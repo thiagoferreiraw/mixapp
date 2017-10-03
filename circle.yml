@@ -12,10 +12,7 @@ test:
     - make tests
 
 dependencies:
-  override:
-      - ls -la
-      - chmod +x deploy.sh
-      - bash ./deploy.sh
+  override:            
       - make setup
 
 deployment: 
