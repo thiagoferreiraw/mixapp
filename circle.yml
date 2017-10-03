@@ -13,6 +13,8 @@ test:
 
 dependencies:
   override:
+      - chmod +x deploy.sh
+      - sh deploy.sh
       - make setup
 
 deployment: 
