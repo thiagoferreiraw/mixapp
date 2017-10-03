@@ -18,5 +18,7 @@ dependencies:
 deployment: 
   staging:
     branch: 'master'
-    commands:
-      - echo DEPLOY!
+    heroku:
+      appname: aqueous-scrubland-68580
+    commands:      
+      - sh ./deploy.sh
