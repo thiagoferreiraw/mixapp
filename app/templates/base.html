@@ -1,12 +1,12 @@
 {% load static %}<!DOCTYPE html>
 <html>
 <head>
-  <title>Simple Social Auth</title>
+  <title>Mixs App</title>
   <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
 </head>
 <body>
   <header>
-    <h1>Simple Social Auth</h1>
+    <h1>Mixs App</h1>
     {% if user.is_authenticated %}
       You are signed in as <strong>{{ user.username }}</strong> /
       <a href="{% url 'home' %}">home</a> /
@@ -29,11 +29,7 @@
     {% endblock %}
   </main>
   <footer>
-    <hr>
-    <small>
-      <a href="https://simpleisbetterthancomplex.com">simpleisbetterthancomplex.com</a> /
-      <a href="https://simpleisbetterthancomplex.com/tutorial/2016/10/24/how-to-add-social-login-to-django.html">read more about this example</a>
-    </small>
+    <hr>    
   </footer>
 </body>
 </html>
