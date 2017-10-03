@@ -1,0 +1,22 @@
+version: 1
+machine:
+  services:
+     - postgresql
+  python:
+    version: 3.6.2
+  environment:
+    ENVIROMENT: staging
+
+test:
+  override:
+    - make tests
+
+dependencies:
+  override:
+      - make setup
+
+deployment: 
+  staging:
+    branch: 'master'
+    commands:
+      - echo DEPLOY!
