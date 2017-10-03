@@ -14,7 +14,7 @@ test:
 dependencies:
   override:
       - chmod +x deploy.sh
-      - sh deploy.sh
+      - bash ./deploy.sh
       - make setup
 
 deployment: 
