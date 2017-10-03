@@ -1,5 +1,6 @@
 #!/bin/bash
 echo "Deploying to heroku..."
+heroku git:remote -a aqueous-scrubland-68580
 #git push heroku master
 heroku config:set DATABASE_NAME=$DATABASE_NAME
 heroku config:set DATABASE_USER=$DATABASE_USER
