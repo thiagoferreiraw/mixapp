@@ -13,6 +13,7 @@ test:
 
 dependencies:
   override:
+      - ls -la
       - chmod +x deploy.sh
       - bash ./deploy.sh
       - make setup
