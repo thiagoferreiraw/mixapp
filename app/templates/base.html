@@ -11,20 +11,23 @@
 <body class="grey lighten-5">
     {% include "menu/menu.html" %}
 <main>
-    <div class="container" style="min-height: 80vh">
-        {% for message in messages %}
-            <p style="color: {% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% endif %}">
-                {{ message }}
-            </p>
-        {% endfor %}
-        {% block content %}
-        {% endblock %}
-    </div>
+    {% for message in messages %}
+        <p style="color: {% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% endif %}">
+            {{ message }}
+        </p>
+    {% endfor %}
+    {% block content %}
+    {% endblock %}
+
 </main>
 <footer>
-    <hr>
 </footer>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<Script>
+    $(document).ready(function(){
+      $('.parallax').parallax();
+    });
+</Script>
 </body>
 </html>

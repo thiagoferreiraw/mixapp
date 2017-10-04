@@ -6,6 +6,9 @@ from django.shortcuts import render, redirect
 
 from social_django.models import UserSocialAuth
 
+def index(request):
+      return render(request, "index.html", {})
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
