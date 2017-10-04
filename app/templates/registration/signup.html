@@ -12,6 +12,21 @@
                         {% csrf_token %}
                         <span class="red-text">{{ form.non_field_errors }}</span>
                         <div class="input-field ">
+                            <label for="{{ form.first_name.id_for_label }}">First name</label>
+                            {{ form.first_name }}
+                            <span class="red-text">{{ form.first_name.errors }}</span>
+                        </div>
+                        <div class="input-field ">
+                            <label for="{{ form.last_name.id_for_label }}">Last name</label>
+                            {{ form.last_name }}
+                            <span class="red-text">{{ form.last_name.errors }}</span>
+                        </div>
+                        <div class="input-field ">
+                            <label for="{{ form.email.id_for_label }}">Email</label>
+                            {{ form.email }}
+                            <span class="red-text">{{ form.email.errors }}</span>
+                        </div>
+                        <div class="input-field ">
                             <label for="{{ form.username.id_for_label }}">Username</label>
                             {{ form.username }}
                             <span class="red-text">{{ form.username.errors }}</span>
