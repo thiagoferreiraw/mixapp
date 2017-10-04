@@ -1,35 +1,29 @@
 {% load static %}<!DOCTYPE html>
 <html>
 <head>
-  <title>Mixs App</title>
-  <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <title>Mixs App</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-  <header>
-    <h1>Mixs App</h1>
-    {% if user.is_authenticated %}
-      You are signed in as <strong>{{ user.username }}</strong> /
-      <a href="{% url 'home' %}">home</a> /
-      <a href="{% url 'settings' %}">settings</a> /
-      <a href="{% url 'password' %}">change password</a> /
-      <a href="{% url 'logout' %}">logout</a>
-    {% else %}
-      <a href="{% url 'login' %}">login</a> /
-      <a href="{% url 'signup' %}">signup</a>
-    {% endif %}
+    {% include "menu/menu.html" %}
+<main>
+    <div class="container" style="min-height: 80vh">
+        {% for message in messages %}
+            <p style="color: {% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% endif %}">
+                {{ message }}
+            </p>
+        {% endfor %}
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+<footer>
     <hr>
-  </header>
-  <main>
-    {% for message in messages %}
-      <p style="color: {% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% endif %}">
-        {{ message }}
-      </p>
-    {% endfor %}
-    {% block content %}
-    {% endblock %}
-  </main>
-  <footer>
-    <hr>    
-  </footer>
+</footer>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 </body>
 </html>

@@ -88,7 +88,7 @@ DATABASES = {
         'CONN_MAX_AGE': 600,
     }
 }
-
+print(DATABASES)
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',

@@ -1,0 +1,46 @@
+<header>
+    <nav class="indigo darken-4" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="{% url 'home' %}" class="brand-logo">
+                Brigid MIXs
+            </a>
+            <ul class="right hide-on-med-and-down">
+                {% if user.is_authenticated %}
+                <li><a class="dropdown-button" href="#!" data-activates="dropdown1">
+                    <i class="material-icons left">person</i>
+                    <strong>{{ user.username|truncatechars:15 }}</strong>
+
+                    <i class="material-icons right">arrow_drop_down</i></a>
+                    <!-- Dropdown Structure -->
+                    <ul id="dropdown1" class="dropdown-content">
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'settings' %}">Settings</a></li>
+                            <li><a href="{% url 'password' %}">Change password</a></li>
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Login</a></li>
+                            <li><a href="{% url 'signup' %}">Signup</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'signup' %}"class="waves-effect waves-light btn yellow darken-3">
+                            Sign up
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'login' %}"class="waves-effect waves-light btn yellow accent-4">
+                            Login
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href="#">Navbar Link</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+</header>
