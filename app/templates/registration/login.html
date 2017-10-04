@@ -1,15 +1,26 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
-  <br>
-  <p><strong>-- OR --</strong></p>
-  <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
-  <a href="{% url 'social:begin' 'twitter' %}">Login with Twitter</a><br>
-  <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+
+    <div class="row">
+        <div class="col s12 m6 offset-m3">
+            <div class="card white">
+                <div class="card-content">
+                    <span class="card-title">Login</span>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="waves-effect waves-light btn   orange darken-4">
+                            Login <i class="material-icons right">send</i>
+                        </button>
+                    </form>
+                    <br>
+                    <p><strong>-- OR --</strong></p><Br>
+                    <a href="{% url 'social:begin' 'facebook' %}"><img src="{% static "img/facebook_logo.png" %}"/></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
