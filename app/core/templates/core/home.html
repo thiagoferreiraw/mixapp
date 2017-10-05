@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Homepage</h2>
-  <p>Hello {{ user.username }}!</p>
+    <div class="container">
+        <h2>Hello, {{ user.first_name }}</h2>
+    </div>
 {% endblock %}

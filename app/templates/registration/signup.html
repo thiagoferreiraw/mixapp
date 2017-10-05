@@ -11,15 +11,26 @@
                     <form method="post">
                         {% csrf_token %}
                         <span class="red-text">{{ form.non_field_errors }}</span>
-                        <div class="input-field ">
-                            <label for="{{ form.first_name.id_for_label }}">First name</label>
-                            {{ form.first_name }}
-                            <span class="red-text">{{ form.first_name.errors }}</span>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <label for="{{ form.first_name.id_for_label }}">First name</label>
+                                {{ form.first_name }}
+                                <span class="red-text">{{ form.first_name.errors }}</span>
+                            </div>
+                            <div class="input-field col s6">
+                                <label for="{{ form.last_name.id_for_label }}">Last name</label>
+                                {{ form.last_name }}
+                                <span class="red-text">{{ form.last_name.errors }}</span>
+                            </div>
                         </div>
-                        <div class="input-field ">
-                            <label for="{{ form.last_name.id_for_label }}">Last name</label>
-                            {{ form.last_name }}
-                            <span class="red-text">{{ form.last_name.errors }}</span>
+                       <div class="input-field ">
+                            <select multiple name="categories">
+                              <option value="" disabled selected>Choose your interests</option>
+                                {% for c in categories %}
+                                    <option value="{{ c.id }}">{{ c.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <label>Tell us what you are interested in</label>
                         </div>
                         <div class="input-field ">
                             <label for="{{ form.email.id_for_label }}">Email</label>
@@ -52,5 +63,6 @@
             </div>
         </div>
     </div>
+    <p class="center-align">Already have an account? <a href="{% url "login" %}">Log in</a></p>
 </div>
 {% endblock %}
