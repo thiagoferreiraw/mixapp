@@ -32,25 +32,29 @@
                             </select>
                             <label>Tell us what you are interested in</label>
                         </div>
-                        <div class="input-field ">
-                            <label for="{{ form.email.id_for_label }}">Email</label>
-                            {{ form.email }}
-                            <span class="red-text">{{ form.email.errors }}</span>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <label for="{{ form.email.id_for_label }}">Email</label>
+                                {{ form.email }}
+                                <span class="red-text">{{ form.email.errors }}</span>
+                            </div>
+                            <div class="input-field col s6">
+                                <label for="{{ form.username.id_for_label }}">Username</label>
+                                {{ form.username }}
+                                <span class="red-text">{{ form.username.errors }}</span>
+                            </div>
                         </div>
-                        <div class="input-field ">
-                            <label for="{{ form.username.id_for_label }}">Username</label>
-                            {{ form.username }}
-                            <span class="red-text">{{ form.username.errors }}</span>
-                        </div>
-                        <div class="input-field ">
-                            <label for="{{ form.password1.id_for_label }}">Password</label>
-                            {{ form.password1 }}
-                            <span class="red-text">{{ form.password1.errors }}</span>
-                        </div>
-                        <div class="input-field ">
-                            <label for="{{ form.password2.id_for_label }}">Password Confirmation</label>
-                            {{ form.password2 }}
-                            <span class="red-text">{{ form.password2.errors }}</span>
+                        <div class="row">
+                            <div class="input-field col s6 ">
+                                <label for="{{ form.password1.id_for_label }}">Password</label>
+                                {{ form.password1 }}
+                                <span class="red-text">{{ form.password1.errors }}</span>
+                            </div>
+                            <div class="input-field col s6">
+                                <label for="{{ form.password2.id_for_label }}">Password Confirmation</label>
+                                {{ form.password2 }}
+                                <span class="red-text">{{ form.password2.errors }}</span>
+                            </div>
                         </div>
                         <button type="submit" class="waves-effect waves-light btn  orange darken-4">
                             Sign up <i class="material-icons right">send</i>
