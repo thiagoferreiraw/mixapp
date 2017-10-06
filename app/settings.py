@@ -36,7 +36,9 @@ INSTALLED_APPS = [
 
     'social_django',
 
-    'app.core',
+    'users',
+
+    'pages'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -56,7 +58,9 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'app/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'app/templates'),
+                 os.path.join(BASE_DIR, 'users/templates'),
+                 os.path.join(BASE_DIR, 'pages/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,7 +138,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv("SOCIAL_AUTH_FACEBOOK_SECRET", "")
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 
-SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/user/settings/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/home/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 
