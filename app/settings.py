@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'social_django',
 
     'users',
+
+    'pages'
 ]
 
 MIDDLEWARE_CLASSES = [
