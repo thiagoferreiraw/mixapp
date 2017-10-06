@@ -1,5 +1,7 @@
 from django.contrib import admin
-from app.core.models import Category
+
+from users.models import Category
+
 
 class CategoryAdmin(admin.ModelAdmin):
     pass

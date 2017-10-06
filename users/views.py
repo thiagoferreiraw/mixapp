@@ -1,15 +1,16 @@
+from users.models import Category
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash, login, authenticate
-from django.contrib import messages
 from django.shortcuts import render, redirect
-from app.core.forms import UserCreationForm
-from app.core.models import Category
-
 from social_django.models import UserSocialAuth
 
+from users.forms import UserCreationForm
+
+
 def index(request):
-      return render(request, "index.html", {})
+      return render(request, "../templates/pages/index.html", {})
 
 def signup(request):
     if request.method == 'POST':
@@ -29,7 +30,7 @@ def signup(request):
 
 @login_required
 def home(request):
-    return render(request, 'core/home.html')
+    return render(request, 'user_profile/home.html')
 
 @login_required
 def settings(request):
@@ -42,7 +43,7 @@ def settings(request):
 
     can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
 
-    return render(request, 'core/settings.html', {
+    return render(request, 'user_profile/settings.html', {
         'facebook_login': facebook_login,
         'can_disconnect': can_disconnect
     })
@@ -65,4 +66,4 @@ def password(request):
             messages.error(request, 'Please correct the error below.')
     else:
         form = PasswordForm(request.user)
-    return render(request, 'core/password.html', {'form': form})
+    return render(request, 'user_profile/password.html', {'form': form})
