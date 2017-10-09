@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.shortcuts import render, redirect
 from social_django.models import UserSocialAuth
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 from users.forms import UserCreationForm, UserEditProfileForm
 
@@ -68,10 +70,13 @@ def password(request):
     return render(request, 'user_profile/password.html', {'form': form})
 
 def edit_profile(request):
+    user = User.objects.get(pk=request.user.id)
     if request.method == 'POST':
-        form = UserEditProfileForm(request.POST)
+        form = UserEditProfileForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
+            messages.success(request, '{}, your profile has been updated successfully'.format(request.user.first_name))
+            return redirect("edit_profile")
     else:
-        form = UserEditProfileForm(instance=request.user)
+        form = UserEditProfileForm(instance=user)
     return render(request, 'user_profile/profile.html', {'form': form, 'categories': Category.objects.all(), 'username': request.user.username})
