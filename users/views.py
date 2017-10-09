@@ -6,7 +6,7 @@ from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeFor
 from django.shortcuts import render, redirect
 from social_django.models import UserSocialAuth
 
-from users.forms import UserCreationForm
+from users.forms import UserCreationForm, UserEditProfileForm
 
 
 def index(request):
@@ -14,7 +14,6 @@ def index(request):
 
 def signup(request):
     if request.method == 'POST':
-        print(request.POST)
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
@@ -67,3 +66,12 @@ def password(request):
     else:
         form = PasswordForm(request.user)
     return render(request, 'user_profile/password.html', {'form': form})
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserEditProfileForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UserEditProfileForm(instance=request.user)
+    return render(request, 'user_profile/profile.html', {'form': form, 'categories': Category.objects.all(), 'username': request.user.username})
