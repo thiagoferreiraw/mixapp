@@ -18,6 +18,15 @@ class UserCreationForm(UserCreationFormDjango):
         fields = ("username", "first_name", "last_name", "email","id")
         field_classes = {'username': UsernameField}
 
+    def save(self, commit=True, chosen_categories=[]):
+        user = super(UserCreationForm, self).save(commit=True)
+
+        for category in chosen_categories:
+            user_category = UserCategory(user_id_id=user.id, category_id_id=category)
+            user_category.save()
+
+        return user
+
 
 class UserEditProfileForm(ModelForm):
 
@@ -27,16 +36,16 @@ class UserEditProfileForm(ModelForm):
         self.fields['last_name'].widget.attrs.update({'required': True})
         self.fields['email'].widget.attrs.update({'required': True})
 
-
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
 
-    def save(self, commit=True):
+    def save(self, commit=True, chosen_categories=[]):
         user = super(UserEditProfileForm, self).save(commit=True)
+
         UserCategory.objects.filter(user_id=user).delete()
-        #for category in self.cleaned_data['categories']:
-        #user_category = UserCategory(user_id_id=user.id, category_id_id=category.id)
-        #    user_category.save()
-        user.save()
+        for category in chosen_categories:
+            user_category = UserCategory(user_id_id=user.id, category_id_id=category)
+            user_category.save()
+
         return user

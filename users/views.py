@@ -1,4 +1,4 @@
-from users.models import Category
+from users.models import Category, UserCategory
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -18,7 +18,7 @@ def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            form.save(chosen_categories=request.POST.getlist('categories'))
             user = authenticate(
                 username=form.cleaned_data.get('username'),
                 password=form.cleaned_data.get('password1')
@@ -70,15 +70,14 @@ def password(request):
     return render(request, 'user_profile/password.html', {'form': form})
 
 def edit_profile(request):
-    categories = Category.objects.all()
-    categories = map(lambda cat: {'id': cat.id, 'name': cat.name, 'selected': False}, categories)
+    categories = _get_user_categories(request.user.id)
 
     user = User.objects.get(pk=request.user.id)
 
     if request.method == 'POST':
         form = UserEditProfileForm(request.POST, instance=user)
         if form.is_valid():
-            form.save()
+            form.save(chosen_categories=request.POST.getlist('categories'))
             messages.success(request, '{}, your profile has been updated successfully'.format(request.POST['first_name']))
             return redirect("edit_profile")
     else:
@@ -87,3 +86,16 @@ def edit_profile(request):
 
     return render(request, 'user_profile/profile.html', {'form': form, 'categories': categories, 'username': request.user.username})
 
+def _get_user_categories(user_id):
+    categories = Category.objects.all()
+    categories = map(lambda cat: {'id': cat.id, 'name': cat.name, 'selected': False}, categories)
+
+    user_categories = UserCategory.objects.filter(user_id_id=user_id)
+
+    if user_categories:
+        categories_ids = [cat.category_id_id for cat in user_categories]
+        categories = list(
+            map(lambda cat: {'id': cat['id'], 'name': cat['name'], 'selected': cat['id'] in categories_ids},
+                categories))
+
+    return categories
