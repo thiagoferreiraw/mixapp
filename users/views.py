@@ -70,13 +70,20 @@ def password(request):
     return render(request, 'user_profile/password.html', {'form': form})
 
 def edit_profile(request):
+    categories = Category.objects.all()
+    categories = map(lambda cat: {'id': cat.id, 'name': cat.name, 'selected': False}, categories)
+
     user = User.objects.get(pk=request.user.id)
+
     if request.method == 'POST':
         form = UserEditProfileForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            messages.success(request, '{}, your profile has been updated successfully'.format(request.user.first_name))
+            messages.success(request, '{}, your profile has been updated successfully'.format(request.POST['first_name']))
             return redirect("edit_profile")
     else:
         form = UserEditProfileForm(instance=user)
-    return render(request, 'user_profile/profile.html', {'form': form, 'categories': Category.objects.all(), 'username': request.user.username})
+
+
+    return render(request, 'user_profile/profile.html', {'form': form, 'categories': categories, 'username': request.user.username})
+

@@ -27,7 +27,7 @@
                             <select multiple name="categories">
                               <option value="" disabled selected>Choose your interests</option>
                                 {% for c in categories %}
-                                    <option value="{{ c.id }}">{{ c.name }}</option>
+                                    <option {{ c.selected|yesno:"selected,'',''" }} value="{{ c.id }}">{{ c.name }}</option>
                                 {% endfor %}
                             </select>
                             <label>Tell us what you are interested in</label>
