@@ -1,3 +1,7 @@
 from django.test import TestCase
 
-# Create your tests here.
+
+class UserTests(TestCase):
+
+    def test_django(self):
+        self.assertIs(False, False)

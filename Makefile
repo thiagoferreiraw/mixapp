@@ -27,7 +27,7 @@ clean:
 .PHONY: clean
 
 tests: clean
-	echo "To-DO: Implement tests"
+	python manage.py test
 
 run:
 	python manage.py runserver
