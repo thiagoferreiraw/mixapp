@@ -9,7 +9,7 @@ machine:
 
 test:
   override:
-    - make tests
+    - echo tests
 
 dependencies:
   override:            

@@ -27,7 +27,7 @@ clean:
 .PHONY: clean
 
 tests: clean
-	echo yes | python manage.py test
+	python manage.py test
 
 run:
 	python manage.py runserver
