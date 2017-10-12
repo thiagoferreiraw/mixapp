@@ -143,4 +143,4 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/home/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 
 
-ALLOWED_HOSTS = ['aqueous-scrubland-68580.herokuapp.com','localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['staging-mixs-app.herokuapp.com','localhost', '127.0.0.1']

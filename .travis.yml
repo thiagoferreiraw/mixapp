@@ -8,7 +8,7 @@ addons:
 
 before_install:
   - export DJ_DEBUG=False
-  - export DABATASE_URL=postgres://postgres@localhost/travisdb
+  - export DABABASE_URL=postgres://postgres@localhost/travisdb
 
 install:
   - pip install -r requirements.txt
@@ -23,3 +23,7 @@ env:
 script:
   - make collectstatic
   - make tests
+
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API_KEY
