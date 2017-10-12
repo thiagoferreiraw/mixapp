@@ -11,4 +11,3 @@ DATABASES = {
         'CONN_MAX_AGE': 600,
     }
 }
-print(DATABASES)
