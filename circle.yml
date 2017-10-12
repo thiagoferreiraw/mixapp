@@ -6,10 +6,12 @@ machine:
     version: 3.6.2
   environment:
     ENVIROMENT: staging
+    DATABASE_URL: postgresql://ubuntu:@127.0.0.1:5432/circle_test
+
 
 test:
   override:
-    - echo tests
+    - make tests
 
 dependencies:
   override:            
