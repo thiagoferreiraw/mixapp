@@ -27,7 +27,7 @@ clean:
 .PHONY: clean
 
 tests: clean
-	python manage.py test
+	python manage.py test --settings=app.test_settings
 
 run:
 	python manage.py runserver
