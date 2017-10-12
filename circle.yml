@@ -31,4 +31,4 @@ deployment:
         EOF
       - chmod 600 ~/.netrc # Heroku cli complains about permissions without this
       - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
-      - git push git@heroku.com:aqueous-scrubland-68580.git $CIRCLE_SHA1:refs/heads/master
+      - git push git@heroku.com:staging-mixs-app.git $CIRCLE_SHA1:refs/heads/master
