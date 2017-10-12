@@ -10,7 +10,7 @@ machine:
 
 database:
   override:
-    - ALTER USER postgres WITH CREATED
+    - psql -c "ALTER USER postgres WITH CREATEDB" -U postgres
 
 test:
   override:
