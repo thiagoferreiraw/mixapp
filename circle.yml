@@ -17,7 +17,7 @@ dependencies:
 
 deployment: 
   staging:
-    branch: 'master'
+    branch: 'XPTO'
     commands:      
       - |
         cat >~/.netrc <<EOF
