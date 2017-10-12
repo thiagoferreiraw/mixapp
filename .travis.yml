@@ -20,4 +20,6 @@ before_script:
 env:
   - DJANGO=1.9.10
 
-script: make tests
+script:
+  - make collectstatic
+  - make tests

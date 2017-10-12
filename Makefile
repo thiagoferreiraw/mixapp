@@ -27,7 +27,7 @@ clean:
 .PHONY: clean
 
 tests: clean
-	python manage.py test 
+	python manage.py test
 
 run:
 	python manage.py runserver
@@ -35,5 +35,8 @@ run:
 migrate:
 	python manage.py makemigrations
 	python manage.py migrate
+
+collectstatic:
+	echo yes | python manage.py collectstatic
 
 default: setup
