@@ -12,7 +12,7 @@ from users.forms import UserCreationForm, UserEditProfileForm
 
 
 def index(request):
-      return render(request, "../templates/pages/index.html", {})
+    return render(request, "../templates/pages/index.html", {})
 
 def signup(request):
     if request.method == 'POST':
@@ -69,6 +69,7 @@ def password(request):
         form = PasswordForm(request.user)
     return render(request, 'user_profile/password.html', {'form': form})
 
+@login_required
 def edit_profile(request):
     categories = _get_user_categories(request.user.id)
 
