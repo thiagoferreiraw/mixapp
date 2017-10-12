@@ -14,7 +14,7 @@ machine:
 
 test:
   override:
-    - make tests
+    - echo yes | make tests
 
 dependencies:
   override:            
