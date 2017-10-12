@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/thiagoferreiraw/mixapp.svg?branch=master)](https://travis-ci.org/thiagoferreiraw/mixapp)
+
 # Brigid Mixs
 
 Brigid Mixs' platform.
