@@ -1,3 +1,4 @@
+[![Build Status](http://circleci-badges-max.herokuapp.com/img/tferreiraw/mixapp/master?token=48a42b6925295d37ceb93b42d29f1c28a40eb4ab)](https://circleci.com/gh/tferreiraw/mixapp/tree/master)
 # Brigid Mixs
 
 Brigid Mixs' platform.
