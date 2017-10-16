@@ -20,7 +20,7 @@ def signup(request, invitation_hash):
 
     try:
         signup_invitation = SignupInvitation.objects.filter(hash=invitation_hash, user_has_signed_up=False)[0]
-    except Exception as e:
+    except ValueError as e:
         return render(request, 'registration/invalid_signup.html', {'hash': invitation_hash})
 
     if request.method == 'POST':
