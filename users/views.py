@@ -41,6 +41,7 @@ def signup(request, invitation_hash):
             return redirect('home')
     else:
         form = UserCreationForm()
+
     return render(request, 'registration/signup.html', {'form': form, 'categories': Category.objects.all(), 'invitation': signup_invitation})
 
 
@@ -101,7 +102,6 @@ def edit_profile(request):
             return redirect("edit_profile")
     else:
         form = UserEditProfileForm(instance=user)
-
 
     return render(request, 'user_profile/profile.html', {'form': form, 'categories': categories, 'username': request.user.username})
 

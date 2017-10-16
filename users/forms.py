@@ -8,9 +8,12 @@ class UserCreationForm(UserCreationFormDjango):
 
     def __init__(self, *args, **kwargs):
         super(UserCreationFormDjango, self).__init__(*args, **kwargs)
-        self.fields['first_name'].widget.attrs.update({'autofocus': '', 'required':True})
-        self.fields['last_name'].widget.attrs.update({'required': True})
-        self.fields['email'].widget.attrs.update({'required': True})
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+        self.fields['email'].required = True
+        self.fields['first_name'].widget.attrs.update({'autofocus': ''})
+        #self.fields['last_name'].widget.attrs.update({'required': True})
+        #self.fields['email'].widget.attrs.update({'required': True})
 
 
     class Meta:
