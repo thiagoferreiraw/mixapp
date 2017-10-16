@@ -1,4 +1,4 @@
-[![Build Status](https://circleci.com/gh/thiagoferreiraw/mixapp.svg?style=shield&circle-token=48a42b6925295d37ceb93b42d29f1c28a40eb4ab)](https://circleci.com/gh/tferreiraw/mixapp/master)
+[![Build Status](https://circleci.com/gh/thiagoferreiraw/mixapp.svg?style=shield&circle-token=48a42b6925295d37ceb93b42d29f1c28a40eb4ab)](https://circleci.com/gh/thiagoferreiraw/mixapp/)
 # Brigid Mixs
 
 Brigid Mixs' platform.
