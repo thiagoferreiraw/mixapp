@@ -11,22 +11,17 @@ from users.models import SignupInvitation
 from users.forms import UserCreationForm, UserEditProfileForm
 from django.http import HttpResponse
 
+
 def index(request):
     return render(request, "../templates/pages/index.html", {})
+
 
 def signup(request, invitation_hash):
 
     try:
-        signup_invitation = SignupInvitation.objects.filter(hash=invitation_hash, user_has_signed_up=False)
-        if len(signup_invitation) > 0:
-            signup_invitation = signup_invitation[0]
-        else:
-            raise Exception("Invitation not found")
-    except ValueError as e:
-        return HttpResponse("Invalid hash")
+        signup_invitation = SignupInvitation.objects.filter(hash=invitation_hash, user_has_signed_up=False)[0]
     except Exception as e:
-        return HttpResponse(str(e))
-
+        return render(request, 'registration/invalid_signup.html', {'hash': invitation_hash})
 
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -48,9 +43,11 @@ def signup(request, invitation_hash):
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form, 'categories': Category.objects.all(), 'invitation': signup_invitation})
 
+
 @login_required
 def home(request):
     return render(request, 'user_profile/home.html')
+
 
 @login_required
 def settings(request):
@@ -67,6 +64,7 @@ def settings(request):
         'facebook_login': facebook_login,
         'can_disconnect': can_disconnect
     })
+
 
 @login_required
 def password(request):
@@ -88,6 +86,7 @@ def password(request):
         form = PasswordForm(request.user)
     return render(request, 'user_profile/password.html', {'form': form})
 
+
 @login_required
 def edit_profile(request):
     categories = _get_user_categories(request.user.id)
@@ -105,6 +104,7 @@ def edit_profile(request):
 
 
     return render(request, 'user_profile/profile.html', {'form': form, 'categories': categories, 'username': request.user.username})
+
 
 def _get_user_categories(user_id):
     categories = Category.objects.all()

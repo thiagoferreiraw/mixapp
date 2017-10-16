@@ -1,4 +1,5 @@
 from django.test import TestCase, RequestFactory
+from users import views
 from unittest import mock
 
 class UserTests(TestCase):
@@ -15,6 +16,11 @@ class UserTests(TestCase):
         response = self.client.get('/home/', follow=True)
         self.assertRedirects(response, '/login/?next=/home/')
 
+    def test_signup_with_invalid_invitation(self):
+        response = self.client.get('/signup/invalid_hash/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['hash'], 'invalid_hash')
 
 
 
