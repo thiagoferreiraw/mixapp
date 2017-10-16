@@ -27,7 +27,8 @@ clean:
 .PHONY: clean
 
 tests: clean
-	python manage.py test --settings=app.test_settings
+	coverage run --include=users/*,app/*,pages/*  manage.py test --settings=app.test_settings
+	coverage report -m
 
 run:
 	python manage.py runserver

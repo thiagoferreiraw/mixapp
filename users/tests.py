@@ -1,7 +1,8 @@
 from django.test import TestCase, RequestFactory
+from mock import patch
 from users.models import *
 from users.models import User
-from users.views import _get_user_categories
+from users.views import _get_user_categories, edit_profile
 
 
 class UserTests(TestCase):
@@ -22,7 +23,7 @@ class UserTests(TestCase):
         response = self.client.get('/user/profile/', follow=True)
         self.assertRedirects(response, '/login/?next=/user/profile/')
 
-    def test_get_access_signup_pagewith_invalid_invitation(self):
+    def test_get_access_signup_page_with_invalid_invitation(self):
         response = self.client.get('/signup/invalid_hash/')
 
         self.assertEqual(response.status_code, 200)
@@ -159,3 +160,27 @@ class UserTests(TestCase):
 
         chosen_categories = UserCategory.objects.filter(user_id_id=created_user.id)
         self.assertEqual(len(chosen_categories), 2)
+
+    @patch('django.contrib.messages.success', return_value=True)
+    def test_post_edit_profile_success(self, mock_messages):
+        user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+
+        request = self.factory.post("/user/profile/", {
+            "email": "invited@test.com",
+            "first_name": "Tester changed1",
+            "last_name": "Tester changed2",
+        })
+
+        request.user = user
+
+        response = edit_profile(request)
+
+        self.assertEqual(response.url, "/user/profile/")
+        self.assertEqual(response.status_code, 302)
+
+        updated_user = User.objects.filter(username="tester")[0]
+
+        self.assertEqual(updated_user.email, "invited@test.com")
+        self.assertEqual(updated_user.first_name, "Tester changed1")
+        self.assertEqual(updated_user.last_name, "Tester changed2")
+        self.assertTrue(mock_messages.called)

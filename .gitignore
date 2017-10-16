@@ -3,3 +3,4 @@
 staticfiles
 *.env
 .idea/
+.coverage

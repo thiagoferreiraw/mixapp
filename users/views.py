@@ -1,5 +1,4 @@
 from users.models import Category, UserCategory
-from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
@@ -9,11 +8,6 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from users.models import SignupInvitation
 from users.forms import UserCreationForm, UserEditProfileForm
-from django.http import HttpResponse
-
-
-def index(request):
-    return render(request, "../templates/pages/index.html", {})
 
 
 def signup(request, invitation_hash):
@@ -43,6 +37,24 @@ def signup(request, invitation_hash):
         form = UserCreationForm()
 
     return render(request, 'registration/signup.html', {'form': form, 'categories': Category.objects.all(), 'invitation': signup_invitation})
+
+
+@login_required
+def edit_profile(request):
+    categories = _get_user_categories(request.user.id)
+
+    user = User.objects.get(pk=request.user.id)
+
+    if request.method == 'POST':
+        form = UserEditProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save(chosen_categories=request.POST.getlist('categories'))
+            messages.success(request, '{}, your profile has been updated successfully'.format(request.POST['first_name']))
+            return redirect("edit_profile")
+    else:
+        form = UserEditProfileForm(instance=user)
+
+    return render(request, 'user_profile/profile.html', {'form': form, 'categories': categories, 'username': request.user.username})
 
 
 @login_required
@@ -86,24 +98,6 @@ def password(request):
     else:
         form = PasswordForm(request.user)
     return render(request, 'user_profile/password.html', {'form': form})
-
-
-@login_required
-def edit_profile(request):
-    categories = _get_user_categories(request.user.id)
-
-    user = User.objects.get(pk=request.user.id)
-
-    if request.method == 'POST':
-        form = UserEditProfileForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save(chosen_categories=request.POST.getlist('categories'))
-            messages.success(request, '{}, your profile has been updated successfully'.format(request.POST['first_name']))
-            return redirect("edit_profile")
-    else:
-        form = UserEditProfileForm(instance=user)
-
-    return render(request, 'user_profile/profile.html', {'form': form, 'categories': categories, 'username': request.user.username})
 
 
 def _get_user_categories(user_id):
