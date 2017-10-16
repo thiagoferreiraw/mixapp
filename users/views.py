@@ -7,18 +7,37 @@ from django.shortcuts import render, redirect
 from social_django.models import UserSocialAuth
 from django.contrib.auth.models import User
 from django.contrib import messages
-
+from users.models import SignupInvitation
 from users.forms import UserCreationForm, UserEditProfileForm
-
+from django.http import HttpResponse
 
 def index(request):
     return render(request, "../templates/pages/index.html", {})
 
-def signup(request):
+def signup(request, invitation_hash):
+
+    try:
+        signup_invitation = SignupInvitation.objects.filter(hash=invitation_hash, user_has_signed_up=False)
+        if len(signup_invitation) > 0:
+            signup_invitation = signup_invitation[0]
+        else:
+            raise Exception("Invitation not found")
+    except ValueError as e:
+        return HttpResponse("Invalid hash")
+    except Exception as e:
+        return HttpResponse(str(e))
+
+
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
+
+        if request.POST.get("email") != signup_invitation.email_invited:
+            messages.error(request, "You must sign up with the invited email: {}".format(signup_invitation.email_invited))
+            return render(request, 'registration/signup.html',
+                   {'form': form, 'categories': Category.objects.all(), 'invitation': signup_invitation})
+
         if form.is_valid():
-            form.save(chosen_categories=request.POST.getlist('categories'))
+            form.save(chosen_categories=request.POST.getlist('categories'), signup_invitation=signup_invitation)
             user = authenticate(
                 username=form.cleaned_data.get('username'),
                 password=form.cleaned_data.get('password1')
@@ -27,7 +46,7 @@ def signup(request):
             return redirect('home')
     else:
         form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form, 'categories': Category.objects.all()})
+    return render(request, 'registration/signup.html', {'form': form, 'categories': Category.objects.all(), 'invitation': signup_invitation})
 
 @login_required
 def home(request):

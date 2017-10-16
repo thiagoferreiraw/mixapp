@@ -18,8 +18,11 @@ class UserCreationForm(UserCreationFormDjango):
         fields = ("username", "first_name", "last_name", "email","id")
         field_classes = {'username': UsernameField}
 
-    def save(self, commit=True, chosen_categories=[]):
+    def save(self, commit=True, chosen_categories=[], signup_invitation=None):
         user = super(UserCreationForm, self).save(commit=True)
+
+        signup_invitation.user_has_signed_up = True
+        signup_invitation.save()
 
         for category in chosen_categories:
             user_category = UserCategory(user_id_id=user.id, category_id_id=category)
