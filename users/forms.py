@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm as UserCreationFormDjango
 from django.forms import ModelForm, MultipleChoiceField
 from users.models import Category, UserCategory
 from django.conf import settings
+from django.core import validators
 
 
 class UserCreationForm(UserCreationFormDjango):
@@ -12,14 +13,24 @@ class UserCreationForm(UserCreationFormDjango):
         self.fields['last_name'].required = True
         self.fields['email'].required = True
         self.fields['first_name'].widget.attrs.update({'autofocus': ''})
-        #self.fields['last_name'].widget.attrs.update({'required': True})
-        #self.fields['email'].widget.attrs.update({'required': True})
-
 
     class Meta:
         model = User
         fields = ("username", "first_name", "last_name", "email", "id")
         field_classes = {'username': UsernameField}
+
+    def is_valid(self):
+        valid = super(UserCreationForm, self).is_valid()
+
+        if not valid:
+            return valid
+
+        email_exists = len(User.objects.filter(email=self.cleaned_data['email'])) > 0
+        if email_exists:
+            self.add_error("email", "This email is already in use")
+            return False
+
+        return True
 
     def save(self, commit=True, chosen_categories=[], signup_invitation=None):
         user = super(UserCreationForm, self).save(commit=True)
@@ -40,12 +51,11 @@ class UserEditProfileForm(ModelForm):
         super(ModelForm, self).__init__(*args, **kwargs)
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
-        self.fields['email'].required = True
         self.fields['first_name'].widget.attrs.update({'autofocus': '', 'required':True})
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('first_name', 'last_name')
 
     def save(self, commit=True, chosen_categories=[]):
         user = super(UserEditProfileForm, self).save(commit=True)

@@ -3,7 +3,7 @@ from mock import patch
 from users.models import *
 from users.models import User
 from users.views import _get_user_categories, edit_profile
-
+from users.forms import UserCreationForm
 
 class UserTests(TestCase):
 
@@ -180,7 +180,36 @@ class UserTests(TestCase):
 
         updated_user = User.objects.filter(username="tester")[0]
 
-        self.assertEqual(updated_user.email, "invited@test.com")
         self.assertEqual(updated_user.first_name, "Tester changed1")
         self.assertEqual(updated_user.last_name, "Tester changed2")
         self.assertTrue(mock_messages.called)
+
+    def test_form_user_signup_duplicated_email(self):
+        user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+
+        form = UserCreationForm({
+            "email": "tester@tester.com",
+            "first_name": "Tester1",
+            "last_name": "Tester2",
+            "password1": "123",
+            "password2": "123",
+            "username": "testerx",
+        })
+
+        self.assertFalse(form.is_valid())
+        self.assertTrue("email" in form.errors)
+
+    def test_form_user_signup_duplicated_username(self):
+        user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+
+        form = UserCreationForm({
+            "email": "tester@tester.com",
+            "first_name": "Tester1",
+            "last_name": "Tester2",
+            "password1": "123",
+            "password2": "123",
+            "username": "tester",
+        })
+
+        self.assertFalse(form.is_valid())
+        self.assertTrue("username" in form.errors)

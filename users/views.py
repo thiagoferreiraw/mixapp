@@ -9,12 +9,11 @@ from django.contrib import messages
 from users.models import SignupInvitation
 from users.forms import UserCreationForm, UserEditProfileForm
 
-
 def signup(request, invitation_hash):
 
     try:
         signup_invitation = SignupInvitation.objects.filter(hash=invitation_hash, user_has_signed_up=False)[0]
-    except ValueError as e:
+    except (ValueError, IndexError) as e:
         return render(request, 'registration/invalid_signup.html', {'hash': invitation_hash})
 
     if request.method == 'POST':
@@ -54,7 +53,7 @@ def edit_profile(request):
     else:
         form = UserEditProfileForm(instance=user)
 
-    return render(request, 'user_profile/profile.html', {'form': form, 'categories': categories, 'username': request.user.username})
+    return render(request, 'user_profile/profile.html', {'form': form, 'categories': categories, 'user': request.user})
 
 
 @login_required

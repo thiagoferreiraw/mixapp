@@ -21,6 +21,7 @@ class UserCategory(models.Model):
 
 class SignupInvitation(models.Model):
     email_invited = models.EmailField()
+    invited_by = models.ForeignKey(User, null=True)
     user_has_signed_up = models.BooleanField(default=False)
     created_at = models.DateField(auto_now_add=True, blank=True, editable=True)
     hash = models.UUIDField(default=uuid.uuid4, unique=True, editable=True)
