@@ -15,3 +15,5 @@
 .brand-logo{
     font-weight: 300;
 }
+
+li.usermenu-active a{font-weight:600;}

@@ -11,6 +11,7 @@ test:
   override:
     - make collectstatic
     - make tests
+    - coverage report -m > $CIRCLE_ARTIFACTS/tests_report.txt
 
 dependencies:
   override:
