@@ -1,23 +1,5 @@
-{% load static %}<!DOCTYPE html>
-<html>
-<head>
-    <title>Mixs App</title>
-    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="screen,projection"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-</head>
-<body class="grey lighten-5">
-    {% include "menu/menu.html" %}
-<main>
-    <div class="container">
-    {% for message in messages %}
-        <p style="color: white; font-weight: 600; padding:5px" class="{% if message.tags == 'success' %}green darken-4{% elif message.tags == 'error' %}red darken-4{% endif %}">
-            {{ message }}
-        </p>
-    {% endfor %}
-    </div>
+{% include "layout/header.html" %}
+
     <div class="container" style="min-height: 80vh">
         <div class="row">
             <div class="col s12 m4 ">
@@ -33,16 +15,5 @@
             </div>
         </div>
     </div>
-</main>
-<footer >
-</footer>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-<Script>
-    $(document).ready(function(){
-      $('.parallax').parallax();
-      $('select').material_select();
-    });
-</Script>
-</body>
-</html>
+
+{% include "layout/footer.html" %}
