@@ -58,9 +58,9 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'app/templates'),
-                 os.path.join(BASE_DIR, 'users/templates'),
-                 os.path.join(BASE_DIR, 'pages/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'app/../templates'),
+                 os.path.join(BASE_DIR, 'users/../../users/templates'),
+                 os.path.join(BASE_DIR, 'pages/../../pages/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -116,11 +116,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, '../staticfiles')
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
+    os.path.join(PROJECT_ROOT, '../static'),
 )
 
 LOGIN_URL = 'login'
@@ -144,3 +144,6 @@ SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 
 
 ALLOWED_HOSTS = ['staging-mixs-app.herokuapp.com','localhost', '127.0.0.1']
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
