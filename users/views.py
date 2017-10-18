@@ -33,7 +33,7 @@ def signup(request, invitation_hash):
             login(request, user)
             return redirect('home')
     else:
-        form = UserCreationForm()
+        form = UserCreationForm(initial={'email': signup_invitation.email_invited})
 
     return render(request, 'registration/signup.html', {'form': form, 'categories': Category.objects.all(), 'invitation': signup_invitation})
 
