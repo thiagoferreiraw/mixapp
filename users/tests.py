@@ -2,7 +2,7 @@ from django.test import TestCase, RequestFactory
 from mock import patch
 from users.models import *
 from users.models import User
-from users.views import _get_user_categories, edit_profile
+from users.views import _get_user_categories, UserEditProfileView
 from users.forms import UserCreationForm
 
 class UserTests(TestCase):
@@ -173,7 +173,8 @@ class UserTests(TestCase):
 
         request.user = user
 
-        response = edit_profile(request)
+        user_edit_view = UserEditProfileView()
+        response = user_edit_view.post(request)
 
         self.assertEqual(response.url, "/user/profile/")
         self.assertEqual(response.status_code, 302)

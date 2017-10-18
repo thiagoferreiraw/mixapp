@@ -8,21 +8,42 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from users.models import SignupInvitation
 from users.forms import UserCreationForm, UserEditProfileForm
+from django.views.generic import View
 
-def signup(request, invitation_hash):
 
-    try:
-        signup_invitation = SignupInvitation.objects.filter(hash=invitation_hash, user_has_signed_up=False)[0]
-    except (ValueError, IndexError) as e:
-        return render(request, 'registration/invalid_signup.html', {'hash': invitation_hash})
+class UserSignupView(View):
+    template_name = "registration/signup.html"
+    redirect_to = "home"
 
-    if request.method == 'POST':
+    @staticmethod
+    def get_invitation(request, invitation_hash):
+        try:
+            signup_invitation = SignupInvitation.objects.filter(hash=invitation_hash, user_has_signed_up=False)[0]
+        except (ValueError, IndexError) as e:
+            return None
+        return signup_invitation
+
+    def get(self, request, invitation_hash):
+        signup_invitation = self.get_invitation(request, invitation_hash)
+        if not signup_invitation:
+            return render(request, 'registration/invalid_signup.html', {'hash': invitation_hash})
+
+        form = UserCreationForm(initial={'email': signup_invitation.email_invited})
+        return render(request, self.template_name, {'form': form, 'categories': Category.objects.all(),
+                                                    'invitation': signup_invitation})
+
+    def post(self, request, invitation_hash):
+        signup_invitation = self.get_invitation(request, invitation_hash)
+        if not signup_invitation:
+            return render(request, 'registration/invalid_signup.html', {'hash': invitation_hash})
+
         form = UserCreationForm(request.POST)
 
         if request.POST.get("email") != signup_invitation.email_invited:
-            messages.error(request, "You must sign up with the invited email: {}".format(signup_invitation.email_invited))
-            return render(request, 'registration/signup.html',
-                   {'form': form, 'categories': Category.objects.all(), 'invitation': signup_invitation})
+            messages.error(request,
+                           "You must sign up with the invited email: {}".format(signup_invitation.email_invited))
+            return render(request, self.template_name,
+                          {'form': form, 'categories': Category.objects.all(), 'invitation': signup_invitation})
 
         if form.is_valid():
             form.save(chosen_categories=request.POST.getlist('categories'), signup_invitation=signup_invitation)
@@ -31,29 +52,30 @@ def signup(request, invitation_hash):
                 password=form.cleaned_data.get('password1')
             )
             login(request, user)
-            return redirect('home')
-    else:
-        form = UserCreationForm()
-
-    return render(request, 'registration/signup.html', {'form': form, 'categories': Category.objects.all(), 'invitation': signup_invitation})
+            return redirect(self.redirect_to)
 
 
-@login_required
-def edit_profile(request):
-    categories = _get_user_categories(request.user.id)
+class UserEditProfileView(View):
+    template_name = "user_profile/profile.html"
 
-    user = User.objects.get(pk=request.user.id)
+    def get(self, request):
+        categories = _get_user_categories(request.user.id)
+        form = UserEditProfileForm(instance=User.objects.get(pk=request.user.id))
+        return render(request, self.template_name,
+                      {'form': form, 'categories': categories, 'user': request.user})
 
-    if request.method == 'POST':
-        form = UserEditProfileForm(request.POST, instance=user)
+    def post(self, request):
+        form = UserEditProfileForm(request.POST, instance=User.objects.get(pk=request.user.id))
         if form.is_valid():
             form.save(chosen_categories=request.POST.getlist('categories'))
-            messages.success(request, '{}, your profile has been updated successfully'.format(request.POST['first_name']))
+            messages.success(request,
+                             'Your profile has been updated successfully'.format(request.POST['first_name']))
             return redirect("edit_profile")
-    else:
-        form = UserEditProfileForm(instance=user)
 
-    return render(request, 'user_profile/profile.html', {'form': form, 'categories': categories, 'user': request.user})
+        categories = _get_user_categories(request.user.id)
+
+        return render(request, self.template_name,
+                      {'form': form, 'categories': categories, 'user': request.user})
 
 
 @login_required
