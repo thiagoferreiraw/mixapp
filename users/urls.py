@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
-from users import views as user_views
+from users.views import views as user_views
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [

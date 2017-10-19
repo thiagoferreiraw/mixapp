@@ -2,8 +2,9 @@ from django.test import TestCase, RequestFactory
 from mock import patch
 from users.models import *
 from users.models import User
-from users.views import _get_user_categories, UserEditProfileView
+from users.views.user_edit_profile_view import UserEditProfileView
 from users.forms import UserCreationForm, UserWaitingListForm
+
 
 class UserTests(TestCase):
 
@@ -118,7 +119,7 @@ class UserTests(TestCase):
 
         UserCategory(user_id_id=user.id, category_id_id=categories[0].id).save()
 
-        user_categories = _get_user_categories(user.id)
+        user_categories = UserEditProfileView._get_user_categories(user.id)
 
         self.assertEqual(len(user_categories), 5)
 
