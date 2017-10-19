@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     url(r'^home/$', user_views.home, name='home'),
-    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^login/$', user_views.login_view, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^waiting_list/$', user_views.UserWaitingListView.as_view(), name='waiting_list'),
     url(r'^signup/(?P<invitation_hash>\w{1,50})/$', user_views.UserSignupView.as_view(), name='signup'),
@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^user/settings/$', user_views.settings, name='settings'),
     url(r'^user/settings/password/$', user_views.password, name='password'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
+
     # Password reset
     url(r'^password_reset/$', auth_views.password_reset, name='password_reset'),
     url(r'^password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),
