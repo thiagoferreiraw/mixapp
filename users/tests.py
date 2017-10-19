@@ -3,7 +3,7 @@ from mock import patch
 from users.models import *
 from users.models import User
 from users.views import _get_user_categories, UserEditProfileView
-from users.forms import UserCreationForm
+from users.forms import UserCreationForm, UserWaitingListForm
 
 class UserTests(TestCase):
 
@@ -214,3 +214,37 @@ class UserTests(TestCase):
 
         self.assertFalse(form.is_valid())
         self.assertTrue("username" in form.errors)
+
+    def test_form_user_waiting_list(self):
+        form = UserWaitingListForm({'email': 'tester@mail.com'})
+        self.assertTrue(form.is_valid())
+        waiting_list = form.save()
+        self.assertEqual(waiting_list.email, 'tester@mail.com')
+
+    def test_form_user_waiting_list_duplicated(self):
+        SignupWaitingList(email="tester@mail.com").save()
+
+        form = UserWaitingListForm({'email': 'tester@mail.com'})
+        self.assertFalse(form.is_valid())
+        self.assertTrue("email" in form.errors)
+
+    def test_post_waiting_list(self):
+        response = self.client.post('/waiting_list/', {
+            "email": "tester@test.com",
+        })
+
+        self.assertEqual(response.status_code, 200)
+
+        signup_waiting_list = SignupWaitingList.objects.filter(email="tester@test.com").first()
+
+        self.assertTrue(signup_waiting_list)
+
+        context_messages = list(response.context['messages'])
+
+        self.assertEqual(len(context_messages), 1)
+
+    def test_get_waiting_list(self):
+        response = self.client.post('/waiting_list/', {
+            "email": "tester@test.com",
+        })
+        self.assertEqual(response.status_code, 200)

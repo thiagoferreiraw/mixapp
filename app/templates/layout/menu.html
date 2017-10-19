@@ -17,28 +17,29 @@
                         {% if user.is_authenticated %}
                             <li><a href="{% url 'edit_profile' %}">Profile</a></li>
                             <li><a href="{% url 'logout' %}">Logout</a></li>
-                        {% else %}
-                            <li><a href="{% url 'login' %}">Login</a></li>
-                            <li><a href="{% url 'signup' 'x' %}">Signup</a></li>
                         {% endif %}
                     </ul>
                 </li>
                 {% else %}
                     <li>
-                        <a href="{% url 'signup' 'x' %}"class="waves-effect waves-light btn yellow darken-3">
-                            Sign up
-                        </a>
-                    </li>
-                    <li>
                         <a href="{% url 'login' %}"class="waves-effect waves-light btn yellow accent-4">
-                            Login
+                            <i class="material-icons left">lock</i> Members
                         </a>
                     </li>
                 {% endif %}
             </ul>
 
             <ul id="nav-mobile" class="side-nav">
-                <li><a href="#">Navbar Link</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'edit_profile' %}">Profile</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'login' %}"class="waves-effect waves-light btn yellow accent-4">
+                            <i class="material-icons left">lock</i>Members
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
             <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
         </div>

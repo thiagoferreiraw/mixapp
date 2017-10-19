@@ -28,3 +28,12 @@ class SignupInvitation(models.Model):
 
     def __str__(self):
         return self.email_invited + " - " + str(self.hash)
+
+class SignupWaitingList(models.Model):
+    email = models.EmailField(unique=True)
+    created_at = models.DateField(auto_now_add=True, blank=True, editable=True)
+
+    def __str__(self):
+        return self.email
+
+

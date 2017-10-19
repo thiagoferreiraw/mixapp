@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^home/$', user_views.home, name='home'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^waiting_list/$', user_views.UserWaitingListView.as_view(), name='waiting_list'),
     url(r'^signup/(?P<invitation_hash>\w{1,50})/$', user_views.UserSignupView.as_view(), name='signup'),
     url(r'^user/profile/$',  login_required(user_views.UserEditProfileView.as_view()), name='edit_profile'),
     url(r'^user/settings/$', user_views.settings, name='settings'),

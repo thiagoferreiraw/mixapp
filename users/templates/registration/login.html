@@ -22,13 +22,14 @@
                           {{ form.password }}
                         </div>
                         <!--{{ form.as_p }}-->
-                        <button type="submit" class="waves-effect waves-light btn   orange darken-4">
+                        <button type="submit" class="waves-effect waves-light btn orange darken-4">
                             Login <i class="material-icons right">send</i>
                         </button>
                     </form>
                 </div>
             </div>
             <p class="center-align"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+            <p class="center-align"><a href="{% url 'waiting_list' %}">Create an account</a></p>
         </div>
     </div>
 </div>
