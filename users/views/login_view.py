@@ -13,8 +13,6 @@ def login_view(request):
                 request.POST._mutable = True
                 request.POST['username'] = username
 
-    print(request.POST)
-
     return login(request)
 
 
