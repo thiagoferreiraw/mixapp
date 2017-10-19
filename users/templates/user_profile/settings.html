@@ -3,14 +3,18 @@
 {% block content %}
 <div class="card white">
     <div class="card-content">
-        <span class="card-title">Settings</span>
+        <span class="card-title">Verify your profile using facebook</span>
         {% if facebook_login %}
-            <p>Connected as <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/"
-                               target="_blank">{{ facebook_login.extra_data.id }}</a></p>
+            <div class="card-panel blue darken-4 white-text">You are connected to facebook as
+            <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/"
+                               target="_blank">{{ facebook_login.extra_data.id }}</a>
+
+            </div>
             {% if can_disconnect %}
                 <form method="post" action="{% url 'social:disconnect' 'facebook' %}">
                     {% csrf_token %}
-                    <button type="submit">Disconnect from Facebook</button>
+
+                    <button type="submit" class="btn btn-flat red-text white ">Disconnect from Facebook</button>
                 </form>
             {% else %}
                 <button type="button" disabled>Disconnect from Facebook</button>
@@ -18,7 +22,7 @@
                     your account before disconnecting from Facebook.</p>
             {% endif %}
         {% else %}
-            <a href="{% url 'social:begin' 'facebook' %}">Connect to Facebook</a>
+            <a href="{% url 'social:begin' 'facebook' %}" class="btn blue darken-4">Connect to Facebook</a>
         {% endif %}
     </div>
 </div>
