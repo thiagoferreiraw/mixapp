@@ -52,6 +52,7 @@ class UserSignupView(View):
                 password=form.cleaned_data.get('password1')
             )
             login(request, user)
+
             return redirect(self.redirect_to)
 
 
