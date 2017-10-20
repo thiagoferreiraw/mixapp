@@ -25,6 +25,9 @@ li.usermenu-active a{font-weight:600;}
 nav{
     height: 70px;
 }
+nav ul a{
+    color: #000;
+}
 nav .button-collapse i {
     color: #000;
 }
