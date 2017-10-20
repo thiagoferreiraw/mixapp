@@ -1,47 +1,49 @@
 {% load static %}
 <header>
-    <nav class="indigo darken-4" role="navigation">
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="/" class="brand-logo">
-                Brigid MIXs
-            </a>
-            <ul class="right hide-on-med-and-down">
-                {% if user.is_authenticated %}
-                <li><a class="dropdown-button" href="#!" data-activates="dropdown1">
-                    <i class="material-icons left">person</i>
-                    <strong>{{ user.username|truncatechars:15 }}</strong>
+    <div class="navbar-fixed">
+        <nav class="indigo white" role="navigation">
+            <div class="nav-wrapper container">
+                <a id="logo-container" href="/" class="brand-logo">
+                    <img src="http://www.brigidmixs.org/uploads/1/4/4/3/14432394/published/website-logo-final-png_1.png?1492466309">
+                </a>
+                <ul class="right hide-on-med-and-down">
+                    {% if user.is_authenticated %}
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1">
+                        <i class="material-icons left">person</i>
+                        <strong>{{ user.username|truncatechars:15 }}</strong>
 
-                    <i class="material-icons right">arrow_drop_down</i></a>
-                    <!-- Dropdown Structure -->
-                    <ul id="dropdown1" class="dropdown-content">
-                        {% if user.is_authenticated %}
-                            <li><a href="{% url 'edit_profile' %}">Profile</a></li>
-                            <li><a href="{% url 'logout' %}">Logout</a></li>
-                        {% endif %}
-                    </ul>
-                </li>
-                {% else %}
-                    <li>
-                        <a href="{% url 'login' %}"class="waves-effect waves-light btn yellow accent-4">
-                            <i class="material-icons left">lock</i> Members
-                        </a>
+                        <i class="material-icons right">arrow_drop_down</i></a>
+                        <!-- Dropdown Structure -->
+                        <ul id="dropdown1" class="dropdown-content">
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'edit_profile' %}">Profile</a></li>
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                            {% endif %}
+                        </ul>
                     </li>
-                {% endif %}
-            </ul>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'login' %}"class="waves-effect waves-light btn yellow accent-4">
+                                <i class="material-icons left">lock</i> Members
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
 
-            <ul id="nav-mobile" class="side-nav">
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'edit_profile' %}">Profile</a></li>
-                    <li><a href="{% url 'logout' %}">Logout</a></li>
-                {% else %}
-                    <li>
-                        <a href="{% url 'login' %}"class="waves-effect waves-light btn yellow accent-4">
-                            <i class="material-icons left">lock</i>Members
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-        </div>
-    </nav>
+                <ul id="nav-mobile" class="side-nav">
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'edit_profile' %}">Profile</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'login' %}"class="waves-effect waves-light btn yellow accent-4">
+                                <i class="material-icons left">lock</i>Members
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+            </div>
+        </nav>
+    </div>
 </header>
