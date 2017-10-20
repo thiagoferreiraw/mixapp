@@ -12,7 +12,8 @@ class UserInvitationView(View):
 
     def get(self, request):
         form = UserInvitationForm()
-        return render(request, self.template_name, {'form': form})
+        invitations = SignupInvitation.objects.filter(invited_by=request.user)
+        return render(request, self.template_name, {'invitations': invitations, 'form': form})
 
     def post(self, request):
         form = UserInvitationForm(request.POST)
