@@ -17,3 +17,90 @@
 }
 
 li.usermenu-active a{font-weight:600;}
+
+
+.brand-logo img{
+    width: 200px;
+}
+nav{
+    height: 70px;
+}
+nav .button-collapse i {
+    color: #000;
+}
+
+*{
+	font-family:Roboto,sans-serif;
+}
+
+.row{
+	margin-bottom: 0;
+}
+
+
+.parallax-container {
+    position: relative;
+    overflow: hidden;
+    z-index: -10;
+    height: 400px;
+}
+
+
+/* Banner section */
+.banner{
+    
+}
+.banner img{
+    width: 100%;
+}
+
+
+/* Info section */
+.info{
+	color: #fff;
+	background-color: #292E50;
+	font-size: 30px;
+}
+
+.info button{
+	margin-top: 8%;
+	margin-bottom: 8%;
+}
+
+
+/* Card details */
+.card-title{
+	color: #000;
+}
+.card-title a {
+    color: #fff;
+    font-size: 30px;
+    width: 100%;
+    background-color: #000;
+    padding: 5px;
+}
+.card .card-content p{
+	color: #000;
+}
+.card .card-image img {
+    display: block;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 260px;
+    background-image: cover;
+}
+.category a {
+    color: #fff;
+    font-size: 20px;
+    width: 100%;
+    background-color: #2962FF;
+    padding: 5px;
+    right: 0;
+}
+
+
