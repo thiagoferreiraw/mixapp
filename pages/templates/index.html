@@ -3,9 +3,55 @@
 
 {% block content %}
 
-    <div class="parallax-container">
-      <div class="parallax"><img src="{% static "img/homepage.jpg" %}"></div>
+    <div class="container banner">
+        <!-- <div class="parallax"><img src="{% static "img/homepage.jpg" %}"> -->
+        <img src="http://www.booking-brazil.com/wp-content/uploads/2017/06/avenida-paulista-1-1200x400.jpg">
+        </div>
     </div>
+
+	<!-- Info section -->
+    <div class="row info center-align">
+        <div class="col s12 m6">
+			<h4 style="margin-top:9%;">Do you want to share ...? Join us!</h4>
+        </div>
+        <div class="col s12 m6">
+			<button style="background-color: #2E3357;">I want to host a mix!</button>
+        </div>
+    </div>
+
+	<!-- Events section -->
+	<div class="row">
+		<div class="col s12 blue darken-1">
+			<h3 class="white-text">Featured events</h3>
+		</div>
+        <div class="col s12 m4 " style="background: url('http://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/France/Paris/paris-attractions-xlarge.jpg');background-size: cover;background-position: center center; height: 250px;">
+        	<span class="card-title"><a href="#">Paris</a></span>
+        	<span class="category"><a href="#">Food</a></span>
+        </div>
+        <div class="col s12 m4 " style="background: url('https://cdn.getyourguide.com/niwziy2l9cvz/3Nl5nGC5fq2CQ0O42awIwq/0cff0ba6cc53c2e0f9c153e820fcc8d0/berlin-Brandenburg-Gate-1112x630.jpg');background-size: cover;background-position: center center; height: 250px;">
+        	<span class="card-title"><a href="#">Berlin</a></span>
+        	<span class="category"><a href="#">Music</a></span>
+
+        </div>
+        <div class="col s12 m4 " style="background: url('http://www.riofan.com.br/wp-content/uploads/2015/11/Fotos-do-Rio-de-Janeiro.jpg'); background-size: cover; background-position: center center; height: 250px;">
+        	<span class="card-title"><a href="#">Rio de Janeiro</a></span>
+        	<span class="category"><a href="#">Photography</a></span>
+
+        </div>
+    </div>
+
+    
+    <!-- <div class="row">
+    	<div class="col s12" style="background-color: #1565C0;">
+			<h3 class="white-text">The project</h3>
+		</div>
+        <div class="col s12 m6 ">
+
+        </div>
+        <div class="col s12 m6 ">
+			
+        </div>
+    </div> -->
 
 
 {% endblock %}
