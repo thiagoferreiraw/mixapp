@@ -17,3 +17,216 @@
 }
 
 li.usermenu-active a{font-weight:600;}
+
+
+.brand-logo img{
+    width: 200px;
+}
+nav{
+    height: 70px;
+}
+nav ul a{
+    color: #000;
+}
+nav .button-collapse i {
+    color: #000;
+}
+
+*{
+	font-family:Roboto,sans-serif;
+}
+
+.row{
+	margin-bottom: 0;
+}
+
+
+.parallax-container {
+    position: relative;
+    overflow: hidden;
+    z-index: -10;
+    height: 400px;
+}
+
+
+/* Banner section */
+.banner{
+    width: 100%;
+}
+/*.banner img{
+    width: 100%;
+}*/
+.slider .indicators .indicator-item.active{
+    background: #0404FF;
+}
+
+/* Events section */
+.events{
+    padding: 30px;
+}
+.events h3{
+    font-size:60px;
+}
+.events hr.down-title{
+    width:20%; 
+    float: left; 
+    margin-bottom: 2%;
+}
+.events .card p.city-name{
+    background-color:#1976D2; 
+    padding:2px; 
+    color #fff;
+}
+
+
+/* Info section */
+.info{
+    color: #000;
+    /*background-color: #292E50;*/
+    background-color: #fff;
+    font-size: 30px;
+    margin-top: 3%;
+}
+
+.info button{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    color: #2E3357;
+}
+.info h4{
+    padding-top: 6%; 
+    padding-bottom: 6%;
+}
+.info p{
+    margin-top:10px; 
+    font-size: 25px; 
+    margin-top: 30px; 
+    color: #0D47A1;
+}
+
+/* Image section */
+.image-section img{
+    width: 100%;
+}
+
+.learn p{
+    font-size:32px; 
+    padding: 20px; 
+    color: #0D47A1;
+}
+
+.learn button{
+    color: #fff; 
+    margin-bottom: 20px;
+}
+
+.about{
+    padding: 30px;
+}
+.about h3{
+    font-size:60px;
+}
+.about hr{
+    width:20%; 
+    float: left; 
+    margin-bottom: 2%;
+}
+.about img{
+    opacity: 0.3; 
+    width: 100%;
+}
+.about p{
+    font-size: 20px; 
+    color: #000; 
+    text-align: justify;
+}
+.about button{
+    color: #fff;
+}
+
+
+/* Icons section */
+.icons {
+    padding: 30px;
+}
+
+/* Partner section */
+.partner{
+    padding-bottom: 20px;
+}
+.partner h4{
+    margin-top:10px;
+}
+.partner p{
+    font-size: 18px;
+    color: #000; 
+    text-align: justify; 
+    padding:20px; 
+    padding-bottom: 5px;
+    padding-top: 5px;"
+}
+.partner .paragraph{
+    font-size:18px; 
+    text-align: left; 
+    padding: 20px; 
+    padding-top:0;
+}
+.partner button{
+    color: #fff;
+}
+/* Card details */
+.card a{
+    /*color: #1976D2;*/
+    color: #fff;
+}
+.card p{
+
+}
+.card-title{
+	color: #000;
+}
+.card-title a {
+    color: #fff;
+    font-size: 30px;
+    width: 100%;
+    background-color: #000;
+    padding: 5px;
+}
+.card .card-content p{
+	color: #000;
+}
+.card .card-image img {
+    display: block;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 260px;
+    background-image: cover;
+}
+.category a {
+    color: #fff;
+    font-size: 20px;
+    width: 100%;
+    background-color: #2962FF;
+    padding: 5px;
+    right: 0;
+}
+
+
+/* Footer */
+
+footer a{
+    color: #fff;
+}
+
+footer i{
+    color#fff;
+}
+
+i.fa{
+    margin-top: 10px;
+}
