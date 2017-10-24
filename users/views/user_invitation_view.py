@@ -22,7 +22,9 @@ class UserInvitationView(View):
             invited.email_invited = form.data['email_invited']
             invited.invited_by = User.objects.get(pk=request.user.id)
             invited.save()
-            link = '/signup/{}'.format(invited.hash)
+            protocol = 'https' if request.is_secure() else 'http'
+            domain = request.META['HTTP_HOST']
+            link = '{0}://{1}/signup/{2}'.format(protocol, domain, invited.hash)
             send_mail('Brigid Mixs Invitation', 'Congrats for invitation!\nSignup in: {0}'.format(link), 'noreply@brigidmixs.org', [invited.email_invited])
             messages.success(request, "Invitation sent successfully!")
 
