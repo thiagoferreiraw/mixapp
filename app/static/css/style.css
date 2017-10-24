@@ -19,6 +19,7 @@
 li.usermenu-active a{font-weight:600;}
 
 
+/* Menu section */
 .brand-logo img{
     width: 200px;
 }
@@ -38,8 +39,12 @@ nav .button-collapse i {
 
 .row{
 	margin-bottom: 0;
+    margin-right: 0;
+    margin-left: 0; 
 }
-
+.container{
+    width: 85%;
+}
 
 .parallax-container {
     position: relative;
@@ -62,7 +67,7 @@ nav .button-collapse i {
 
 /* Events section */
 .events{
-    padding: 30px;
+    /*padding: 30px;*/
 }
 .events h3{
     font-size:60px;
@@ -98,9 +103,9 @@ nav .button-collapse i {
     padding-bottom: 6%;
 }
 .info p{
-    margin-top:10px; 
     font-size: 25px; 
-    margin-top: 30px; 
+    margin-top: 0px; 
+    margin-bottom: 0;
     color: #0D47A1;
 }
 
@@ -228,5 +233,5 @@ footer i{
 }
 
 i.fa{
-    margin-top: 10px;
+    margin: 10px;
 }
