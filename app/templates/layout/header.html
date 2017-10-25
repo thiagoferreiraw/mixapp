@@ -7,6 +7,7 @@
     <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="screen,projection"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://use.fontawesome.com/db56ec0679.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body class="grey lighten-5">
@@ -14,7 +15,7 @@
 
 <div class="container">
 {% for message in messages %}
-    <p style="color: white; font-weight: 600; padding:5px" class="{% if message.tags == 'success' %}green darken-4{% elif message.tags == 'error' %}red darken-4{% endif %}">
+    <p style="color: white; font-weight: 600; padding:5px" class="{% if message.tags == 'success' %}green darken-4{% elif 'error' in message.tags %}red darken-4{% endif %}">
         {{ message }}
     </p>
 {% endfor %}

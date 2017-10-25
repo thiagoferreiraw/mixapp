@@ -1,14 +1,36 @@
 {% load static %}
-<footer >
+<footer class="container white center-align">
+	<!-- Icons section -->
+    <div class="row center-align" style="padding:0;">
+        <div class="col s12 blue darken-4">
+        	<a href=""><i class="fa fa-facebook-square fa-2x"></i></a>
+        	<a href=""><i class="fa fa-instagram fa-2x"></i></a>
+        	<a href=""><i class="fa fa-twitter fa-2x"></i></a>
+        	<a href=""><i class="fa fa-envelope-o fa-2x"></i></a>
+        	<a href=""><i class="fa fa-google-plus fa-2x"></i></a>
+        </div>
+    </div>
 </footer>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjK5WU8daOGnAjlwjy6wKdDzxS2hHeLEs" async defer></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-<Script>
+<script type="text/javascript" src="{% static 'js/mapa.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/init.js' %}"></script>
+
+
+
+<script type="text/javascript">
+
+
     $(document).ready(function(){
       $('.parallax').parallax();
       $('select').material_select(); //Makes the select buttons work
       $(".button-collapse").sideNav(); // Makes the side nav work
     });
-</Script>
+
+        $(document).ready(function(){
+              $('.slider').slider({full_width: true});
+        });
+</script>
 </body>
 </html>
