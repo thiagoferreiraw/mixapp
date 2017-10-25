@@ -21,6 +21,7 @@ class SignupInvitation(models.Model):
 
     def __str__(self):
         return self.email_invited + " - " + str(self.hash)
+        
 
 class SignupWaitingList(models.Model):
     email = models.EmailField(unique=True)
