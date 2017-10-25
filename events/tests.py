@@ -1,7 +1,7 @@
 from django.test import TestCase, RequestFactory
 from mock import patch
 from events.services import PlacesService, PlacesGateway
-from events.models import User, City, Event
+from events.models import User, City, Event, Category, Location
 from datetime import datetime
 from events.views.create_event_view import EventCreateView, EventCreateForm
 import time
@@ -41,13 +41,21 @@ class EventsServiceTests(TestCase):
     def test_get_and_save_city(self):
         service = PlacesService()
         city = service.get_and_save_city("ChIJHcKsaB2_uZQROerevgruuDc", "en")
-        from events.models import City
         self.assertTrue(City.objects.all())
 
+    def test_get_and_save_location(self):
+        service = PlacesService()
+        location = service.get_and_save_location("ChIJHcKsaB2_uZQROerevgruuDc", "en")
+        self.assertTrue(Location.objects.all())
 
 class EventsFormsTests(TestCase):
     def test_insert_form_success(self):
         user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        category = Category(description="Category", name="Cat")
+        category.save()
+
+        city = PlacesService().get_and_save_city("ChIJHcKsaB2_uZQROerevgruuDc", "en")
+        location = PlacesService().get_and_save_location("ChIJHcKsaB2_uZQROerevgruuDc", "en")
 
         form = EventCreateForm({
             'name': "Test Event",
@@ -55,14 +63,15 @@ class EventsFormsTests(TestCase):
             'duration': 1,
             'date': datetime.now(),
             'time': "15:00",
-            'city': None,
+            'city': city.id,
             'location': "Location",
             'expected_costs': 200,
-            'hosted_by': None
+            'hosted_by': None,
+            'location': location.id
         })
 
         self.assertTrue(form.is_valid())
-        event = form.save(user_id=user.id, google_city_id="ChIJN1t_tDeuEmsRUsoyG83frY4")
+        event = form.save(user_id=user.id)
 
         created_city = City.objects.filter(place_id="ChIJN1t_tDeuEmsRUsoyG83frY4").first()
 
@@ -71,8 +80,8 @@ class EventsFormsTests(TestCase):
         self.assertEquals(event.duration, 1)
         self.assertTrue(event.date is not None)
         self.assertTrue(event.time is not None)
-        self.assertEquals(event.city.id, created_city.id)
-        self.assertEquals(event.location,"Location" )
+        self.assertEquals(event.city.id, city.id)
+        self.assertEquals(event.location.id, location.id )
         self.assertEquals(event.expected_costs, 200)
         self.assertEquals(event.hosted_by_id, user.id )
 
@@ -111,7 +120,10 @@ class EventsViewsTests(TestCase):
             'time': "15:00",
             'location': "Location",
             'expected_costs': 200,
-            'place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4'
+            'city': None,
+            'location': None,
+            'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+            'location_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4'
         })
 
         request.user = user

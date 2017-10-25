@@ -1,5 +1,5 @@
 from events.gateways import PlacesGateway
-from events.models import City
+from events.models import City, Location
 
 
 class PlacesService():
@@ -30,3 +30,18 @@ class PlacesService():
 
         return city
 
+    def get_and_save_location(self, place_id, language):
+        location = Location.objects.filter(place_id=place_id)
+        if len(location) == 0:
+            google_place = self.get_place_by_id(place_id, language)
+            location = Location(
+                place_id=google_place['place_id'],
+                description=google_place['formatted_address'],
+                latitude=google_place['geometry']['location']['lat'],
+                longitude = google_place['geometry']['location']['lng']
+            )
+            location.save()
+        else:
+            location = location.first()
+
+        return location

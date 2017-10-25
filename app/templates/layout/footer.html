@@ -11,10 +11,8 @@
         </div>
     </div>
 </footer>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjK5WU8daOGnAjlwjy6wKdDzxS2hHeLEs" async defer></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/mapa.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/init.js' %}"></script>
 
 
@@ -47,11 +45,10 @@
         ampmclickable: true, // make AM PM clickable
         aftershow: function(){} //Function for after opening timepicker
       });
+
+      $('.slider').slider({full_width: true});
     });
 
-        $(document).ready(function(){
-              $('.slider').slider({full_width: true});
-        });
 </script>
 </body>
 </html>
