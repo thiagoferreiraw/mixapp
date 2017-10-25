@@ -38,7 +38,9 @@ INSTALLED_APPS = [
 
     'users',
 
-    'pages'
+    'pages',
+
+    'events'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -60,6 +62,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'app/../templates'),
                  os.path.join(BASE_DIR, 'users/../../users/templates'),
+                 os.path.join(BASE_DIR, 'events/../../events/templates'),
                  os.path.join(BASE_DIR, 'pages/../../pages/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -147,3 +150,4 @@ ALLOWED_HOSTS = ['staging-mixs-app.herokuapp.com','localhost', '127.0.0.1']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+TOKEN_GOOGLE_PLACES_API = os.getenv("TOKEN_GOOGLE_PLACES_API" )

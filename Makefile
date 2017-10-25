@@ -27,7 +27,7 @@ clean:
 .PHONY: clean
 
 tests: clean
-	coverage run --include=users/*,app/*,pages/*  manage.py test --settings=app.config.test_settings
+	coverage run --include=users/*,app/*,pages/*,events/*  manage.py test --settings=app.config.test_settings
 	coverage report -m
 
 run:
