@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm as UserCreationFormDjango, User, UsernameField
 from django.forms import ModelForm, MultipleChoiceField
-from users.models import Category, UserCategory, SignupWaitingList
+from users.models import Category, UserCategory, SignupInvitation, SignupWaitingList
 from django.conf import settings
 from django.core import validators
 
@@ -66,6 +66,12 @@ class UserEditProfileForm(ModelForm):
             user_category.save()
 
         return user
+
+
+class UserInvitationForm(ModelForm):
+    class Meta:
+        model = SignupInvitation
+        fields = ('email_invited',)
 
 
 class UserWaitingListForm(ModelForm):

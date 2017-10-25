@@ -1,9 +1,10 @@
 from django.test import TestCase, RequestFactory
+from django.core.urlresolvers import reverse
 from mock import patch
 from users.models import *
 from users.models import User
 from users.views.user_edit_profile_view import UserEditProfileView
-from users.forms import UserCreationForm, UserWaitingListForm
+from users.forms import UserCreationForm, UserWaitingListForm, UserInvitationForm
 
 
 class UserTests(TestCase):
@@ -249,3 +250,13 @@ class UserTests(TestCase):
             "email": "tester@test.com",
         })
         self.assertEqual(response.status_code, 200)
+
+    def test_form_send_invitation_valid(self):
+        form = UserInvitationForm({'email_invited': 'tester@mail.com'})
+        self.assertTrue(form.is_valid())
+        send_invitation = form.save()
+        self.assertEqual(send_invitation.email_invited, 'tester@mail.com')
+
+    def test_form_send_invitation_invalid(self):
+        form = UserInvitationForm({'email_invited': ''})
+        self.assertFalse(form.is_valid())   
