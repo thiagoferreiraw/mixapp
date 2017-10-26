@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.contrib import messages
 from events.forms import EventCreateForm
 from django.views.generic import View
 from events.services import PlacesService
+
 
 class EventCreateView(View):
     template_name = "events/create_event.html"
@@ -12,7 +12,19 @@ class EventCreateView(View):
         self.places_service = PlacesService()
 
     def get(self, request):
-        form = EventCreateForm()
+
+        form = EventCreateForm(initial={
+            'name': "Test Event",
+            'description': "test Event",
+            'duration': 1,
+            'date': "2017-01-01",
+            'time': "15:00",
+            'expected_costs': 200,
+            #'hosted_by': user.id,
+            'category': 1,
+            #'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+            #'location_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4'
+        })
         return render(request, self.template_name,
                       {'form': form, 'user': request.user})
 
@@ -20,13 +32,15 @@ class EventCreateView(View):
 
         request = self.get_city(request)
         request = self.get_location(request)
+        request.POST['hosted_by'] = request.user.id
 
         form = EventCreateForm(request.POST)
         if form.is_valid():
-            form.save(user_id=request.user.id)
-            messages.success(request,'Event created successfully')
+            form.save()
+            messages.success(request, 'Event created successfully')
             return redirect("create_event")
 
+        print(form.errors)
         return render(request, self.template_name,
                       {'form': form,  'user': request.user})
 

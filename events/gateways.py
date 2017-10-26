@@ -19,7 +19,6 @@ class PlacesGateway():
     def get_places_by_id(self, place_id, language):
         url = self.base_url + "maps/api/place/details/json"
         query = {
-            'types': "(cities)",
             'placeid': place_id,
             'language': language,
             'key': settings.TOKEN_GOOGLE_PLACES_API
