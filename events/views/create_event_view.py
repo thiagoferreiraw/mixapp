@@ -13,18 +13,7 @@ class EventCreateView(View):
 
     def get(self, request):
 
-        form = EventCreateForm(initial={
-            'name': "Test Event",
-            'description': "test Event",
-            'duration': 1,
-            'date': "2017-01-01",
-            'time': "15:00",
-            'expected_costs': 200,
-            #'hosted_by': user.id,
-            'category': 1,
-            #'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-            #'location_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4'
-        })
+        form = EventCreateForm()
         return render(request, self.template_name,
                       {'form': form, 'user': request.user})
 
