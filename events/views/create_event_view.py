@@ -40,7 +40,6 @@ class EventCreateView(View):
             messages.success(request, 'Event created successfully')
             return redirect("create_event")
 
-        print(form.errors)
         return render(request, self.template_name,
                       {'form': form,  'user': request.user})
 
