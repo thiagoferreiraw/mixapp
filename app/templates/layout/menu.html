@@ -8,6 +8,7 @@
                 </a>
                 <ul class="right hide-on-med-and-down">
                     {% if user.is_authenticated %}
+                    <li><a href="{% url "create_event" %}">Host a MIXs</a></li>
                     <li><a class="dropdown-button" href="#!" data-activates="dropdown1">
                         <i class="material-icons left">person</i>
                         <strong>{{ user.username|truncatechars:15 }}</strong>

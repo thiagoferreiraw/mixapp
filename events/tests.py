@@ -4,7 +4,6 @@ from events.services import PlacesService, PlacesGateway
 from events.models import User, City, Event, Category, Location
 from datetime import datetime
 from events.views.create_event_view import EventCreateView, EventCreateForm
-import time
 
 
 class EventsGatewayTests(TestCase):
@@ -41,14 +40,17 @@ class EventsServiceTests(TestCase):
     def test_get_and_save_city(self):
         service = PlacesService()
         city = service.get_and_save_city("ChIJHcKsaB2_uZQROerevgruuDc", "en")
-        self.assertTrue(City.objects.all())
+        self.assertIsNotNone(city.description)
 
     def test_get_and_save_location(self):
         service = PlacesService()
         location = service.get_and_save_location("ChIJHcKsaB2_uZQROerevgruuDc", "en")
-        self.assertTrue(Location.objects.all())
+        self.assertIsNotNone(location.description)
+
 
 class EventsFormsTests(TestCase):
+    fixtures = ['categories.json']
+
     def test_insert_form_success(self):
         user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
         category = Category(description="Category", name="Cat")
@@ -61,19 +63,18 @@ class EventsFormsTests(TestCase):
             'name': "Test Event",
             'description': "test Event",
             'duration': 1,
-            'date': datetime.now(),
+            'date': datetime.now().strftime("%Y-%m-%d"),
             'time': "15:00",
             'city': city.id,
-            'location': "Location",
+            'location': location.id,
             'expected_costs': 200,
-            'hosted_by': None,
-            'location': location.id
+            'hosted_by': user.id,
+            'category': Category.objects.get(pk=1).id
         })
 
         self.assertTrue(form.is_valid())
-        event = form.save(user_id=user.id)
 
-        created_city = City.objects.filter(place_id="ChIJN1t_tDeuEmsRUsoyG83frY4").first()
+        event = form.save()
 
         self.assertEquals(event.name, "Test Event")
         self.assertEquals(event.description, "test Event")
@@ -81,9 +82,9 @@ class EventsFormsTests(TestCase):
         self.assertTrue(event.date is not None)
         self.assertTrue(event.time is not None)
         self.assertEquals(event.city.id, city.id)
-        self.assertEquals(event.location.id, location.id )
+        self.assertEquals(event.location.id, location.id)
         self.assertEquals(event.expected_costs, 200)
-        self.assertEquals(event.hosted_by_id, user.id )
+        self.assertEquals(event.hosted_by_id, user.id)
 
     def test_insert_form_fail(self):
         user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
@@ -91,7 +92,7 @@ class EventsFormsTests(TestCase):
         form = EventCreateForm({
             'description': "test Event",
             'duration': 1,
-            'date_time': datetime.now(),
+            'date_time': datetime.now().strftime("%Y-%m-%d"),
             'city': None,
             'location': "Location",
             'expected_costs': 200,
@@ -104,6 +105,8 @@ class EventsFormsTests(TestCase):
 
 
 class EventsViewsTests(TestCase):
+    fixtures = ['categories.json']
+
     def setUp(self):
         self.factory = RequestFactory()
 
@@ -113,15 +116,14 @@ class EventsViewsTests(TestCase):
         Event.objects.all().delete()
 
         request = self.factory.post("/events/new/", {
-            "name": "Test",
+            'name': "Test Event",
             'description': "test Event",
             'duration': 1,
-            'date': "2017-01-01",
+            'date': datetime.now().strftime("%Y-%m-%d"),
             'time': "15:00",
-            'location': "Location",
             'expected_costs': 200,
-            'city': None,
-            'location': None,
+            'hosted_by': user.id,
+            'category': Category.objects.get(pk=1).id,
             'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
             'location_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4'
         })
@@ -137,4 +139,13 @@ class EventsViewsTests(TestCase):
         self.assertEquals(event.description, "test Event")
 
         self.assertTrue(mock_messages.called)
+
+        city = City.objects.filter(place_id="ChIJN1t_tDeuEmsRUsoyG83frY4").first()
+
+        self.assertIsNotNone(city.description)
+
+        location = Location.objects.filter(place_id="ChIJN1t_tDeuEmsRUsoyG83frY4").first()
+
+        self.assertIsNotNone(location.description)
+
 
