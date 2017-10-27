@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from users.forms import UserWaitingListForm
 from django.views.generic import View
@@ -16,5 +16,6 @@ class UserWaitingListView(View):
         if form.is_valid():
             form.save()
             messages.success(request, "You've been added to our waiting list! Looking forward to see you again :)")
+            return redirect("waiting_list")
 
         return render(request, self.template_name, {'form': form})

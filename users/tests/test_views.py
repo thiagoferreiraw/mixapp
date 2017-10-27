@@ -1,21 +1,52 @@
 from django.test import TestCase, RequestFactory
-from django.core.urlresolvers import reverse
 from mock import patch
 from users.models import *
-from users.models import User
 from users.views.user_edit_profile_view import UserEditProfileView
-from users.forms import UserCreationForm, UserWaitingListForm, UserInvitationForm
 
 
-class UserTests(TestCase):
+class TestViews(TestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
         User.objects.all().delete()
 
-    def test_login_page(self):
-        resp = self.client.get('/login/')
-        self.assertEqual(resp.status_code, 200)
+    def test_get_login_page(self):
+        response = self.client.get('/login/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_post_login_page(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        response = self.client.post('/login/', {'username': "tester", 'password': 'top_secret'})
+        self.assertRedirects(response, "/home/")
+
+    def test_post_login_page_with_email(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        response = self.client.post('/login/', {'username': "tester@tester.com", 'password': 'top_secret'})
+        self.assertRedirects(response, "/home/")
+
+    def test_post_login_page_with_failing_email(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        response = self.client.post('/login/', {'username': "wrong_email@tester.com", 'password': 'top_secret'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['form'].errors)
+
+    def test_get_settings_page(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        self.client.login(username='tester', password='top_secret')
+        response = self.client.get('/user/settings/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_settings_password(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        self.client.login(username='tester', password='top_secret')
+        response = self.client.get('/user/settings/password/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_post_settings_password(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        self.client.login(username='tester', password='top_secret')
+        response = self.client.post('/user/settings/password/', {'old_password': 'top_secret', 'new_password1': 'top_secret2', 'new_password2': 'top_secret2'} )
+        self.assertRedirects(response, '/user/settings/password/')
 
     def test_access_to_home_page_without_logged_user(self):
         response = self.client.get('/home/', follow=True)
@@ -27,6 +58,12 @@ class UserTests(TestCase):
 
     def test_get_access_signup_page_with_invalid_invitation(self):
         response = self.client.get('/signup/invalid_hash/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['hash'], 'invalid_hash')
+
+    def test_post_signup_page_with_invalid_invitation(self):
+        response = self.client.post('/signup/invalid_hash/', {})
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['hash'], 'invalid_hash')
@@ -163,20 +200,27 @@ class UserTests(TestCase):
         chosen_categories = UserCategory.objects.filter(user_id_id=created_user.id)
         self.assertEqual(len(chosen_categories), 2)
 
+    def test_get_edit_user_profile(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+
+        self.client.login(username="tester", password="top_secret")
+
+        response = self.client.get("/user/profile/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("form" in response.context)
+
     @patch('django.contrib.messages.success', return_value=True)
     def test_post_edit_profile_success(self, mock_messages):
-        user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
 
-        request = self.factory.post("/user/profile/", {
+        self.client.login(username="tester", password="top_secret")
+
+        response = self.client.post("/user/profile/", {
             "email": "invited@test.com",
             "first_name": "Tester changed1",
             "last_name": "Tester changed2",
         })
-
-        request.user = user
-
-        user_edit_view = UserEditProfileView()
-        response = user_edit_view.post(request)
 
         self.assertEqual(response.url, "/user/profile/")
         self.assertEqual(response.status_code, 302)
@@ -187,76 +231,73 @@ class UserTests(TestCase):
         self.assertEqual(updated_user.last_name, "Tester changed2")
         self.assertTrue(mock_messages.called)
 
-    def test_form_user_signup_duplicated_email(self):
-        user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+    @patch('django.contrib.messages.success', return_value=True)
+    def test_post_edit_profile_failed(self, mock_messages):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
 
-        form = UserCreationForm({
-            "email": "tester@tester.com",
-            "first_name": "Tester1",
-            "last_name": "Tester2",
-            "password1": "123",
-            "password2": "123",
-            "username": "testerx",
-        })
+        self.client.login(username="tester", password="top_secret")
 
-        self.assertFalse(form.is_valid())
-        self.assertTrue("email" in form.errors)
+        response = self.client.post("/user/profile/", {})
 
-    def test_form_user_signup_duplicated_username(self):
-        user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("first_name" in response.context['form'].errors)
 
-        form = UserCreationForm({
-            "email": "tester@tester.com",
-            "first_name": "Tester1",
-            "last_name": "Tester2",
-            "password1": "123",
-            "password2": "123",
-            "username": "tester",
-        })
-
-        self.assertFalse(form.is_valid())
-        self.assertTrue("username" in form.errors)
-
-    def test_form_user_waiting_list(self):
-        form = UserWaitingListForm({'email': 'tester@mail.com'})
-        self.assertTrue(form.is_valid())
-        waiting_list = form.save()
-        self.assertEqual(waiting_list.email, 'tester@mail.com')
-
-    def test_form_user_waiting_list_duplicated(self):
-        SignupWaitingList(email="tester@mail.com").save()
-
-        form = UserWaitingListForm({'email': 'tester@mail.com'})
-        self.assertFalse(form.is_valid())
-        self.assertTrue("email" in form.errors)
-
-    def test_post_waiting_list(self):
+    def test_post_waiting_list_success(self):
         response = self.client.post('/waiting_list/', {
             "email": "tester@test.com",
         })
 
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/waiting_list/")
+
+        signup_waiting_list = SignupWaitingList.objects.filter(email="tester@test.com")
+
+        self.assertTrue(len(signup_waiting_list) > 0)
+
+    def test_post_waiting_list_fail(self):
+        response = self.client.post('/waiting_list/', {})
+
         self.assertEqual(response.status_code, 200)
-
-        signup_waiting_list = SignupWaitingList.objects.filter(email="tester@test.com").first()
-
-        self.assertTrue(signup_waiting_list)
-
-        context_messages = list(response.context['messages'])
-
-        self.assertEqual(len(context_messages), 1)
+        self.assertTrue("email" in response.context['form'].errors)
 
     def test_get_waiting_list(self):
-        response = self.client.post('/waiting_list/', {
-            "email": "tester@test.com",
-        })
+        response = self.client.get('/waiting_list/')
         self.assertEqual(response.status_code, 200)
 
-    def test_form_send_invitation_valid(self):
-        form = UserInvitationForm({'email_invited': 'tester@mail.com'})
-        self.assertTrue(form.is_valid())
-        send_invitation = form.save()
-        self.assertEqual(send_invitation.email_invited, 'tester@mail.com')
+    def test_post_send_invitation_success(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
 
-    def test_form_send_invitation_invalid(self):
-        form = UserInvitationForm({'email_invited': ''})
-        self.assertFalse(form.is_valid())   
+        self.client.login(username="tester", password="top_secret")
+
+        response = self.client.post('/user/send_invitation/', {
+            "email_invited": "invited@test.com",
+        })
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/user/send_invitation/")
+
+        invitation_created = SignupInvitation.objects.filter(email_invited="invited@test.com")
+
+        self.assertTrue(len(invitation_created) > 0)
+
+    def test_post_send_invitation_fail(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+
+        self.client.login(username="tester", password="top_secret")
+
+        response = self.client.post('/user/send_invitation/', {})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("email_invited" in response.context['form'].errors)
+
+    def test_get_send_invitation(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+
+        self.client.login(username="tester", password="top_secret")
+
+        response = self.client.get('/user/send_invitation/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("invitations" in response.context)
+
+
