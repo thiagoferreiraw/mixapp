@@ -19,8 +19,7 @@ class UserEditProfileView(View):
         form = UserEditProfileForm(request.POST, instance=User.objects.get(pk=request.user.id))
         if form.is_valid():
             form.save(chosen_categories=request.POST.getlist('categories'))
-            messages.success(request,
-                             'Your profile has been updated successfully'.format(request.POST['first_name']))
+            messages.success(request, 'Your profile has been updated successfully')
             return redirect("edit_profile")
 
         categories = self._get_user_categories(request.user.id)

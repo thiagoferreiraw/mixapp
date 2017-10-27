@@ -14,6 +14,7 @@ These instructions will get you a copy of the project up and running on your loc
 - Postgres
 - Virtual env wrapper
 - Facebook APP
+- Google maps api key
 
 ### Installing
 
@@ -26,6 +27,7 @@ docker run -d --name djangoweb --net host -e POSTGRES_PASSWORD=root postgres
 ```
 $ export SOCIAL_AUTH_FACEBOOK_KEY="YOU_APP_KEY"
 $ export SOCIAL_AUTH_FACEBOOK_SECRET="YOU_APP_SECRET"
+$ export TOKEN_GOOGLE_PLACES_API="YOUR_KEY"
 ```
 - Run `make setup` to install the dependencies
 - Run `make migrate` to apply the models on database
@@ -52,4 +54,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Thiago Ferreira ** - *Initial work* - [Github](https://github.com/thiagoferreiraw)
+* **Thiago Ferreira ** - *Backend, Frontend* - [Github](https://github.com/thiagoferreiraw)
+* **Felipe Souza ** - *Backend* - [Github](https://github.com/fnscoder)
+* **Raian De Andrades ** - *Frontend* - [Github](https://github.com/RaianAndrades)
+* **Vinícius Souza ** - *Frontend* - [Github](https://github.com/euvinisouza)
