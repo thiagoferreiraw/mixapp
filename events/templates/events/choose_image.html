@@ -1,0 +1,48 @@
+{% extends 'base_member.html' %}
+{% load static %}
+
+{% block content %}
+<div class="blue darken-4" style="height: 150px;"></div>
+<div class="container" style="min-height: 80vh; margin-top: -100px;">
+    <div class="row">
+        <div class="col s12 ">
+            <div class="card white z-depth-3">
+                <div class="card-content">
+                    <span class="card-title">{{ form_action }} Choose a image for your event</span>
+                    <form method="post">
+
+                        {% for image in images %}
+                            <a href="#" class="choose-image" data-image="{{ image.id }}">
+                                <img style="width: 300px" src="{{ image.url }}"/>
+                            </a>
+
+                        {% empty %}
+
+                        {% endfor %}
+
+
+
+
+                        <button type="submit" class="waves-effect waves-light btn blue darken-4">
+                            Submit <i class="material-icons right">send</i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+    $(".choose-image").click(function () {
+        window.location = "{{ request.path }}?image_id="+$(this).data("image");
+        //$.post("{{ request.path }}", { image_id: $(this).data("image")} );
+    });
+});
+function choose_image(image_id){
+
+}
+
+</script>
+{% endblock %}

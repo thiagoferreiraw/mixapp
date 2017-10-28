@@ -7,7 +7,7 @@ from events.services import PlacesService
 
 
 class EventEditView(View):
-    template_name = "events/create_event.html"
+    template_name = "events/event_form.html"
     form_action = "Edit"
 
     def __init__(self):
@@ -18,7 +18,7 @@ class EventEditView(View):
 
         form = EventForm(instance=event)
         return render(request, self.template_name,
-                      {'form': form, 'user': request.user, 'form_action': self.form_action})
+                      {'form': form, 'user': request.user, 'form_action': self.form_action, 'event_id': event_id})
 
     def post(self, request, event_id):
         event = self.get_event_or_404(event_id, request.user.id)
@@ -31,10 +31,10 @@ class EventEditView(View):
         if form.is_valid():
             form.save()
             messages.success(request, 'Event updated successfully')
-            return redirect("edit_event", event_id=event_id)
+            return redirect("edit_event_image", event.id)
 
         return render(request, self.template_name,
-                      {'form': form,  'user': request.user, 'form_action': self.form_action})
+                      {'form': form,  'user': request.user, 'form_action': self.form_action, 'event_id': event_id})
 
     @staticmethod
     def get_event_or_404(event_id, user_id):

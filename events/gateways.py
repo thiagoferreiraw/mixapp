@@ -2,7 +2,7 @@ import requests
 from django.conf import settings
 
 
-class PlacesGateway():
+class PlacesGateway:
     base_url = "https://maps.googleapis.com/"
 
     def get_cities_by_description(self, description, language):
@@ -25,3 +25,4 @@ class PlacesGateway():
         }
 
         return requests.get(url, params=query)
+
