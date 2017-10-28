@@ -1,8 +1,8 @@
 from django.test import TestCase
 from events.services import PlacesService
-from events.models import User, Category
+from events.models import User, Category, Event
 from datetime import datetime
-from events.views.create_event_view import EventCreateForm
+from events.views.create_event_view import EventForm
 
 
 class EventsFormsTests(TestCase):
@@ -10,13 +10,11 @@ class EventsFormsTests(TestCase):
 
     def test_insert_form_success(self):
         user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
-        category = Category(description="Category", name="Cat")
-        category.save()
 
         city = PlacesService().get_and_save_city("ChIJHcKsaB2_uZQROerevgruuDc", "en")
         location = PlacesService().get_and_save_location("ChIJHcKsaB2_uZQROerevgruuDc", "en")
 
-        form = EventCreateForm({
+        form = EventForm({
             'name': "Test Event",
             'description': "test Event",
             'duration': 1,
@@ -26,7 +24,7 @@ class EventsFormsTests(TestCase):
             'location': location.id,
             'expected_costs': 200,
             'hosted_by': user.id,
-            'category': Category.objects.get(pk=1).id
+            'category': 1
         })
 
         self.assertTrue(form.is_valid())
@@ -46,7 +44,7 @@ class EventsFormsTests(TestCase):
     def test_insert_form_fail(self):
         user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
 
-        form = EventCreateForm({
+        form = EventForm({
             'description': "test Event",
             'duration': 1,
             'date_time': datetime.now().strftime("%Y-%m-%d"),
@@ -59,3 +57,35 @@ class EventsFormsTests(TestCase):
 
         self.assertFalse(form.is_valid())
         self.assertTrue("name" in form.errors)
+
+    def test_edit_form_success(self):
+        user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+
+        city = PlacesService().get_and_save_city("ChIJHcKsaB2_uZQROerevgruuDc", "en")
+        location = PlacesService().get_and_save_location("ChIJHcKsaB2_uZQROerevgruuDc", "en")
+
+        event = Event(name="Test Event", description="test Event", duration=1,
+                      date=datetime.now().strftime("%Y-%m-%d"), time="15:00",
+                      city_id=city.id, location_id=location.id, expected_costs=200,
+                      hosted_by_id=user.id, category_id=1)
+        event.save()
+
+        form = EventForm({
+            'name': "Edit Test Event",
+            'description': "test Event",
+            'duration': 1,
+            'date': datetime.now().strftime("%Y-%m-%d"),
+            'time': "15:00",
+            'city': city.id,
+            'location': location.id,
+            'expected_costs': 200,
+            'hosted_by': user.id,
+            'category': 1
+        }, instance=event)
+
+        self.assertTrue(form.is_valid())
+        self.assertTrue(form.save())
+
+
+
+

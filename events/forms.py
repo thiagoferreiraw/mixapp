@@ -1,8 +1,12 @@
-from django.forms import ModelForm,  HiddenInput, Textarea
+from django.forms import ModelForm,  HiddenInput, Textarea, CharField, TextInput
 from events.models import Category, Event, City
-from events.services import PlacesService
 
-class EventCreateForm(ModelForm):
+
+class EventForm(ModelForm):
+    autocomplete_city = CharField(required=False, widget=TextInput(attrs={'id': 'autocomplete_city'}))
+    autocomplete_location = CharField(required=False, widget=TextInput(attrs={'id': 'autocomplete_location'}))
+    city_place_id = CharField(required=False, widget=HiddenInput(attrs={'id': 'city_place_id'}))
+    location_place_id = CharField(required=False, widget=HiddenInput(attrs={'id': 'location_place_id'}))
 
     def __init__(self, *args, **kwargs):
         super(ModelForm, self).__init__(*args, **kwargs)
@@ -16,8 +20,14 @@ class EventCreateForm(ModelForm):
         self.fields['date'].widget.attrs['class'] = "datepicker"
         self.fields['time'].widget.attrs['class'] = "timepicker"
 
+        if self.instance.pk:
+            self.fields['autocomplete_city'].initial = self.instance.city.description
+            self.fields['autocomplete_location'].initial = self.instance.location.description
+            self.fields['city_place_id'].initial = self.instance.city.place_id
+            self.fields['location_place_id'].initial = self.instance.location.place_id
+
     class Meta:
         model = Event
-        fields = ('name', 'description', 'duration', 'date', 'time', 'city', 'category', 'location', 'expected_costs', 'hosted_by')
-
-
+        fields = ('name', 'description', 'duration',
+                  'date', 'time', 'city', 'category',
+                  'location', 'expected_costs', 'hosted_by')
