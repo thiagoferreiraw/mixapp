@@ -1,7 +1,7 @@
 from django.test import TestCase, RequestFactory
 from mock import patch
 from events.models import User, City, Event, Category, Location
-from datetime import datetime
+from datetime import datetime, timedelta
 from events.views.create_event_view import EventCreateView
 
 
@@ -20,8 +20,8 @@ class EventsViewsTests(TestCase):
             'name': "Test Event",
             'description': "test Event",
             'duration': 1,
-            'date': datetime.now().strftime("%Y-%m-%d"),
-            'time': "15:00",
+            'date': (datetime.now() + timedelta(days=1)).date(),
+            'time': datetime.now().time(),
             'expected_costs': 200,
             'hosted_by': user.id,
             'category': Category.objects.get(pk=1).id,

@@ -80,7 +80,7 @@ nav .button-collapse i {
 .events .card p.city-name{
     background-color:#1976D2; 
     padding:2px; 
-    color #fff;
+    color: #fff;
 }
 
 
@@ -229,9 +229,11 @@ footer a{
 }
 
 footer i{
-    color#fff;
+    color: #fff;
 }
 
 i.fa{
     margin: 10px;
 }
+
+

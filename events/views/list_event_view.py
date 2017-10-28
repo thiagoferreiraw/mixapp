@@ -7,6 +7,6 @@ class EventListView(View):
     template_name = "events/list_events.html"
 
     def get(self, request):
-        events = Event.objects.filter(hosted_by_id=request.user.id)
+        events = Event.objects.filter(hosted_by_id=request.user.id).order_by("-id")
         return render(request, self.template_name, {'event_list': events})
 

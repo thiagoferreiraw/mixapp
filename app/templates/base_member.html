@@ -1,0 +1,107 @@
+{#{% include "layout/header.html" %}#}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mixs App</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style_members.css' %}" media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjK5WU8daOGnAjlwjy6wKdDzxS2hHeLEs&libraries=places" async defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body class="grey lighten-5">
+    <header>
+{#      <nav class="top-nav">#}
+{#        <div class="container">#}
+{#          <div class="nav-wrapper"><a class="page-title">Grid</a></div>#}
+{#        </div>#}
+{#      </nav>#}
+      <div class="container">
+          <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a>
+      </div>
+      <ul id="nav-mobile" class="side-nav fixed" style="overflow: auto; transform: translateX(0px);">
+        <li class="">
+            <a id="logo-container" href="/" class="brand-logo" style="display: block; height: auto; padding: 8px">
+                <img src="http://www.brigidmixs.org/uploads/1/4/4/3/14432394/published/website-logo-final-png_1.png?1492466309" style="width: 100%">
+            </a>
+        </li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold active"><a class="collapsible-header {% if "events" in request.path %} active {% endif %} waves-effect waves-teal">My events</a>
+              <div class="collapsible-body" style="display: block;">
+                <ul>
+                  <li class="{% if request.path == "/events/list/" %} active {% endif %}"><a href="{% url 'list_events' %}">List my events</a></li>
+                  <li class="{% if request.path == "/events/new/" %} active {% endif %}"><a href="{% url 'create_event' %}">Create new event</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold active"><a class="collapsible-header {% if "user" in request.path %} active {% endif %} waves-effect waves-teal">My account</a>
+              <div class="collapsible-body" style="display: block;">
+                <ul>
+                  <li class="{% if request.path == "/user/profile/" %} active {% endif %}"><a href="{% url 'edit_profile' %}">Edit profile</a></li>
+                  <li class="{% if request.path == "/user/settings/password/" %} active {% endif %}"><a href="{% url 'password' %}">Change password</a></li>
+                  <li class="{% if request.path == "/user/settings/" %} active {% endif %}"><a href="{% url 'settings' %}">Settings</a></li>
+                  <li class="{% if request.path == "/user/send_invitation/" %} active {% endif %}"><a href="{% url 'send_invitation' %}">Invite people</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+
+<main>
+    {% for message in messages %}
+        <p style="color: white; font-weight: 600; padding:20px;margin:0" class="{% if message.tags == 'success' %}green darken-4{% elif 'error' in message.tags %}red darken-4{% endif %}">
+            {{ message }}
+        </p>
+    {% endfor %}
+
+    {% block content %}
+    {% endblock %}
+</main>
+
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+      $('select').material_select(); //Makes the select buttons work
+      $(".button-collapse").sideNav(); // Makes the side nav work
+      $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        today: 'Today',
+        clear: 'Clear',
+        close: 'Ok',
+        closeOnSelect: false, // Close upon selecting a date,
+          format: 'yyyy-mm-dd'
+        });
+
+      $('.timepicker').pickatime({
+        default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+        fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+        twelvehour: false, // Use AM/PM or 24-hour format
+        donetext: 'OK', // text for done-button
+        cleartext: 'Clear', // text for clear-button
+        canceltext: 'Cancel', // Text for cancel-button
+        autoclose: false, // automatic close timepicker
+        ampmclickable: true, // make AM PM clickable
+        aftershow: function(){} //Function for after opening timepicker
+      });
+
+        $('.collapsible').collapsible();
+
+
+    });
+
+</script>
+</body>
+</html>

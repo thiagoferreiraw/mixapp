@@ -1,51 +1,58 @@
-{% extends 'user_profile/base_user_profile.html' %}
+{% extends 'base_member.html' %}
 {% load static %}
 
 {% block content %}
-    <div class="card white">
-        <div class="card-content">
-            <span class="card-title">Send invitation</span>
-            <form method="post">
-                {% csrf_token %}
-                <span class="red-text">{{ form.non_field_errors }}</span>
-                <div class="input-field ">
-                  <label for="{{ form.email_invited.id_for_label }}">email</label>
-                  {{ form.email_invited }}
-                    <span class="red-text">{{ form.email.errors }}</span>
+<div class="blue darken-4" style="height: 150px;"></div>
+<div class="container" style="min-height: 80vh; margin-top: -100px;">
+    <div class="row">
+        <div class="col s12 ">
+            <div class="card white">
+                <div class="card-content">
+                    <span class="card-title">Send invitation</span>
+                    <form method="post">
+                        {% csrf_token %}
+                        <span class="red-text">{{ form.non_field_errors }}</span>
+                        <div class="input-field ">
+                          <label for="{{ form.email_invited.id_for_label }}">email</label>
+                          {{ form.email_invited }}
+                            <span class="red-text">{{ form.email.errors }}</span>
+                        </div>
+                        <button type="submit" class="waves-effect waves-light btn   blue darken-4">
+                            Send <i class="material-icons right">send</i>
+                        </button>
+                    </form>
                 </div>
-                <button type="submit" class="waves-effect waves-light btn   orange darken-4">
-                    Send <i class="material-icons right">send</i>
-                </button>
-            </form>
+                {% if invitations %}
+                <div class="card-content">
+                    <span class="card-title">Sent invitations</span>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Email invited</th>
+                                <th>SignUp</th>
+                                <th>Created at</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for invite in invitations %}
+                                <tr>
+                                    <td>{{ invite.email_invited }}</td>
+                                    <td>{% if invite.user_has_signup %}
+                                            Yes
+                                        {% else %}
+                                            No
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ invite.created_at }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
         </div>
-        {% if invitations %}
-        <div class="card-content">
-            <span class="card-title">Sent invitations</span>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Email invited</th>
-                        <th>SignUp</th>
-                        <th>Created at</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for invite in invitations %}
-                        <tr>
-                            <td>{{ invite.email_invited }}</td>
-                            <td>{% if invite.user_has_signup %}
-                                    Yes
-                                {% else %}
-                                    No
-                                {% endif %}
-                            </td>
-                            <td>{{ invite.created_at }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% endif %}
     </div>
+</div>
 {% endblock %}

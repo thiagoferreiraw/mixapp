@@ -1,48 +1,55 @@
-{% extends 'user_profile/base_user_profile.html' %}
+{% extends 'base_member.html' %}
 {% load static %}
 
 {% block content %}
-<div class="card white">
-    <div class="card-content">
-        <span class="card-title">Edit your profile</span>
-        <form method="post">
-            {% csrf_token %}
-            <span class="red-text">{{ form.non_field_errors }}</span>
-            <div class="row">
-                <div class="input-field col s6">
-                    <label for="{{ form.first_name.id_for_label }}">First name</label>
-                    {{ form.first_name }}
-                    <span class="red-text">{{ form.first_name.errors }}</span>
-                </div>
-                <div class="input-field col s6">
-                    <label for="{{ form.last_name.id_for_label }}">Last name</label>
-                    {{ form.last_name }}
-                    <span class="red-text">{{ form.last_name.errors }}</span>
+<div class="blue darken-4" style="height: 150px;"></div>
+<div class="container" style="min-height: 80vh; margin-top: -100px;">
+    <div class="row">
+        <div class="col s12 ">
+            <div class="card white">
+                <div class="card-content">
+                    <span class="card-title">Edit your profile</span>
+                    <form method="post">
+                        {% csrf_token %}
+                        <span class="red-text">{{ form.non_field_errors }}</span>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <label for="{{ form.first_name.id_for_label }}">First name</label>
+                                {{ form.first_name }}
+                                <span class="red-text">{{ form.first_name.errors }}</span>
+                            </div>
+                            <div class="input-field col s6">
+                                <label for="{{ form.last_name.id_for_label }}">Last name</label>
+                                {{ form.last_name }}
+                                <span class="red-text">{{ form.last_name.errors }}</span>
+                            </div>
+                        </div>
+                       <div class="input-field ">
+                            <select multiple name="categories">
+                              <option value="" disabled selected>Choose your interests</option>
+                                {% for c in categories %}
+                                    <option {{ c.selected|yesno:"selected,'',''" }} value="{{ c.id }}">{{ c.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <label>Tell us what you are interested in</label>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <label for="{{ form.email.id_for_label }}">Email</label>
+                                <input disabled="true" type="text" value="{{ user.email }}"/>
+                            </div>
+                            <div class="input-field col s6">
+                                <label for="{{ form.username.id_for_label }}">Username</label>
+                                <input disabled="true" type="text" value="{{ user.username }}"/>
+                            </div>
+                        </div>
+                        <button type="submit" class="waves-effect waves-light btn  blue darken-4">
+                            Save profile <i class="material-icons right">send</i>
+                        </button>
+                    </form>
                 </div>
             </div>
-           <div class="input-field ">
-                <select multiple name="categories">
-                  <option value="" disabled selected>Choose your interests</option>
-                    {% for c in categories %}
-                        <option {{ c.selected|yesno:"selected,'',''" }} value="{{ c.id }}">{{ c.name }}</option>
-                    {% endfor %}
-                </select>
-                <label>Tell us what you are interested in</label>
-            </div>
-            <div class="row">
-                <div class="input-field col s6">
-                    <label for="{{ form.email.id_for_label }}">Email</label>
-                    <input disabled="true" type="text" value="{{ user.email }}"/>
-                </div>
-                <div class="input-field col s6">
-                    <label for="{{ form.username.id_for_label }}">Username</label>
-                    <input disabled="true" type="text" value="{{ user.username }}"/>
-                </div>
-            </div>
-            <button type="submit" class="waves-effect waves-light btn  orange darken-4">
-                Save profile <i class="material-icons right">send</i>
-            </button>
-        </form>
+        </div>
     </div>
 </div>
 {% endblock %}
