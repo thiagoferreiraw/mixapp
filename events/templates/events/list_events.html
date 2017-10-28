@@ -12,11 +12,12 @@
                     <ul>
                         {% for event in event_list %}
                             <li>
+                                <p>ID: {{ event.id}}</p>
                                 <p>Name: {{ event.name }}</p>
                                 <p>City: {{ event.city.description }}</p>
                                 <p>Location: {{ event.location.description }}</p>
                                 <p>Category: {{ event.category.description }}</p>
-
+                                <p><a href="{% url "edit_event" event.id %}" class="btn">Edit</a></p>
                             </li>
 
                             <hr/>

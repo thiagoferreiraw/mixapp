@@ -8,7 +8,7 @@
         <div class="col s12 m8 offset-m2 ">
             <div class="card white z-depth-3">
                 <div class="card-content">
-                    <span class="card-title">Create Event</span>
+                    <span class="card-title">{{ form_action }} Event</span>
                     <form method="post">
                         {% csrf_token %}
 
@@ -72,8 +72,8 @@
                         <div class="row">
                             <div class="input-field col m6 ">
                                 <i class="material-icons prefix">map</i>
-                                <input id="city_google_maps" type="text" required/>
-                                <input id="city_place_id" name="city_place_id" type="hidden"/>
+                                 {{ form.autocomplete_city }}
+                                 {{ form.city_place_id }}
                                 <label for="city_google_maps">City </label>
                                 <span class="red-text">{{ form.city.errors }}</span>
                             </div>
@@ -81,8 +81,8 @@
 
                             <div class="input-field col m6">
                                 <i class="material-icons prefix">place</i>
-                                <input id="location_google_maps" type="text" size="50" required/>
-                                <input id="location_place_id" name="location_place_id" type="hidden"/>
+                                 {{ form.autocomplete_location }}
+                                 {{ form.location_place_id }}
                                 <label for="location_place_id">Location or address</label>
                                 <span class="red-text">{{ form.location.errors }}</span>
                             </div>
@@ -101,8 +101,8 @@
 <script>
 
     function init_autocomplete_maps() {
-        var city_input = document.getElementById('city_google_maps');
-        var location_input = document.getElementById('location_google_maps');
+        var city_input = document.getElementById('autocomplete_city');
+        var location_input = document.getElementById('autocomplete_location');
         var autocomplete_city = new google.maps.places.Autocomplete(city_input, {types: ['(cities)']});
         var autocomplete_location = new google.maps.places.Autocomplete(location_input, {strictBounds: true});
 
@@ -111,15 +111,17 @@
             if (!place.geometry) {
                 // User entered the name of a Place that was not suggested and
                 // pressed the Enter key, or the Place Details request failed.
-                document.getElementById("city_place_id").setAttribute('value', "");
+                $("#city_place_id").val("")
                 window.alert("No details available for input: '" + place.name + "'");
                 return;
             }
-            console.log(place);
-            document.getElementById("city_place_id").setAttribute('value', place.place_id);
+
+            $("#city_place_id").val(place.place_id)
+            $("#location_place_id").val("")
+            $("#autocomplete_location").val("")
+
 
             autocomplete_location.setBounds(place.geometry.viewport);
-            //autocomplete_location.setComponentRestrictions({locality: place.place_id})
 
         });
 
@@ -133,7 +135,7 @@
                 return;
             }
 
-            document.getElementById("location_place_id").setAttribute('value', place.place_id);
+            $("#location_place_id").val(place.place_id)
         });
     }
 
