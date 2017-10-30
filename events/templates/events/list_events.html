@@ -23,7 +23,8 @@
                         </ul>
                     </div>
                      <div class="card-action">
-                      <p><a href="{% url "edit_event" event.id %}" class="btn waves-effect waves-light blue ">Edit</a></p>
+                      <a href="{% url "edit_event" event.id %}" class="btn waves-effect waves-light blue ">Edit</a>
+                      <a href="{% url "edit_event_image" event.id %}" class="btn waves-effect waves-light blue ">Change image</a>
                     </div>
                 </div>
             </div>
