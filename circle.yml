@@ -19,7 +19,7 @@ dependencies:
 
 deployment:
   staging:
-    branch: 'master'
+    branch: 'dev'
     commands:
       - |
         cat >~/.netrc <<EOF
