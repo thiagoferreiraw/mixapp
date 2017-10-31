@@ -10,16 +10,19 @@
                 <div class="card-content">
                     <span class="card-title">{{ form_action }} Choose a image for your event</span>
                     <form method="post">
+                        <div class="row">
+                            {% for image in images %}
+                                <div class="col s12 m4">
+                                    <a href="#" class="choose-image crop-choose-img" data-image="{{ image.id }}">
+                                        <img class="" src="{{ image.url }}"/>
+                                    </a>
+                                </div>
 
-                        {% for image in images %}
-                            <a href="#" class="choose-image" data-image="{{ image.id }}">
-                                <img style="width: 300px" src="{{ image.url }}"/>
-                            </a>
 
-                        {% empty %}
+                            {% empty %}
 
-                        {% endfor %}
-
+                            {% endfor %}
+                        </div>
                     </form>
                 </div>
             </div>
