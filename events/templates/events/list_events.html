@@ -4,38 +4,39 @@
 {% block content %}
 <div class="blue darken-4" style="height: 150px;"></div>
 <div class="container" style="min-height: 80vh; margin-top: -100px;">
-    <div class="row">
-        {% for event in event_list %}
-            <div class="col s12 m6">
-                <div class="card white z-depth-3 ">
-                    <div class="card-image">
-                      <img src="{{ event.image_url }}">
-                      <span class="card-title">{{ event.name }}</span>
-                    </div>
-                    <div class="card-content">
-                        <ul>
-                                <li>
-                                    <p><b>City: </b>{{ event.city.description }}</p>
-                                    <p><b>Location:</b> {{ event.location.description }}</p>
-                                    <p><b>Category: </b>{{ event.category.description }}</p>
-
-                                </li>
-                        </ul>
-                    </div>
-                     <div class="card-action">
-                      <a href="{% url "edit_event" event.id %}" class="btn waves-effect waves-light blue ">Edit</a>
-                      <a href="{% url "edit_event_image" event.id %}" class="btn waves-effect waves-light blue ">Change image</a>
-                    </div>
-                </div>
-            </div>
-        {% empty %}
+    {% for event in event_list %}
+        {% cycle '<div class="row">' '' %}
+        <div class="col s12 m6">
             <div class="card white z-depth-3 ">
+                <div class="card-image">
+                  <picture class="crop-event-img">
+                      <img src="{{ event.image_url }}" >
+                  </picture>
+                  <span class="card-title">{{ event.name }}</span>
+                </div>
                 <div class="card-content">
-                    <p>You haven't created any event yet.</p>
+                    <ul>
+                            <li>
+                                <p><b>City: </b>{{ event.city.description }}</p>
+                                <p><b>Location:</b> {{ event.location.description }}</p>
+                                <p><b>Category: </b>{{ event.category.description }}</p>
+
+                            </li>
+                    </ul>
+                </div>
+                 <div class="card-action">
+                  <a href="{% url "edit_event" event.id %}" class="btn waves-effect waves-light blue ">Edit</a>
+                  <a href="{% url "edit_event_image" event.id %}" class="btn waves-effect waves-light blue ">Change image</a>
                 </div>
             </div>
-        {% endfor %}
-
-    </div>
+        </div>
+        {% if forloop.counter|divisibleby:2 or forloop.last %}</div>{% endif %}
+    {% empty %}
+        <div class="card white z-depth-3 ">
+            <div class="card-content">
+                <p>You haven't created any event yet.</p>
+            </div>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}
