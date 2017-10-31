@@ -88,6 +88,8 @@
                             </div>
                         </div>
 
+                        <!--<div id="map" style="height: 200px"></div>-->
+
                         <!--{{ form.errors }}-->
 
                         <button type="submit" class="waves-effect waves-light btn blue darken-4">
@@ -103,12 +105,17 @@
 <script>
 
     function init_autocomplete_maps() {
+        /*var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -33.8688, lng: 151.2195},
+            zoom: 13
+        });*/
+
         var city_input = document.getElementById('autocomplete_city');
         var location_input = document.getElementById('autocomplete_location');
         var autocomplete_city = new google.maps.places.Autocomplete(city_input, {types: ['(cities)']});
         var autocomplete_location = new google.maps.places.Autocomplete(location_input, {strictBounds: true});
 
-        autocomplete_city.addListener('place_changed', function(e) {
+        autocomplete_city.addListener('place_changed', function (e) {
             var place = autocomplete_city.getPlace();
             if (!place.geometry) {
                 // User entered the name of a Place that was not suggested and
@@ -127,7 +134,7 @@
 
         });
 
-        autocomplete_location.addListener('place_changed', function() {
+        autocomplete_location.addListener('place_changed', function () {
             var place = autocomplete_location.getPlace();
             if (!place.geometry) {
                 // User entered the name of a Place that was not suggested and
@@ -136,6 +143,7 @@
                 window.alert("No details available for input: '" + place.name + "'");
                 return;
             }
+            console.log(place.geometry.viewport)
 
             $("#location_place_id").val(place.place_id)
         });
@@ -144,6 +152,7 @@
     google.maps.event.addDomListener(window, 'load', init_autocomplete_maps);
 
     $(document).ready(function(){
+
         // Form validation...
         $('form').submit(function (e) {
 

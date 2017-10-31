@@ -22,7 +22,7 @@
       <div class="container">
           <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a>
       </div>
-      <ul id="nav-mobile" class="side-nav fixed" style="overflow: auto; transform: translateX(0px);">
+      <ul id="nav-mobile" class="side-nav fixed hide-on-small-only" style="overflow: auto; transform: translateX(0px);">
         <li class="">
             <a id="logo-container" href="/" class="brand-logo" style="display: block; height: auto; padding: 8px">
                 <img src="http://www.brigidmixs.org/uploads/1/4/4/3/14432394/published/website-logo-final-png_1.png?1492466309" style="width: 100%">
@@ -97,7 +97,9 @@
         aftershow: function(){} //Function for after opening timepicker
       });
 
-        $('.collapsible').collapsible();
+      $('.collapsible').collapsible();
+
+      $('#nav-mobile').removeClass("hide-on-small-only");
 
 
     });
