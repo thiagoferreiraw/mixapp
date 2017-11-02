@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base_member.html' %}
 {% load static %}
 
 {% block content %}
 <div class="blue darken-4" style="height: 150px;"></div>
 <div class="container" style="min-height: 80vh; margin-top: -100px;">
     <div class="row">
-        <div class="col s12 m8 offset-m2 ">
+        <div class="col s12 ">
             <div class="card white z-depth-3">
                 <div class="card-content">
                     <span class="card-title">{{ form_action }} Event</span>
@@ -21,14 +21,14 @@
                         </div>
 
                         <div class="row">
-                            <div class="input-field col m6">
+                            <div class="input-field col s12 m6">
                                 <i class="material-icons prefix">apps</i>
                               {{ form.category }}
                                 <label for="{{ form.category.id_for_label }}">Category </label>
                               <span class="red-text">{{ form.category.errors }}</span>
                             </div>
 
-                            <div class="input-field col m6">
+                            <div class="input-field col s12 m6">
                                 <i class="material-icons prefix">attach_money</i>
                               {{ form.expected_costs }}
                                 <label for="{{ form.expected_costs.id_for_label }}">Expected costs </label>
@@ -46,21 +46,21 @@
 
 
                         <div class="row">
-                            <div class="input-field col m4">
+                            <div class="input-field col s12 m4">
                                 <i class="material-icons prefix">date_range</i>
                                  {{ form.date }}
                                 <label for="{{ form.date.id_for_label }}">Date</label>
                               <span class="red-text">{{ form.date.errors }}</span>
                             </div>
 
-                            <div class="input-field col m4">
+                            <div class="input-field col s12 m4">
                                 <i class="material-icons prefix">watch_later</i>
                               {{ form.time }}
                                 <label for="{{ form.time.id_for_label }}">Time</label>
                               <span class="red-text">{{ form.time.errors }}</span>
                             </div>
 
-                            <div class="input-field col m4">
+                            <div class="input-field col s12 m4">
                                 <i class="material-icons prefix">timelapse</i>
                               {{ form.duration }}
                                 <label for="{{ form.duration.id_for_label }}">Event Duration in hours </label>
@@ -70,7 +70,7 @@
 
 
                         <div class="row">
-                            <div class="input-field col m6 ">
+                            <div class="input-field col s12 m6 ">
                                 <i class="material-icons prefix">map</i>
                                  {{ form.autocomplete_city }}
                                  {{ form.city_place_id }}
@@ -79,7 +79,7 @@
                             </div>
 
 
-                            <div class="input-field col m6">
+                            <div class="input-field col s12 m6">
                                 <i class="material-icons prefix">place</i>
                                  {{ form.autocomplete_location }}
                                  {{ form.location_place_id }}
@@ -87,6 +87,10 @@
                                 <span class="red-text">{{ form.location.errors }}</span>
                             </div>
                         </div>
+
+                        <!--<div id="map" style="height: 200px"></div>-->
+
+                        <!--{{ form.errors }}-->
 
                         <button type="submit" class="waves-effect waves-light btn blue darken-4">
                             Submit <i class="material-icons right">send</i>
@@ -101,12 +105,17 @@
 <script>
 
     function init_autocomplete_maps() {
+        /*var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -33.8688, lng: 151.2195},
+            zoom: 13
+        });*/
+
         var city_input = document.getElementById('autocomplete_city');
         var location_input = document.getElementById('autocomplete_location');
         var autocomplete_city = new google.maps.places.Autocomplete(city_input, {types: ['(cities)']});
         var autocomplete_location = new google.maps.places.Autocomplete(location_input, {strictBounds: true});
 
-        autocomplete_city.addListener('place_changed', function(e) {
+        autocomplete_city.addListener('place_changed', function (e) {
             var place = autocomplete_city.getPlace();
             if (!place.geometry) {
                 // User entered the name of a Place that was not suggested and
@@ -125,7 +134,7 @@
 
         });
 
-        autocomplete_location.addListener('place_changed', function() {
+        autocomplete_location.addListener('place_changed', function () {
             var place = autocomplete_location.getPlace();
             if (!place.geometry) {
                 // User entered the name of a Place that was not suggested and
@@ -134,6 +143,7 @@
                 window.alert("No details available for input: '" + place.name + "'");
                 return;
             }
+            console.log(place.geometry.viewport)
 
             $("#location_place_id").val(place.place_id)
         });
@@ -142,6 +152,7 @@
     google.maps.event.addDomListener(window, 'load', init_autocomplete_maps);
 
     $(document).ready(function(){
+
         // Form validation...
         $('form').submit(function (e) {
 
@@ -154,7 +165,14 @@
                 return;
             }
 
+        }).bind("keypress", function (e) {
+            if (e.keyCode == 13) {
+                //$("#btnSearch").attr('value');
+                //add more buttons here
+                return false;
+            }
         });
+
     });
 
 </script>

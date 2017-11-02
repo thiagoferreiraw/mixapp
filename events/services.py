@@ -1,5 +1,5 @@
-from events.gateways import PlacesGateway
-from events.models import City, Location
+from events.gateways import PlacesGateway, settings
+from events.models import City, Location, LocationImage
 
 
 class PlacesService:
@@ -20,7 +20,8 @@ class PlacesService:
                 place_id=google_place['place_id'],
                 description=google_place['formatted_address'],
                 latitude=google_place['geometry']['location']['lat'],
-                longitude=google_place['geometry']['location']['lng']
+                longitude=google_place['geometry']['location']['lng'],
+                timezone=google_place['utc_offset'] / 60,
             )
             city.save()
         else:
@@ -36,9 +37,24 @@ class PlacesService:
                 place_id=google_place['place_id'],
                 description=google_place['formatted_address'],
                 latitude=google_place['geometry']['location']['lat'],
-                longitude = google_place['geometry']['location']['lng']
+                longitude=google_place['geometry']['location']['lng'],
+                timezone=google_place['utc_offset'] / 60,
             )
+
             location.save()
+
+            if "photos" in google_place:
+                for photo in google_place['photos']:
+                    LocationImage.objects.create(url="https://maps.googleapis.com/maps/api/place/photo?maxheight={}&photoreference={}&key={}"
+                                                 .format(360, photo['photo_reference'], settings.TOKEN_GOOGLE_PLACES_API), location_id = location.id)
+
+            for heading in [0, 60, 120, 180, 240, 300, 360]:
+                token = settings.TOKEN_GOOGLE_STREET_VIEW_API
+                size = "640x360"
+                coordinates = "{},{}".format(location.latitude, location.longitude)
+                url = "https://maps.googleapis.com/maps/api/streetview?size={}&location={}&heading={}&key={}".format(size, coordinates, heading, token)
+                LocationImage.objects.create(url=url, location_id=location.id)
+
         else:
             location = location.first()
 
