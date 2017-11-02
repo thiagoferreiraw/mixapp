@@ -6,7 +6,7 @@
 <div class="container" style="min-height: 80vh; margin-top: -100px;">
     {% for event in event_list %}
         {% cycle '<div class="row">' '' %}
-        <div class="col s12 m6">
+        <div class="col s12 m8">
             <div class="card white z-depth-3 ">
                 <div class="card-image">
                   <picture class="crop-event-img">
@@ -27,6 +27,7 @@
                  <div class="card-action">
                   <a href="{% url "edit_event" event.id %}" class="btn waves-effect waves-light blue ">Edit</a>
                   <a href="{% url "edit_event_image" event.id %}" class="btn waves-effect waves-light blue ">Change image</a>
+                  <a href="{% url "event_details" event.id %}" class="btn waves-effect waves-light blue ">Details</a>
                 </div>
             </div>
         </div>
