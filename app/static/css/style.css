@@ -150,7 +150,7 @@ nav .button-collapse i {
 }
 
 .about{
-    padding: 30px;
+    /*padding: 30px;*/
 }
 .about h3{
     font-size:60px;
@@ -172,7 +172,11 @@ nav .button-collapse i {
 .about button{
     color: #fff;
 }
-
+.about-left{
+    top: 0;
+    bottom: 0;
+    padding: 15px;
+}
 
 /* Icons section */
 .icons {
