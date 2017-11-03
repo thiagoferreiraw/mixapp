@@ -90,7 +90,8 @@ nav .button-collapse i {
     /*padding: 30px;*/
     /*background: #1976D2;*/
     background: #0D47A1;
-    padding: 5%;
+    padding-top: 30px;
+    padding-bottom: 40px;
 }
 .events h3{
     font-size:50px;
@@ -150,7 +151,8 @@ nav .button-collapse i {
 }
 
 .about{
-    /*padding: 30px;*/
+    padding-top: 60px;
+    padding-bottom: 60px;
 }
 .about h3{
     font-size:60px;
@@ -185,7 +187,8 @@ nav .button-collapse i {
 
 /* Partner section */
 .partner{
-    padding-bottom: 20px;
+    padding-bottom: 50px;
+    padding-top: 50px;
 }
 .partner h4{
     margin-top:10px;
