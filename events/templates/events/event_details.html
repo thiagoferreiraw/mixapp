@@ -49,12 +49,15 @@
 
                         <div class="input-field col s12 m6">
                             <strong>Location: </strong>
-                             {{ event_details.location }}                        
+                             {{ event_details.location }}                         
                         </div>
                     </div>
 
                     <div class="row">
                         <img src="{{ event_details.image_url }}">                            
+                    </div>
+                    <div class="row">
+                        <div id="map" style="height: 200px"></div>
                     </div>
                 </div>
                 <div class="card-action">
@@ -67,4 +70,19 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block map %}
+    var myLatLong = {lat: {{ event_details.location.latitude }}, lng: {{ event_details.location.longitude }}};
+    
+    var map = new google.maps.Map(document.getElementById('map'), {
+          center: myLatLong,
+          zoom: 13
+    });
+
+    var marker = new google.maps.Marker({
+        position: myLatLong,
+        map: map,
+        title: '{{ event_details.location }}'
+    });
 {% endblock %}
