@@ -5,11 +5,12 @@
 
     <!-- Banner section -->
 {#    <div class="container">#}
-          <div class="banner" style="background: url('http://lorempixel.com/1280/400/nightlife/4');background-size: cover;background-position: center center; height: 550px;">
+          <div class="banner" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('{% static "img/map.jpeg" %}');background-size: cover;background-position: center center;">
                 <div class="caption center-align white-text">
                   <h1>CONNECT WITH <span>PEOPLE</span></h1>
                   <a class="btn" style="margin:10px; background-color:#FABE2D;">I WANT TO FIND A MIX</a>
-                  <a class="btn" style="margin:10px; background-color:red;">I WANT TO HOST A MIX</a>
+                  <a class="btn" style="margin:10px; background-color:#0d47a1;">I WANT TO HOST A MIX</a>
                 </div>
           </div>
 {#    </div>#}
@@ -30,7 +31,7 @@
                           <div class="content-text" style="margin-top: -30%; padding: 15px;">
                             <h4 class="white-text text-darken-2">DEC/12</h4>
                             <hr>
-                            <span class="card-title white-text text-darken-2"  style="padding:5px;">Art class</span>
+                            <span class="card-title white-text text-darken-2"  style="padding-bottom:5px;">Art class</span>
                           </div>
 
                         <div class="card-content white" style="margin-top: -4%; padding: 15px;">
@@ -51,7 +52,7 @@
                           <div class="content-text" style="margin-top: -30%; padding: 15px;">
                             <h4 class="white-text text-darken-2">DEC/12</h4>
                             <hr>
-                            <span class="card-title white-text text-darken-2"  style="padding:5px;">Music class</span>
+                            <span class="card-title white-text text-darken-2"  style="padding-bottom:5px;">Music class</span>
                           </div>
 
                         <div class="card-content white"  style="margin-top: -4%; padding: 15px;">
@@ -72,7 +73,7 @@
                           <div class="content-text" style="margin-top: -30%; padding: 15px;">
                             <h4 class="white-text text-darken-2">DEC/12</h4>
                             <hr>
-                            <span class="card-title white-text text-darken-2"  style="padding:5px;">Food class</span>
+                            <span class="card-title white-text text-darken-2"  style="padding-bottom:5px;">Food class</span>
                           </div>
 
                         <div class="card-content white" style="margin-top: -4%;  padding: 15px;">
@@ -90,9 +91,9 @@
     </section>
 
             <!-- Image section -->
-{#    <div class="image-section">#}
-{#        <img src="http://modelo1.taurusmulticanal.com.br/CMS/Modelo02/images/corp.jpg">#}
-{#    </div>#}
+        {#    <div class="image-section">#}
+        {#        <img src="http://modelo1.taurusmulticanal.com.br/CMS/Modelo02/images/corp.jpg">#}
+        {#    </div>#}
 
            <!--  <div class="row center-align learn">
                 <div class="col s12">
@@ -103,9 +104,10 @@
 
 
     <!-- About section -->
-    <div class="white about">
+    <div class="white about" style="background: linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)),
+                url('{% static "img/texture.jpg" %}');background-size: cover;background-position: center center; margin: 20px;">
         <div class="container ">
-            <div class="row  white">
+            <div class="row">
                 <div class="col s12 m4 about-left">
                     <div class="col s12 ">
                         <h3 class="">The Brigid MIXs' Community</h3>
@@ -118,8 +120,8 @@
                <!--  <div class="col s12 m6">
                     <img src="http://www.brigidmixs.org/uploads/1/4/4/3/14432394/copied-10-of-123_orig.jpg">
                 </div> -->
-                <div class="col s12 m8">
-                    <p style="padding:20px;  padding-top:0;">
+                <div class="col s12 m8 white">
+                    <p style="padding:20px;  margin-top:0;">
 
                         Brigid MIXs is testing on three continents, with 22 volunteers in 8 countries. We're soft launching in up to 50 cities by the end of November, and the hard-launch is set for another 500 cities by end of April, 2018. Brigid MIXs' next milestone is 20k active monthly participants, and 100 million in 10 years!<br><br>
 
@@ -127,8 +129,8 @@
 
                         ​Cultural exchange is the seed to cultural progression; help us progress the world's culture!
 
-                        <div class="col s12 center-align">
-                            <button class="waves-effect waves-light btn blue darken-4">Learn how to collaborate</button>
+                        <div class="col s12 center-align" style="margin-bottom: 20px;">
+                            <button class="waves-effect waves-light btn grey">Learn how to collaborate</button>
                         </div>
                     </p>
                 </div>
@@ -168,7 +170,7 @@
     <!-- Partner section-->
     <div class="partner gray">
         <div class="container">
-            <div class="row center-align ">
+            <div class="row center-align" style="padding: 30px;">
                 <div class="col s12 m6" style="padding: 20px;">
                     <h4 class="blue-text text-darken-4">​Strategic Partnerships</h4>
                       <p>
@@ -186,7 +188,7 @@
                         <b>Any other ideas are strongly encouraged and welcomed!</b>
                     </div>
                 </div>
-                <div class="col s12 m6" style="background: url('http://www.brigidmixs.org/uploads/1/4/4/3/14432394/copied-10-of-123_orig.jpg');background-size: cover;background-position: center center; height: 600px;">
+                <div class="col s12 m6" style="background: url('{% static "img/volunteers.jpeg" %}');background-size: cover;background-position: center center; height: 600px; padding: 20px;">
                 </div>
             </div>
         </div>
@@ -200,7 +202,7 @@
                 </div>
                      <div class="col s12">
                         <div class="col m4">
-                            <button class="waves-effect waves-light btn blue darken-4" style="margin-top: 10%;">Contact</button>
+                            <button class="waves-effect waves-light btn blue darken-4" style="margin-top: 5%;">Contact</button>
                         </div>
                         <div class="col m4">
                             <div class="wsite-image wsite-image-border-none ">
@@ -210,7 +212,7 @@
                             </div>
                         </div>
                         <div class="col m4">
-                                <div id="436509819920537698" align="center" style="width: 100%; overflow-y: hidden; margin-top: 10%;" class="wcustomhtml"><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                <div id="436509819920537698" align="center" style="width: 100%; overflow-y: hidden; margin-top: 5%;" class="wcustomhtml"><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                                 <input type="hidden" name="cmd" value="_s-xclick">
                                 <input type="hidden" name="hosted_button_id" value="ARQETEVCWU56W">
                                 <input type="image" src="https://www.paypalobjects.com/en_US/ES/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
