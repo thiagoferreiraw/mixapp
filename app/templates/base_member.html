@@ -49,6 +49,7 @@
                   <li class="{% if request.path == "/user/settings/password/" %} active {% endif %}"><a href="{% url 'password' %}">Change password</a></li>
                   <li class="{% if request.path == "/user/settings/" %} active {% endif %}"><a href="{% url 'settings' %}">Settings</a></li>
                   <li class="{% if request.path == "/user/send_invitation/" %} active {% endif %}"><a href="{% url 'send_invitation' %}">Invite people</a></li>
+                  <li class="{% if request.path == "/logout/" %} active {% endif %}"><a href="{% url 'logout' %}">Logout</a></li>
                 </ul>
               </div>
             </li>
