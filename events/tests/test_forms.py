@@ -26,6 +26,8 @@ class EventsFormsTests(TestCase):
             'time': date_time_form.time(),
             'city': city.id,
             'location': location.id,
+            "location_lat": -33.8688,
+            "location_lng": 151.2195,
             'expected_costs': 200,
             'hosted_by': self.user.id,
             'category': 1
@@ -57,6 +59,8 @@ class EventsFormsTests(TestCase):
             'date': "2017-01-01",
             'time': "15:00",
             'city': city.id,
+            "location_lat": -33.8688,
+            "location_lng": 151.2195,
             'location': location.id,
             'expected_costs': 200,
             'hosted_by': self.user.id,
@@ -80,6 +84,8 @@ class EventsFormsTests(TestCase):
             'date': date_time_form.date(),
             'time': date_time_form.time(),
             'city': city.id,
+            "location_lat": -33.8688,
+            "location_lng": 151.2195,
             'location': location.id,
             'expected_costs': 200,
             'hosted_by': self.user.id,
@@ -96,6 +102,8 @@ class EventsFormsTests(TestCase):
             'date_time': datetime.now().strftime("%Y-%m-%d"),
             'city': None,
             'location': "Location",
+            "location_lat": -33.8688,
+            "location_lng": 151.2195,
             'expected_costs': 200,
             'hosted_by': None,
             'category': []
@@ -111,7 +119,7 @@ class EventsFormsTests(TestCase):
         event = Event(name="Test Event", description="test Event", duration=1,
                       date=datetime.now().date(), time=datetime.now().time(),
                       city_id=city.id, location_id=location.id, expected_costs=200,
-                      hosted_by_id=self.user.id, category_id=1)
+                      hosted_by_id=self.user.id, category_id=1, location_lat=0, location_lng=0)
         event.save()
 
         date_time_form = (datetime.now() + timedelta(days=10))
@@ -123,6 +131,8 @@ class EventsFormsTests(TestCase):
             'date': date_time_form.date(),
             'time': date_time_form.time(),
             'city': city.id,
+            "location_lat": -33.8688,
+            "location_lng": 151.2195,
             'location': location.id,
             'expected_costs': 200,
             'hosted_by': self.user.id,
