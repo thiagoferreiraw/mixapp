@@ -48,17 +48,21 @@ class PlacesService:
                     LocationImage.objects.create(url="https://maps.googleapis.com/maps/api/place/photo?maxheight={}&photoreference={}&key={}"
                                                  .format(360, photo['photo_reference'], settings.TOKEN_GOOGLE_PLACES_API), location_id = location.id)
 
-            for heading in [0, 60, 120, 180, 240, 300, 360]:
-                token = settings.TOKEN_GOOGLE_STREET_VIEW_API
-                size = "640x360"
-                coordinates = "{},{}".format(location.latitude, location.longitude)
-                url = "https://maps.googleapis.com/maps/api/streetview?size={}&location={}&heading={}&key={}".format(size, coordinates, heading, token)
-                LocationImage.objects.create(url=url, location_id=location.id)
-
         else:
             location = location.first()
 
         return location
+
+    def save_images_street_view_for_coordinates(self, location_id, lat, lng):
+        for heading in [0, 60, 120, 180, 240, 300, 360]:
+            token = settings.TOKEN_GOOGLE_STREET_VIEW_API
+            size = "640x360"
+            coordinates = "{},{}".format(lat, lng)
+            url = "https://maps.googleapis.com/maps/api/streetview?size={}&location={}&heading={}&key={}".format(size,
+                                                                                                                 coordinates,
+                                                                                                                 heading,
+                                                                                                                 token)
+            LocationImage.objects.create(url=url, location_id=location_id)
 
     def get_city_for_request(self, request):
         if not (request.POST['city_place_id'] is None or request.POST['city_place_id'] == ""):

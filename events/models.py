@@ -52,6 +52,8 @@ class Event(models.Model):
     datetime = models.DateTimeField()
     city = models.ForeignKey(City)
     location = models.ForeignKey(Location)
+    location_lat = models.FloatField()
+    location_lng = models.FloatField()
     expected_costs = models.FloatField()
     hosted_by = models.ForeignKey(User)
     category = models.ForeignKey(Category)
