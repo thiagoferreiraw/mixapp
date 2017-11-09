@@ -85,14 +85,14 @@ nav .button-collapse i {
     background: #0404FF;
 }
 .slider .indicators {
-    display: none;
+    /*display: none;*/
 }
 
 /* Events section */
 .events{
     /*padding: 30px;*/
-    /*background: #1976D2;*/
     background: #0D47A1;
+    background: #54aee8;
     padding-top: 4%;
     padding-bottom: 4%;
     min-height:50vh;
