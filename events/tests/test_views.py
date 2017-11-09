@@ -72,6 +72,8 @@ class EventDeatailsViewsTests(TestCase):
             'time': datetime.now().time(),
             'expected_costs': 200,
             'hosted_by': user.id,
+            "location_lat": "-33.8688",
+            "location_lng": "151.2195",
             'category': Category.objects.get(pk=1).id,
             'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
             'location_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4'
