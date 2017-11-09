@@ -88,7 +88,12 @@
                             </div>
                         </div>
 
-                        <!--<div id="map" style="height: 200px"></div>-->
+                        <div class="row">
+                            <p class="center-align" style="font-weight: bold; margin-bottom:10px">Choose on the map the exact coordinates to meet</p>
+                            <div id="map" style="height: 250px"></div>
+                            {{ form.location_lat }}
+                            {{ form.location_lng }}
+                        </div>
 
                         <!--{{ form.errors }}-->
 
@@ -105,15 +110,25 @@
 <script>
 
     function init_autocomplete_maps() {
-        /*var map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -33.8688, lng: 151.2195},
+        var initial_coordinates = {lat: {{ form.location_lat.value|default_if_none:"-33.8688" }},
+                                   lng: {{ form.location_lng.value|default_if_none:"151.2195" }}};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: initial_coordinates,
             zoom: 13
-        });*/
+        });
+
+        var marker = new google.maps.Marker({
+          position: initial_coordinates,
+          map: map,
+          title: 'Hello World!'
+        });
 
         var city_input = document.getElementById('autocomplete_city');
         var location_input = document.getElementById('autocomplete_location');
         var autocomplete_city = new google.maps.places.Autocomplete(city_input, {types: ['(cities)']});
         var autocomplete_location = new google.maps.places.Autocomplete(location_input, {strictBounds: true});
+
 
         autocomplete_city.addListener('place_changed', function (e) {
             var place = autocomplete_city.getPlace();
@@ -129,12 +144,15 @@
             $("#location_place_id").val("")
             $("#autocomplete_location").val("")
 
+            marker.setPosition(place.geometry.location);
+            map.setCenter(marker.getPosition());
+            map.setZoom(13)
 
             autocomplete_location.setBounds(place.geometry.viewport);
 
         });
 
-        autocomplete_location.addListener('place_changed', function () {
+        autocomplete_location.addListener('place_changed', function (e) {
             var place = autocomplete_location.getPlace();
             if (!place.geometry) {
                 // User entered the name of a Place that was not suggested and
@@ -143,9 +161,21 @@
                 window.alert("No details available for input: '" + place.name + "'");
                 return;
             }
-            console.log(place.geometry.viewport)
+
+            marker.setPosition(place.geometry.location);
+            map.setCenter(marker.getPosition());
+            map.setZoom(16)
+
+            $("#location_lat").val(place.geometry.location.lat());
+            $("#location_lng").val(place.geometry.location.lng());
 
             $("#location_place_id").val(place.place_id)
+        });
+
+        map.addListener('click', function(e) {
+          marker.setPosition(e.latLng)
+          $("#location_lat").val(e.latLng.lat());
+          $("#location_lng").val(e.latLng.lng());
         });
     }
 

@@ -65,16 +65,19 @@ nav .button-collapse i {
 /* Banner section */
 .banner{
     width: 100%;
+    min-height:50vh;
    /* height: 500px;*/
 }
 .banner .caption{
     opacity:1; 
-    padding: 13%;
+    padding: 15%;
 }
+
 .banner span{
     border: 1px solid #fff; 
     padding: 10px;
 }
+
 /*.banner img{
     width: 100%;
 }*/
@@ -82,15 +85,17 @@ nav .button-collapse i {
     background: #0404FF;
 }
 .slider .indicators {
-    display: none;
+    /*display: none;*/
 }
 
 /* Events section */
 .events{
     /*padding: 30px;*/
-    /*background: #1976D2;*/
     background: #0D47A1;
-    padding: 5%;
+    background: #54aee8;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    min-height:50vh;
 }
 .events h3{
     font-size:50px;
@@ -105,6 +110,13 @@ nav .button-collapse i {
     padding:2px; 
     color: #fff;
     margin: 1px;
+}
+
+@media (min-width: 1400px){
+    .banner .caption{
+        opacity:1; 
+        padding: 20%;
+    }
 }
 
 
@@ -150,10 +162,12 @@ nav .button-collapse i {
 }
 
 .about{
-    padding: 30px;
+    padding-top: 8%;
+    padding-bottom: 8%;
 }
 .about h3{
     font-size:60px;
+    color: gray;
 }
 .about hr{
     width:20%; 
@@ -165,14 +179,24 @@ nav .button-collapse i {
     width: 100%;
 }
 .about p{
-    font-size: 20px; 
+    font-size: 19px; 
     color: #000; 
     text-align: justify;
 }
 .about button{
     color: #fff;
 }
-
+.about-left{
+    top: 0;
+    bottom: 0;
+    padding: 15px;
+}
+@media (max-width: 900px){
+    .about h3{
+        font-size:40px;
+        color: gray;
+    }
+}
 
 /* Icons section */
 .icons {
@@ -181,7 +205,8 @@ nav .button-collapse i {
 
 /* Partner section */
 .partner{
-    padding-bottom: 20px;
+    padding-bottom: 50px;
+    padding-top: 50px;
 }
 .partner h4{
     margin-top:10px;

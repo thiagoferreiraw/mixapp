@@ -41,7 +41,8 @@ class EventForm(ModelForm):
         model = Event
         fields = ('id', 'name', 'description', 'duration',
                   'date', 'time', 'city', 'category',
-                  'location', 'expected_costs', 'hosted_by')
+                  'location', 'expected_costs', 'hosted_by',
+                  'location_lat', 'location_lng')
 
     def set_up_widgets(self):
         self.fields['category'].empty_label = "Select a category"
@@ -50,3 +51,5 @@ class EventForm(ModelForm):
         self.fields['expected_costs'].widget.attrs.update({'min': 0})
         self.fields['date'].widget.attrs['class'] = "datepicker"
         self.fields['time'].widget.attrs['class'] = "timepicker"
+        self.fields['location_lat'].widget = HiddenInput(attrs={'id': 'location_lat'})
+        self.fields['location_lng'].widget = HiddenInput(attrs={'id': 'location_lng'})

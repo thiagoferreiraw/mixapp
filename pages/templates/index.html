@@ -4,190 +4,294 @@
 {% block content %}
 
     <!-- Banner section -->
-    <div class="container">
-          <div class="banner" style="background: url('http://lorempixel.com/1280/400/nightlife/4');background-size: cover;background-position: center center; height: 550px;">
+{#    <div class="container">#}
+          <div class="banner" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('{% static "img/Guides.jpeg" %}');background-size: cover;background-position: center center;">
                 <div class="caption center-align white-text">
                   <h1>CONNECT WITH <span>PEOPLE</span></h1>
                   <a class="btn" style="margin:10px; background-color:#FABE2D;">I WANT TO FIND A MIX</a>
-                  <a class="btn" style="margin:10px; background-color:red;">I WANT TO HOST A MIX</a>
+                  <a class="btn" style="margin:10px; background-color:#0d47a1;">I WANT TO HOST A MIX</a>
                 </div>
           </div>
-    </div>
+{#    </div>#}
 
     <!-- Events section -->
-    <div class="container">
-        <div class="row events">
-            <div class="col s12">
-                <h3 class="white-text text-darken-2">NEXT EVENTS</h3>
-                <hr class="down-title">
-            </div>
-            <div class="col s12 m4">
-                <div class="card  blue darken-4 ">
-              
-                    <div class="card-image waves-effect waves-block waves-light" class="card-image waves-effect waves-block waves-light" style="background: url('http://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/France/Paris/paris-attractions-xlarge.jpg');background-size: cover;background-position: center center; height: 250px; -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,3)), to(rgba(0,0,0,0)))">
-                    </div>
-                      <div class="content-text" style="margin-top: -30%; padding: 15px;">
-                        <h4 class="white-text text-darken-2">DEC/12</h4>
-                        <hr> 
-                        <span class="card-title white-text text-darken-2"  style="padding:5px;">Art class</span>
-                      </div>
+    <section class="events">
+        <div class="container">
+            <div class="row events">
+                <div class="col s12">
+                    <h3 class="white-text text-darken-2">UPCOMING EVENTS</h3>
+                    <hr class="down-title">
+                </div>
+                <div class="col s12 m4">
+                    <div class="card  blue darken-4 ">
 
-                    <div class="card-content white" style="margin-top: -4%; padding: 15px;">
-                        <p class="city-name"><a href="#"><i class="medium material-icons" style="font-size: 15px; padding: 5px;">location_on</i> PARIS</a></p>
-                      <p style="justify">{% lorem 15 w random %}</p>
-                    </div>
-                    <div class="card-reveal">
-                      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                        <div class="card-image waves-effect waves-block waves-light" class="card-image waves-effect waves-block waves-light" style="background: url('http://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/France/Paris/paris-attractions-xlarge.jpg');background-size: cover;background-position: center center; height: 250px; -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,3)), to(rgba(0,0,0,0)))">
+                        </div>
+                          <div class="content-text" style="margin-top: -30%; padding: 15px;">
+                            <h4 class="white-text text-darken-2">DEC/12</h4>
+                            <hr>
+                            <span class="card-title white-text text-darken-2"  style="padding-bottom:5px;">Art MIX</span>
+                          </div>
+
+                        <div class="card-content white" style="margin-top: -4%; padding: 15px;  margin-top: 2px;">
+                            <p class="city-name"><a href="#"><i class="medium material-icons" style="font-size: 15px; padding: 5px;">location_on</i> PARIS</a></p>
+                          <p style="justify">{% lorem 15 w random %}</p>
+                        </div>
+                        <div class="card-reveal">
+                          <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                          <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col s12 m4">
-                <div class="card  blue darken-4 ">
-              
-                    <div class="card-image waves-effect waves-block waves-light" class="card-image waves-effect waves-block waves-light" style="background: url('https://cdn.getyourguide.com/niwziy2l9cvz/3Nl5nGC5fq2CQ0O42awIwq/0cff0ba6cc53c2e0f9c153e820fcc8d0/berlin-Brandenburg-Gate-1112x630.jpg');background-size: cover;background-position: center center; height: 250px; -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,3)), to(rgba(0,0,0,0)))">
-                    </div>
-                      <div class="content-text" style="margin-top: -30%; padding: 15px;">
-                        <h4 class="white-text text-darken-2">DEC/12</h4>
-                        <hr> 
-                        <span class="card-title white-text text-darken-2"  style="padding:5px;">Music class</span>
-                      </div>
+                <div class="col s12 m4">
+                    <div class="card  blue darken-4 ">
 
-                    <div class="card-content white"  style="margin-top: -4%; padding: 15px;">
-                        <p class="city-name"><a href="#"><i class="medium material-icons" style="font-size: 15px; padding: 5px;">location_on</i> BERLIN</a></p>
-                      <p style="justify">{% lorem 15 w random %}</p>
-                    </div>
-                    <div class="card-reveal">
-                      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                        <div class="card-image waves-effect waves-block waves-light" class="card-image waves-effect waves-block waves-light" style="background: url('https://cdn.getyourguide.com/niwziy2l9cvz/3Nl5nGC5fq2CQ0O42awIwq/0cff0ba6cc53c2e0f9c153e820fcc8d0/berlin-Brandenburg-Gate-1112x630.jpg');background-size: cover;background-position: center center; height: 250px; -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,3)), to(rgba(0,0,0,0)))">
+                        </div>
+                          <div class="content-text" style="margin-top: -30%; padding: 15px;">
+                            <h4 class="white-text text-darken-2">DEC/12</h4>
+                            <hr>
+                            <span class="card-title white-text text-darken-2"  style="padding-bottom:5px;">Music MIX</span>
+                          </div>
+
+                        <div class="card-content white"  style="margin-top: -4%; padding: 15px;  margin-top: 2px;">
+                            <p class="city-name"><a href="#"><i class="medium material-icons" style="font-size: 15px; padding: 5px;">location_on</i> BERLIN</a></p>
+                          <p style="justify">{% lorem 15 w random %}</p>
+                        </div>
+                        <div class="card-reveal">
+                          <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                          <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col s12 m4">
-                <div class="card  blue darken-4 ">
-              
-                    <div class="card-image waves-effect waves-block waves-light" class="card-image waves-effect waves-block waves-light" style="background: url('http://www.riofan.com.br/wp-content/uploads/2015/11/Fotos-do-Rio-de-Janeiro.jpg');background-size: cover;background-position: center center; height: 250px; -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,3)), to(rgba(0,0,0,0)))">
-                    </div>
-                      <div class="content-text" style="margin-top: -30%; padding: 15px;">
-                        <h4 class="white-text text-darken-2">DEC/12</h4>
-                        <hr> 
-                        <span class="card-title white-text text-darken-2"  style="padding:5px;">Food class</span>
-                      </div>
+                <div class="col s12 m4">
+                    <div class="card  blue darken-4 ">
 
-                    <div class="card-content white" style="margin-top: -4%;  padding: 15px;">
-                        <p class="city-name"><a href="#"><i class="medium material-icons" style="font-size: 15px; padding: 5px;">location_on</i> RIO DE JANEIRO</a></p>
-                      <p style="justify">{% lorem 15 w random %}</p>
-                    </div>
-                    <div class="card-reveal">
-                      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                        <div class="card-image waves-effect waves-block waves-light" class="card-image waves-effect waves-block waves-light" style="background: url('http://www.riofan.com.br/wp-content/uploads/2015/11/Fotos-do-Rio-de-Janeiro.jpg');background-size: cover;background-position: center center; height: 250px; -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,3)), to(rgba(0,0,0,0)))">
+                        </div>
+                          <div class="content-text" style="margin-top: -30%; padding: 15px;">
+                            <h4 class="white-text text-darken-2">DEC/12</h4>
+                            <hr>
+                            <span class="card-title white-text text-darken-2"  style="padding-bottom:5px;">Food MIX</span>
+                          </div>
+
+                        <div class="card-content white" style="margin-top: -4%;  padding: 15px; margin-top: 2px;">
+                            <p class="city-name"><a href="#"><i class="medium material-icons" style="font-size: 15px; padding: 5px;">location_on</i> RIO DE JANEIRO</a></p>
+                          <p style="justify">{% lorem 15 w random %}</p>
+                        </div>
+                        <div class="card-reveal">
+                          <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                          <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Image section -->
-        <div class="image-section">
-            <img src="http://modelo1.taurusmulticanal.com.br/CMS/Modelo02/images/corp.jpg">
-        </div>
+            <!-- Image section -->
+        {#    <div class="image-section">#}
+        {#        <img src="http://modelo1.taurusmulticanal.com.br/CMS/Modelo02/images/corp.jpg">#}
+        {#    </div>#}
 
-        <div class="row center-align learn">
-            <div class="col s12">
-                <p>We're creating an online community where anyone can host or participate in an activity of their choice, as long as you follow the Brigid MIXs Model​</p>
-                <button class="waves-effect waves-light btn blue darken-4">Learn more</button>
-            </div>
-        </div>
-    </div>
+           <!--  <div class="row center-align learn">
+                <div class="col s12">
+                    <p>We're creating an online community where anyone can host or participate in an activity of their choice, as long as you follow the Brigid MIXs Model​</p>
+                    <button class="waves-effect waves-light btn blue darken-4">Learn more</button>
+                </div>
+            </div> -->
+
 
     <!-- About section -->
-
-    <div class="container">
-        <div class="row about white">
-            <div class="col s12">
-                <h3 class="blue-text text-darken-2">The Brigid MIXs' Community</h3>
-                <h5>Find or host MIX activities in your city or a city you're traveling to!</h5>
-                <hr>
-            </div>
-            <div class="col s12 m6">
-                <img src="http://www.brigidmixs.org/uploads/1/4/4/3/14432394/copied-10-of-123_orig.jpg">
-            </div>
-            <div class="col s12 m6">
-                <p>
-                    
-                    Brigid MIXs is testing on three continents, with 22 volunteers in 8 countries. We're soft launching in up to 50 cities by the end of November, and the hard-launch is set for another 500 cities by end of April, 2018. Brigid MIXs' next milestone is 20k active monthly participants, and 100 million in 10 years!<br><br> 
-
-                    Be an advocate for cultural exchange in your community by participating as a Brigid MIXs' Ambassador or MIX Guide.<br><br> 
-
-                    ​Cultural exchange is the seed to cultural progression; help us progress the world's culture! 
-
-                    <div class="col s12 center-align">
-                        <button class="waves-effect waves-light btn blue darken-4">Learn how to collaborate</button>
+    <div class="white about" style="background: linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)),
+                url('{% static "img/texture.jpg" %}');background-size: cover;background-position: center center; margin: 20px;">
+        <div class="container ">
+            <div class="row">
+                <div class="col s12 m4 about-left">
+                    <div class="col s12 ">
+                        <h3 class="">The Brigid MIXs' Community</h3>
+                        <hr>
                     </div>
-                </p>
+                    <div class="col s12 " style="padding: 20px;">
+                        <h5>Find or host MIX activities in your city or a city you're traveling to!</h5>
+                    </div>
+                </div>
+               <!--  <div class="col s12 m6">
+                    <img src="http://www.brigidmixs.org/uploads/1/4/4/3/14432394/copied-10-of-123_orig.jpg">
+                </div> -->
+                <div class="col s12 m8 white">
+                    <p style="padding:20px;  margin-top:0;">
+
+                        Brigid MIXs is testing on three continents, with 22 volunteers in 8 countries. We're soft launching in up to 50 cities by the end of November, and the hard-launch is set for another 500 cities by end of April, 2018. Brigid MIXs' next milestone is 20k active monthly participants, and 100 million in 10 years!<br><br>
+
+                        Be an advocate for cultural exchange in your community by participating as a Brigid MIXs' Ambassador or MIX Guide.<br><br>
+
+                        ​Cultural exchange is the seed to cultural progression; help us progress the world's culture!
+
+                        <div class="col s12 center-align" style="margin-bottom: 20px;">
+                            <button class="waves-effect waves-light btn grey">Learn how to collaborate</button>
+                        </div>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Icons section -->
-    <div class="container">
-        <div class="row icons  center-align">
-            <div class="col s12 m1">
-              
+    <div class="icons orange accent-4" style="font-size: 25px;">
+        <div class="container">
+            <div class="row icons  center-align white-text">
+                <div class="col s12 m4" style="padding:2%;">
+                    <i class="medium material-icons">event</i>
+                    <h3>1000</h3>
+                    <p>Events</p>
+                </div>
+                <div class="col s12 m4" style="padding:2%;">
+                    <i class="medium material-icons">location_city</i>
+                    <h3>500</h3>
+                    <p>Cities</p>
+                </div>
+                <div class="col s12 m4" style="padding:2%;">
+                    <i class="medium material-icons">people</i>
+                    <h3>20.000</h3>
+                    <p>People</p>
+                </div>
             </div>
-            <div class="col s12 m2">
-              <i class="medium material-icons">local_dining</i> <p>Food</p>
+        </div>
+    </div>
+
+    <!-- Video section -->
+    <div class="video accent-4" style="background: radial-gradient(#eae5e5 15%, transparent 16%) 0 0, radial-gradient(#eceaea 15%, transparent 16%) 8px 8px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+    background-color: #f7f7f7;
+    background-size: 16px 16px;">
+        <div class="container">
+            <div class="row black-text" style="padding: 5%;">
+                <div class="col s12 m6">
+                      <div class="col s12 ">
+                        <h3 class="" style="font-size: 60px;color: gray;">Volunteer</h3>
+                        <hr style="width:20%; float: left;">
+                    </div>
+                    <div class="col s12 " style="padding: 20px;">
+                        <h5>MIX activities</h5><br>
+                        {% lorem 15 w random %}
+                        {% lorem 15 w random %}
+
+                    </div>
+                </div>
+                <div class="col s12 m6">
+                    <iframe width="100%" height="315"
+                        src="https://www.youtube.com/embed/6w9TxnwVF5o">
+                    </iframe>
+                </div>
             </div>
-            <div class="col s12 m2">
-              <i class="medium material-icons">music_note</i> <p>Music</p>
-            </div>
-            <div class="col s12 m2">
-              <i class="medium material-icons">photo_camera</i> <p>Photography</p>
-            </div>
-            <div class="col s12 m2">
-              <i class="medium material-icons">group</i> <p>Health</p>
-            </div>
-            <div class="col s12 m2">
-              <i class="medium material-icons">looks</i> <p>Crafts</p>
-            </div>
-            <div class="col s12 m1">
-              
+        </div>
+    </div>
+
+    <!-- Testimonial section -->
+    <div class="testimonial gray accent-4" style="font-size: 25px;">
+        <div class="container">
+            <div class="row center-align black-text">
+                <div class="col s12 m1">
+
+                </div>
+                <div class="col s12 m10" style="padding:2%;">
+                    <div class="slider">
+                        <ul class="slides white center-align">
+                            <li>
+                                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" style="border-radius: 50%; width: 200px; height: 200px;">
+                                <h5><a rel="nofollow" target="_ext" class="blue-text">User</a></h5><p style="padding:15px;">"{% lorem 15 w random %}."</p>
+                            </li>
+                            <li>
+                                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" style="border-radius: 50%; width: 200px; height: 200px;">
+                                <h5><a rel="nofollow" target="_ext" class="blue-text">User</a></h5><p style="padding:15px;">"{% lorem 15 w random %}."</p>
+                            </li>
+                            <li>
+                                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" style="border-radius: 50%; width: 200px; height: 200px;">
+                                <h5><a rel="nofollow" target="_ext" class="blue-text">User</a></h5><p style="padding:15px;">"{% lorem 15 w random %}."</p>
+                            </li>
+                            <li>
+                                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" style="border-radius: 50%; width: 200px; height: 200px;">
+                                <h5><a rel="nofollow" target="_ext" class="blue-text">User</a></h5><p style="padding:15px;">"{% lorem 15 w random %}."</p>
+                            </li>
+                            <li>
+                                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" style="border-radius: 50%; width: 200px; height: 200px;">
+                                <h5><a rel="nofollow" target="_ext" class="blue-text">User</a></h5><p style="padding:15px;">"{% lorem 15 w random %}."</p>
+                            </li>
+                            <li>
+                                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" style="border-radius: 50%; width: 200px; height: 200px;">
+                                <h5><a rel="nofollow" target="_ext" class="blue-text">User</a></h5><p style="padding:15px;">"{% lorem 15 w random %}."</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col s12 m1">
+
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Partner section-->
-    <div class="container">
-        <div class="row center-align white partner">
-            <div class="col s12 m6">
-                <h4 class="blue-text text-darken-4">​Strategic Partnerships</h4>
-                  <p>
-                    
-                    The more Brigid MIXs is able to inspire collaboration from education institutions, cultural and social centers, and other organizations, the faster Brigid MIXs will provide communities around the world access to: healthy, fun and insightful opportunities for cultural exchanges!. 
-                </p>
-                <div class="paragraph">
-                    <div>Our partners collaborate by:&nbsp;</div>
-                    <ul>
-                        <li>- Filling gaps in Brigid MIXs Management Team</li>
-                        <li>- Providing students to host MIXs in exchange for credit and recognition</li>
-                        <li>- Offering space at their location for Brigid MIXs' activities.</li>
-                        <li>- Providing free or discounted products and services.&nbsp;</li>
-                        <li>- Contributing economic resources&nbsp;to invest in the people and technology in order to grow Brigid MIXs exponentially.&nbsp;<br /></li>
-                    </ul>
-                    <b>Any other ideas are strongly encouraged and welcomed!</b>
+    <div class="partner " style="background: url('{% static "img/volunteers.jpeg" %}');background-size: cover;background-position: center center; height: 100%; padding: 30px;">
+        <div class="container">
+            <div class="row center-align">
+                <div class="col s12 m2">
                 </div>
-                <div class="row center-align">
-                    <div class="col s12">
-                        <div class="col m4">
+                <div class="col s12 m8 white" style="padding: 20px; opacity: 0.9;">
+                    <h4 class="blue-text text-darken-4">​Strategic Partnerships</h4>
+                      <p>
+                        The more Brigid MIXs is able to inspire collaboration from education institutions, cultural and social centers, and other organizations, the faster Brigid MIXs will provide communities around the world access to: healthy, fun and insightful opportunities for cultural exchanges!.
+                    </p>
+                    <div class="paragraph">
+                        <div>Our partners collaborate by:&nbsp;</div>
+                        <ul>
+                            <li>- Filling gaps in Brigid MIXs Management Team</li>
+                            <li>- Providing students to host MIXs in exchange for credit and recognition</li>
+                            <li>- Offering space at their location for Brigid MIXs' activities.</li>
+                            <li>- Providing free or discounted products and services.&nbsp;</li>
+                            <li>- Contributing economic resources&nbsp;to invest in the people and technology in order to grow Brigid MIXs exponentially.&nbsp;<br /></li>
+                        </ul>
+                        <b>Any other ideas are strongly encouraged and welcomed!</b>
+                    </div>
+                     <div class="col m12">
                             <button class="waves-effect waves-light btn blue darken-4">Contact</button>
                         </div>
-                        <div class="col m8">
-                            <a href=""><img src="https://www.paypalobjects.com/en_US/ES/i/btn/btn_donateCC_LG.gif"></a>
-                        </div>
-                    </div>
+                </div>
+                <div class="col s12 m2">
                 </div>
             </div>
-            <div class="col s12 m6" style="background: url('http://www.brigidmixs.org/uploads/1/4/4/3/14432394/copied-10-of-123_orig.jpg');background-size: cover;background-position: center center; height: 600px;">
-            </div>
+        </div>
+    </div>
+
+
+    <!-- Contact section-->
+    <div class="container">
+        <div class="row center-align">
+                <div class="col s12">
+                </div>
+                     <div class="col m12">
+                        <div class="col m4" style="margin-top: 4%; margin-bottom: 5%;">
+                            <h4>Like our project? <br>Join us!</h4>
+                        </div>
+                        <div class="col m4" style="margin-top: 5%; margin-bottom: 5%;">
+                            <div class="wsite-image wsite-image-border-none ">
+                            <a href='http://www.patreon.com/brigidmixs' target='_blank'>
+                            <img src="http://www.brigidmixs.org/uploads/1/4/4/3/14432394/published/121013332.png?1509554821" alt="Picture" style="width:auto;max-width:100%" />
+                            </a>
+                            </div>
+                        </div>
+                        <div class="col m4" style="margin-top: 5%; margin-bottom: 5%;">
+                                <div id="436509819920537698" align="center" style="width: 100%; overflow-y: hidden; margin-top: 5%;" class="wcustomhtml"><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                <input type="hidden" name="cmd" value="_s-xclick">
+                                <input type="hidden" name="hosted_button_id" value="ARQETEVCWU56W">
+                                <input type="image" src="https://www.paypalobjects.com/en_US/ES/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                                </form>
+                                </div>
+                        </div>
+                    </div>
+            
         </div>
     </div>
 

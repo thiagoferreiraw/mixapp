@@ -25,11 +25,15 @@ class EventEditView(View):
 
         request = self.places_service.get_city_for_request(request)
         request = self.places_service.get_location_for_request(request)
+
         request.POST['hosted_by'] = request.user.id
 
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
-            form.save()
+            event = form.save()
+            self.places_service.save_images_street_view_for_coordinates(event.location.id,
+                                                                        event.location_lat,
+                                                                        event.location_lng)
             messages.success(request, 'Event updated successfully')
             return redirect("edit_event_image", event.id)
 
@@ -39,6 +43,6 @@ class EventEditView(View):
     @staticmethod
     def get_event_or_404(event_id, user_id):
         event = Event.objects.filter(pk=event_id, hosted_by=user_id).first()
-        if not event_id:
+        if not event:
             raise Http404()
         return event
