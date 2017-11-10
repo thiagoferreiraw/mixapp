@@ -73,7 +73,7 @@
 {% endblock %}
 
 {% block map %}
-    var myLatLong = {lat: {{ event_details.location.latitude }}, lng: {{ event_details.location.longitude }}};
+    var myLatLong = {lat: {{ event_details.location_lat }}, lng: {{ event_details.location_lng }}};
     
     var map = new google.maps.Map(document.getElementById('map'), {
           center: myLatLong,

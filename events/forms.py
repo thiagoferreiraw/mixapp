@@ -1,4 +1,4 @@
-from django.forms import ModelForm,  HiddenInput, Textarea, CharField, TextInput
+from django.forms import Form, ModelForm,  HiddenInput, Textarea, CharField, TextInput, FileField
 from events.models import Category, Event, City
 from datetime import datetime
 
@@ -53,3 +53,7 @@ class EventForm(ModelForm):
         self.fields['time'].widget.attrs['class'] = "timepicker"
         self.fields['location_lat'].widget = HiddenInput(attrs={'id': 'location_lat'})
         self.fields['location_lng'].widget = HiddenInput(attrs={'id': 'location_lng'})
+
+
+class ImageUploadForm(Form):
+    file = FileField()
