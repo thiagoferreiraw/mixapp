@@ -108,27 +108,61 @@
     </div>
 </div>
 <script>
-
     function init_autocomplete_maps() {
-        var initial_coordinates = {lat: {{ form.location_lat.value|default_if_none:"-33.8688" }},
-                                   lng: {{ form.location_lng.value|default_if_none:"151.2195" }}};
+        function create_autocomplete_input(input, options) {
+            // store the original event binding function
+            var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
+
+            function addEventListenerWrapper(type, listener) {
+                // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
+                // and then trigger the original listener.
+                if (type == "keydown") {
+                    var orig_listener = listener;
+                    listener = function(event) {
+                        var suggestion_selected = $(".pac-item-selected").length > 0;
+                        if ((event.which == 13 || event.which == 9) && !suggestion_selected) {
+                            var simulated_downarrow = $.Event("keydown", {
+                                keyCode: 40,
+                                which: 40
+                            });
+                            orig_listener.apply(input, [simulated_downarrow]);
+                        }
+
+                        orig_listener.apply(input, [event]);
+                    };
+                }
+
+                _addEventListener.apply(input, [type, listener]);
+            }
+
+            input.addEventListener = addEventListenerWrapper;
+            input.attachEvent = addEventListenerWrapper;
+
+            return new google.maps.places.Autocomplete(input, options);
+        }
+
+        var initial_coordinates = {lat: {{ form.location_lat.value|default_if_none:"52.50697" }},
+                                   lng: {{ form.location_lng.value|default_if_none:"13.2843063" }}};
 
         var map = new google.maps.Map(document.getElementById('map'), {
             center: initial_coordinates,
-            zoom: 13
+            {% if  form.location_lat.value %}
+                zoom: 16
+            {% else %}
+                zoom: 2
+            {% endif %}
         });
 
         var marker = new google.maps.Marker({
-          position: initial_coordinates,
+          {% if  form.location_lat.value %}
+            position: initial_coordinates,
+          {% endif %}
           map: map,
-          title: 'Hello World!'
+          title: 'Location'
         });
 
-        var city_input = document.getElementById('autocomplete_city');
-        var location_input = document.getElementById('autocomplete_location');
-        var autocomplete_city = new google.maps.places.Autocomplete(city_input, {types: ['(cities)']});
-        var autocomplete_location = new google.maps.places.Autocomplete(location_input, {strictBounds: true});
-
+        var autocomplete_city = create_autocomplete_input(document.getElementById('autocomplete_city'),  {types: ['(cities)']});
+        var autocomplete_location = create_autocomplete_input(document.getElementById('autocomplete_location'), {strictBounds: true})
 
         autocomplete_city.addListener('place_changed', function (e) {
             var place = autocomplete_city.getPlace();
@@ -144,12 +178,10 @@
             $("#location_place_id").val("")
             $("#autocomplete_location").val("")
 
-            marker.setPosition(place.geometry.location);
-            map.setCenter(marker.getPosition());
+            map.setCenter(place.geometry.location);
             map.setZoom(13)
 
             autocomplete_location.setBounds(place.geometry.viewport);
-
         });
 
         autocomplete_location.addListener('place_changed', function (e) {
@@ -197,8 +229,6 @@
 
         }).bind("keypress", function (e) {
             if (e.keyCode == 13) {
-                //$("#btnSearch").attr('value');
-                //add more buttons here
                 return false;
             }
         });
