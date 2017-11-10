@@ -31,9 +31,6 @@ class EventEditView(View):
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
             event = form.save()
-            self.places_service.save_images_street_view_for_coordinates(event.location.id,
-                                                                        event.location_lat,
-                                                                        event.location_lng)
             messages.success(request, 'Event updated successfully')
             return redirect("edit_event_image", event.id)
 

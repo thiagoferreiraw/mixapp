@@ -13,7 +13,7 @@
                         <div class="row">
                             {% for image in images %}
                                 <div class="col s12 m4">
-                                    <a href="#" class="choose-image crop-choose-img" data-image="{{ image.id }}">
+                                    <a href="#" class="choose-image crop-choose-img" data-image="{{ image.idx }}">
                                         <img class="" src="{{ image.url }}"/>
                                     </a>
                                 </div>
@@ -24,6 +24,11 @@
                             {% endfor %}
                         </div>
                     </form>
+                   <!--<form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form }}
+                        <input type="submit" value="Submit" />
+                    </form>-->
                 </div>
             </div>
 
@@ -33,13 +38,8 @@
 <script>
 $(document).ready(function(){
     $(".choose-image").click(function () {
-        window.location = "{{ request.path }}?image_id="+$(this).data("image");
-        //$.post("{{ request.path }}", { image_id: $(this).data("image")} );
+        window.location = "{{ request.path }}?image_idx="+$(this).data("image");
     });
 });
-function choose_image(image_id){
-
-}
-
 </script>
 {% endblock %}
