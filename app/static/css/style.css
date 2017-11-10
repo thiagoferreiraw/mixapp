@@ -65,7 +65,7 @@ nav .button-collapse i {
 /* Banner section */
 .banner{
     width: 100%;
-    min-height:50vh;
+    min-height:70vh;
    /* height: 500px;*/
 }
 .banner .caption{
@@ -74,6 +74,19 @@ nav .button-collapse i {
 }
 
 .banner span{
+    border: 1px solid #fff; 
+    padding: 10px;
+}
+
+/* Testimonial */
+.banner-right .caption{
+    font-size: 60px; 
+    float: left; 
+    padding-top: 20%; 
+    padding-left:10px;
+}
+
+.banner-right span{
     border: 1px solid #fff; 
     padding: 10px;
 }
@@ -116,6 +129,13 @@ nav .button-collapse i {
     .banner .caption{
         opacity:1; 
         padding: 20%;
+    }
+
+    .banner-right .caption{
+        font-size: 60px; 
+        float: left; 
+        padding-top: 18%; 
+        padding-left:10px;
     }
 }
 
@@ -269,6 +289,7 @@ nav .button-collapse i {
     padding: 5px;
     right: 0;
 }
+
 
 
 /* Footer */
