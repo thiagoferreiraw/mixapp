@@ -1,5 +1,5 @@
-from events.gateways import PlacesGateway
-from events.models import City, Location
+from events.gateways import PlacesGateway, settings
+from events.models import City, Location, LocationImage
 
 
 class PlacesService:
@@ -20,7 +20,8 @@ class PlacesService:
                 place_id=google_place['place_id'],
                 description=google_place['formatted_address'],
                 latitude=google_place['geometry']['location']['lat'],
-                longitude=google_place['geometry']['location']['lng']
+                longitude=google_place['geometry']['location']['lng'],
+                timezone=google_place['utc_offset'] / 60,
             )
             city.save()
         else:
@@ -36,13 +37,38 @@ class PlacesService:
                 place_id=google_place['place_id'],
                 description=google_place['formatted_address'],
                 latitude=google_place['geometry']['location']['lat'],
-                longitude = google_place['geometry']['location']['lng']
+                longitude=google_place['geometry']['location']['lng'],
+                timezone=google_place['utc_offset'] / 60,
             )
+
             location.save()
         else:
             location = location.first()
 
         return location
+
+    def get_images_street_view(self, lat, lng):
+        images = []
+        for heading in [0, 60, 120, 180, 240, 300, 360]:
+            token = settings.TOKEN_GOOGLE_STREET_VIEW_API
+            size = "640x360"
+            coordinates = "{},{}".format(lat, lng)
+            images.append("https://maps.googleapis.com/maps/api/streetview?size={}&location={}&heading={}&key={}".format(size,
+                                                                                                                 coordinates,
+                                                                                                                 heading,
+                                                                                                                 token))
+        return images
+
+    def get_images_google_place(self, place_id, language):
+        images = []
+        google_place = self.get_place_by_id(place_id, language)
+        if "photos" in google_place:
+            for photo in google_place['photos']:
+                images.append(
+                    "https://maps.googleapis.com/maps/api/place/photo?maxheight={}&photoreference={}&key={}"
+                    .format(360, photo['photo_reference'], settings.TOKEN_GOOGLE_PLACES_API))
+
+        return images
 
     def get_city_for_request(self, request):
         if not (request.POST['city_place_id'] is None or request.POST['city_place_id'] == ""):

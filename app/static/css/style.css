@@ -43,7 +43,15 @@ nav .button-collapse i {
     margin-left: 0; 
 }
 .container{
-    width: 85%;
+    width: 100%;
+}
+.container .row {
+    margin: 0;
+}
+@media (max-width: 600px){
+    .container{
+        width: 85%;
+    }
 }
 
 .parallax-container {
@@ -57,20 +65,53 @@ nav .button-collapse i {
 /* Banner section */
 .banner{
     width: 100%;
+    min-height:70vh;
+   /* height: 500px;*/
 }
+.banner .caption{
+    opacity:1; 
+    padding: 15%;
+}
+
+.banner span{
+    border: 1px solid #fff; 
+    padding: 10px;
+}
+
+/* Testimonial */
+.banner-right .caption{
+    font-size: 60px; 
+    float: left; 
+    padding-top: 20%; 
+    padding-left:10px;
+}
+
+.banner-right span{
+    border: 1px solid #fff; 
+    padding: 10px;
+}
+
 /*.banner img{
     width: 100%;
 }*/
 .slider .indicators .indicator-item.active{
     background: #0404FF;
 }
+.slider .indicators {
+    /*display: none;*/
+}
 
 /* Events section */
 .events{
     /*padding: 30px;*/
+    background: #0D47A1;
+    background: #54aee8;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    min-height:50vh;
 }
 .events h3{
-    font-size:60px;
+    font-size:50px;
 }
 .events hr.down-title{
     width:20%; 
@@ -80,7 +121,22 @@ nav .button-collapse i {
 .events .card p.city-name{
     background-color:#1976D2; 
     padding:2px; 
-    color #fff;
+    color: #fff;
+    margin: 1px;
+}
+
+@media (min-width: 1400px){
+    .banner .caption{
+        opacity:1; 
+        padding: 20%;
+    }
+
+    .banner-right .caption{
+        font-size: 60px; 
+        float: left; 
+        padding-top: 18%; 
+        padding-left:10px;
+    }
 }
 
 
@@ -126,10 +182,12 @@ nav .button-collapse i {
 }
 
 .about{
-    padding: 30px;
+    padding-top: 8%;
+    padding-bottom: 8%;
 }
 .about h3{
     font-size:60px;
+    color: gray;
 }
 .about hr{
     width:20%; 
@@ -141,14 +199,24 @@ nav .button-collapse i {
     width: 100%;
 }
 .about p{
-    font-size: 20px; 
+    font-size: 19px; 
     color: #000; 
     text-align: justify;
 }
 .about button{
     color: #fff;
 }
-
+.about-left{
+    top: 0;
+    bottom: 0;
+    padding: 15px;
+}
+@media (max-width: 900px){
+    .about h3{
+        font-size:40px;
+        color: gray;
+    }
+}
 
 /* Icons section */
 .icons {
@@ -157,7 +225,8 @@ nav .button-collapse i {
 
 /* Partner section */
 .partner{
-    padding-bottom: 20px;
+    padding-bottom: 50px;
+    padding-top: 50px;
 }
 .partner h4{
     margin-top:10px;
@@ -222,6 +291,7 @@ nav .button-collapse i {
 }
 
 
+
 /* Footer */
 
 footer a{
@@ -229,9 +299,11 @@ footer a{
 }
 
 footer i{
-    color#fff;
+    color: #fff;
 }
 
 i.fa{
     margin: 10px;
 }
+
+
