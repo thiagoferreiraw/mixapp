@@ -2,6 +2,10 @@ from django.db import models
 from users.models import User
 from datetime import datetime
 from django.conf import settings
+import urllib
+import os
+from django.core.files import File
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -58,9 +62,19 @@ class Event(models.Model):
     hosted_by = models.ForeignKey(User)
     category = models.ForeignKey(Category)
     image_url = models.CharField(max_length=500, null=True)
+    image = models.ImageField(null=True)
 
     def __str__(self):
         return self.name
+
+    def get_remote_image(self):
+        if self.image_url and not self.image:
+            result = urllib.urlretrieve(self.image_url)
+            self.image_file.save(
+                os.path.basename(self.image_url),
+                File(open(result[0]))
+            )
+            self.save()
 
     def save(self, *args, **kwargs):
         if self.date is not None and self.time is not None:

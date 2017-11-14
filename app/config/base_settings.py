@@ -152,3 +152,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 TOKEN_GOOGLE_PLACES_API = os.getenv("TOKEN_GOOGLE_PLACES_API" )
 TOKEN_GOOGLE_STREET_VIEW_API = os.getenv("TOKEN_GOOGLE_STREET_VIEW_API" )
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

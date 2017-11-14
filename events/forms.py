@@ -55,5 +55,7 @@ class EventForm(ModelForm):
         self.fields['location_lng'].widget = HiddenInput(attrs={'id': 'location_lng'})
 
 
-class ImageUploadForm(Form):
-    file = FileField()
+class ImageUploadForm(ModelForm):
+    class Meta:
+        model = Event
+        fields = ('image', )

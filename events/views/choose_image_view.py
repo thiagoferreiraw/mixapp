@@ -26,21 +26,19 @@ class ChooseImageView(View):
         if "image_idx" in request.GET:
             event.image_url = images[int(request.GET['image_idx'])]['url']
             event.save()
+            event.get_remote_image()
             return redirect("list_events")
 
         return render(request, self.template_name,
                       {'images': images, 'form': ImageUploadForm()})
 
-#   def post(self, request, event_id):
-#        form = ImageUploadForm(request.POST, request.FILES)
-#        if form.is_valid():
-#            f = request.FILES['file']
-#            with open("media/{}.jpg".format(uuid.uuid4().hex), 'wb+') as destination:
-#                for chunk in f.chunks():
-#                    destination.write(chunk)
-#            return redirect("list_events")
-#        else:
-#            messages.error(request, 'Invalid file, try again')
+    def post(self, request, event_id):
+        form = ImageUploadForm(request.POST, request.FILES, instance=Event.objects.get(pk=event_id))
+        if form.is_valid():
+            form.save()
+            return redirect("list_events")
+        else:
+            messages.error(request, 'Invalid file, try again')
 
     @staticmethod
     def get_event_or_404(event_id, user_id):
