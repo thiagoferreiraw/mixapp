@@ -4,6 +4,7 @@ from events.models import User, City, Event, Category, Location
 from datetime import datetime, timedelta
 from events.views.create_event_view import EventCreateView
 from events.views.event_details_view import EventDetailsView
+from events.views.search_event_view import EventSearchView
 
 
 class EventsViewsTests(TestCase):
@@ -53,7 +54,7 @@ class EventsViewsTests(TestCase):
         self.assertIsNotNone(location.description)
 
 
-class EventDeatailsViewsTests(TestCase):
+class EventDetailsViewsTests(TestCase):
     fixtures = ['categories.json']
 
     def setUp(self):
@@ -85,4 +86,23 @@ class EventDeatailsViewsTests(TestCase):
         event = Event.objects.all().first()
         response = EventDetailsView().get(request, event.id)
 
+        self.assertEquals(response.status_code, 200)
+
+
+class SearchEventViewTests(TestCase):
+    fixtures = ['categories.json']
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    @patch('django.contrib.messages.success', return_value=True)
+    def test_get_success(self, mock_messages):
+        user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        Event.objects.all().delete()
+        request = self.factory.post("/events/search/", {
+            'category': "",
+            'city': ""
+        })
+        request.user = user
+        response = EventSearchView().get(request)
         self.assertEquals(response.status_code, 200)
