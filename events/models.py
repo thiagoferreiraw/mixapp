@@ -5,6 +5,9 @@ from django.conf import settings
 import urllib
 import os
 from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
+from sorl.thumbnail import get_thumbnail
+import uuid
 
 
 class Category(models.Model):
@@ -68,11 +71,12 @@ class Event(models.Model):
         return self.name
 
     def get_remote_image(self):
-        if self.image_url and not self.image:
-            result = urllib.urlretrieve(self.image_url)
-            self.image_file.save(
-                os.path.basename(self.image_url),
-                File(open(result[0]))
+        if self.image_url:
+            print(self.image_url)
+            result = urllib.request.urlretrieve(self.image_url)
+            self.image.save(
+                os.path.basename(uuid.uuid4().hex+".jpg"),
+                File(open(result[0], 'rb'))
             )
             self.save()
 

@@ -9,3 +9,4 @@ mock==2.0.0
 coveralls==1.2.0
 docopt==0.6.2
 Pillow==4.3.0
+sorl-thumbnail==12.3
