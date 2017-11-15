@@ -35,6 +35,7 @@
                 <ul>
                   <li class="{% if request.path == "/events/list/" %} active {% endif %}"><a href="{% url 'list_events' %}">List my events</a></li>
                   <li class="{% if request.path == "/events/new/" %} active {% endif %}"><a href="{% url 'create_event' %}">Create new event</a></li>
+                  <li class="{% if request.path == "/events/search/" %} active {% endif %}"><a href="{% url 'search_events' %}">Find a MIX</a></li>
                 </ul>
               </div>
             </li>

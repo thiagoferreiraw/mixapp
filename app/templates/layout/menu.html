@@ -10,6 +10,7 @@
                     {% if user.is_authenticated %}
                     <li><a href="{% url "list_events" %}">List my events</a></li>
                     <li><a href="{% url "create_event" %}">Create event</a></li>
+                    <li><a href="{% url 'search_events' %}">Find a MIX</a></li>
                     <li><a class="dropdown-button" href="#!" data-activates="dropdown1">
                         <i class="material-icons left">person</i>
                         <strong>{{ user.username|truncatechars:15 }}</strong>
