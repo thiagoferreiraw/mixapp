@@ -26,3 +26,11 @@ class PlacesGateway:
 
         return requests.get(url, params=query)
 
+    def get_place_metadata_street_view(self, lat, lng):
+        url = self.base_url + "maps/api/streetview/metadata"
+        query = {
+            'location': "{},{}".format(lat, lng),
+            'key': settings.TOKEN_GOOGLE_STREET_VIEW_API
+        }
+
+        return requests.get(url, params=query)

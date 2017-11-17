@@ -64,21 +64,18 @@ class Event(models.Model):
     expected_costs = models.FloatField()
     hosted_by = models.ForeignKey(User)
     category = models.ForeignKey(Category)
-    image_url = models.CharField(max_length=500, null=True)
     image = models.ImageField(null=True)
 
     def __str__(self):
         return self.name
 
-    def get_remote_image(self):
-        if self.image_url:
-            print(self.image_url)
-            result = urllib.request.urlretrieve(self.image_url)
-            self.image.save(
-                os.path.basename(uuid.uuid4().hex+".jpg"),
-                File(open(result[0], 'rb'))
-            )
-            self.save()
+    def get_remote_image(self, image_url):
+        result = urllib.request.urlretrieve(image_url)
+        self.image.save(
+            os.path.basename(uuid.uuid4().hex+".jpg"),
+            File(open(result[0], 'rb'))
+        )
+        self.save()
 
     def save(self, *args, **kwargs):
         if self.date is not None and self.time is not None:

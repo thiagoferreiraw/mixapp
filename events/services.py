@@ -49,6 +49,12 @@ class PlacesService:
 
     def get_images_street_view(self, lat, lng):
         images = []
+
+        status_api = PlacesGateway().get_place_metadata_street_view(lat, lng).json()
+
+        if status_api['status'] != 'OK':
+            return images
+
         for heading in [0, 60, 120, 180, 240, 300, 360]:
             token = settings.TOKEN_GOOGLE_STREET_VIEW_API
             size = "640x360"
@@ -66,7 +72,7 @@ class PlacesService:
             for photo in google_place['photos']:
                 images.append(
                     "https://maps.googleapis.com/maps/api/place/photo?maxheight={}&photoreference={}&key={}"
-                    .format(360, photo['photo_reference'], settings.TOKEN_GOOGLE_PLACES_API))
+                    .format(1000, photo['photo_reference'], settings.TOKEN_GOOGLE_PLACES_API))
 
         return images
 
