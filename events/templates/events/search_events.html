@@ -7,71 +7,53 @@
     <div class="col s12 l6 ">
         <div class="card white z-depth-3 ">
             <h3>Find a MIX!</h3>
-            <form method="post">
+            
+            <form method="GET">
                 {% csrf_token %}
-                <h5>Category</h5>
-                <select name="select-categories">
-                    <option value="">Choose a category</option>
-                    {% for category in categories %}
-                        <option value="{{ category.name }}">{{ category.name }}</option>
-                    {% endfor %}
-                </select>
-                <h5>City</h5>
-                <select name="select-cities">
-                    <option value="">Choose a city</option>
-                    {% for city in cities %}
-                        <option value="{{ city.description }}">{{ city.description }}</option>
-                    {% endfor %}
-                </select>
+                {{ form }}
                 <button type="submit" class="waves-effect waves-light btn blue darken-4">
                     Submit <i class="material-icons right">send</i>
                 </button>
-            </form>
+            </form>            
         </div>
     </div>
-    {% if request.method == "POST" %}
-        {% if events %}
 
-            {% for event in events %}
-                {% cycle '<div class="row">' '' %}
-                <div class="col s12 l6 ">
-                    <div class="card white z-depth-3 ">
-                        <div class="card-image">
-                          <picture class="crop-event-img">
-                              <img src="{{ event.image_url }}" >
-                          </picture>
-                          <span class="card-title">{{ event.name }}</span>
-                        </div>
-                        <div class="card-content">
-                            <ul>
-                                    <li>
-                                        <p><b>City: </b>{{ event.city.description }}</p>
-                                        <p><b>Location:</b> {{ event.location.description }}</p>
-                                        <p><b>Category: </b>{{ event.category.description }}</p>
-                                    </li>
-                            </ul>
-                        </div>
-                         <div class="card-action">
-                          <a href="{% url "edit_event" event.id %}" class="btn waves-effect waves-light blue "> <i class="material-icons">create</i></a>
-                          <a href="{% url "edit_event_image" event.id %}" class="btn waves-effect waves-light blue "> <i class="material-icons">image</i></a>
-                          <a href="{% url "event_details" event.id %}" class="btn waves-effect waves-light blue "> <i class="material-icons">remove_red_eye</i></a>
-                        </div>
-                    </div>
+    {% for event in events %}
+        {% cycle '<div class="row">' '' %}
+        <div class="col s12 l6 ">
+            <div class="card white z-depth-3 ">
+                <div class="card-image">
+                  <picture class="crop-event-img">
+                      <img src="{{ event.image_url }}" >
+                  </picture>
+                  <span class="card-title">{{ event.name }}</span>
                 </div>
-                {% if forloop.counter|divisibleby:2 or forloop.last %}</div>{% endif %}
-            {% empty %}
-                <div class="card white z-depth-3 ">
-                    <div class="card-content">
-                        <p>You haven't created any event yet.</p>
-                    </div>
+                <div class="card-content">
+                    <ul>
+                            <li>
+                                <p><b>City: </b>{{ event.city.description }}</p>
+                                <p><b>Location:</b> {{ event.location.description }}</p>
+                                <p><b>Category: </b>{{ event.category.description }}</p>
+                            </li>
+                    </ul>
                 </div>
-            {% endfor %}
+                 <div class="card-action">
+                  <a href="{% url "edit_event" event.id %}" class="btn waves-effect waves-light blue "> <i class="material-icons">create</i></a>
+                  <a href="{% url "edit_event_image" event.id %}" class="btn waves-effect waves-light blue "> <i class="material-icons">image</i></a>
+                  <a href="{% url "event_details" event.id %}" class="btn waves-effect waves-light blue "> <i class="material-icons">remove_red_eye</i></a>
+                </div>
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:2 or forloop.last %}</div>{% endif %}
+    {% empty %}
+        <div class="card white z-depth-3 ">
+            <div class="card-content">
+                <p>Sorry! We don't have any event at this moment.</p>
+                <p>Why don't you start right now?</p>
+                <a href="{% url 'create_event' %}" class="btn">Make a MIX</a>
+            </div>
+        </div>
+    {% endfor %}
 
-        {% else %}
-            <p>Sorry! We don't have any event in this city or category at this moment.</p>
-            <p>Why don't you start right now?</p>
-            <a href="{% url 'create_event' %}" class="btn">Make a MIX</a>
-        {% endif %}
-    {% endif %}
 </div>
 {% endblock %}

@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import Form, ModelForm,  HiddenInput, Textarea, CharField, TextInput, FileField
 from events.models import Category, Event, City
 from datetime import datetime
@@ -57,3 +58,19 @@ class EventForm(ModelForm):
 
 class ImageUploadForm(Form):
     file = FileField()
+
+
+class SearchForm(Form):
+
+    categories = Category.objects.all()
+    CATEGORIES_CHOICES = [('', 'Select a category')]
+    for c in categories:
+        CATEGORIES_CHOICES.append((c.id, c.name))
+
+    cities = City.objects.raw("select city.id, city.description || ' ('|| (select count(1) from events_event where city_id = city.id  and datetime > current_timestamp ) || ')' as description from events_city city")
+    CITIES_CHOICES = [('', 'Select a city')]
+    for c in cities:
+        CITIES_CHOICES.append((c.id, c.description))
+
+    category = forms.ChoiceField(choices=(CATEGORIES_CHOICES), required=False, label=False)
+    city = forms.ChoiceField(choices=(CITIES_CHOICES), required=False, label=False)
