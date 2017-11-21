@@ -90,7 +90,7 @@ class EventDetailsViewsTests(TestCase):
 
 
 class SearchEventViewTests(TestCase):
-    fixtures = ['categories.json']
+    fixtures = ['fixture_test_events.json']
 
     def setUp(self):
         self.factory = RequestFactory()
