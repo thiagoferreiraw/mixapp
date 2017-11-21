@@ -307,3 +307,6 @@ i.fa{
 }
 
 
+#sidenav-overlay {
+ z-index: 996;
+}
