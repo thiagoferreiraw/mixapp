@@ -42,10 +42,13 @@ class EventForm(ModelForm):
         fields = ('id', 'name', 'description', 'duration',
                   'date', 'time', 'city', 'category',
                   'location', 'expected_costs', 'hosted_by',
-                  'location_lat', 'location_lng')
+                  'location_lat', 'location_lng', 'native_language',
+                  'foreign_language')
 
     def set_up_widgets(self):
         self.fields['category'].empty_label = "Select a category"
+        self.fields['native_language'].empty_label = "Select the native language"
+        self.fields['foreign_language'].empty_label = "Select the foreign language"
         self.fields['description'].widget = Textarea(attrs={'class': 'materialize-textarea'})
         self.fields['duration'].widget.attrs.update({'min': 1, 'max': 10})
         self.fields['expected_costs'].widget.attrs.update({'min': 0})
@@ -55,5 +58,7 @@ class EventForm(ModelForm):
         self.fields['location_lng'].widget = HiddenInput(attrs={'id': 'location_lng'})
 
 
-class ImageUploadForm(Form):
-    file = FileField()
+class ImageUploadForm(ModelForm):
+    class Meta:
+        model = Event
+        fields = ('image', )

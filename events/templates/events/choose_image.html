@@ -9,6 +9,11 @@
             <div class="card white z-depth-3">
                 <div class="card-content">
                     <span class="card-title">{{ form_action }} Choose a image for your event</span>
+                    <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form }}
+                            <input type="submit" value="Submit"  />
+                    </form>
                     <form method="post">
                         <div class="row">
                             {% for image in images %}
@@ -24,11 +29,6 @@
                             {% endfor %}
                         </div>
                     </form>
-                   <!--<form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ form }}
-                        <input type="submit" value="Submit" />
-                    </form>-->
                 </div>
             </div>
 

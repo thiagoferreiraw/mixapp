@@ -14,6 +14,7 @@ class EventEditView(View):
         self.places_service = PlacesService()
 
     def get(self, request, event_id):
+        print("ID DO EVENTO: ".format(event_id))
         event = self.get_event_or_404(event_id, request.user.id)
 
         form = EventForm(instance=event)
@@ -32,7 +33,11 @@ class EventEditView(View):
         if form.is_valid():
             event = form.save()
             messages.success(request, 'Event updated successfully')
-            return redirect("edit_event_image", event.id)
+
+            if "location_lat" in form.changed_data or "location_lng" in form.changed_data:
+                return redirect("edit_event_image", event.id)
+
+            return redirect("list_events")
 
         return render(request, self.template_name,
                       {'form': form,  'user': request.user, 'form_action': self.form_action, 'event_id': event_id})

@@ -2,6 +2,13 @@ from django.db import models
 from users.models import User
 from datetime import datetime
 from django.conf import settings
+import urllib
+import os
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
+from sorl.thumbnail import get_thumbnail
+import uuid
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -38,9 +45,12 @@ class Location(models.Model):
         return self.description
 
 
-class LocationImage(models.Model):
-    url = models.CharField(max_length=500)
-    location = models.ForeignKey(Location)
+class Language(models.Model):
+    key = models.CharField(max_length=20, unique=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class Event(models.Model):
@@ -57,13 +67,22 @@ class Event(models.Model):
     expected_costs = models.FloatField()
     hosted_by = models.ForeignKey(User)
     category = models.ForeignKey(Category)
-    image_url = models.CharField(max_length=500, null=True)
+    image = models.ImageField(null=True)
+    native_language = models.ForeignKey(Language, related_name="native_language")
+    foreign_language = models.ForeignKey(Language, related_name="foreign_language")
 
     def __str__(self):
         return self.name
+
+    def get_remote_image(self, image_url):
+        result = urllib.request.urlretrieve(image_url)
+        self.image.save(
+            os.path.basename(uuid.uuid4().hex+".jpg"),
+            File(open(result[0], 'rb'))
+        )
+        self.save()
 
     def save(self, *args, **kwargs):
         if self.date is not None and self.time is not None:
             self.datetime = datetime.combine(date=self.date, time=self.time)
         super(Event, self).save(*args, **kwargs)
-

@@ -1,5 +1,6 @@
 {% extends 'base_member.html' %}
 {% load static %}
+{% load thumbnail %}
 
 {% block content %}
 <div class="blue darken-4" style="height: 150px;"></div>
@@ -10,7 +11,9 @@
             <div class="card white z-depth-3 ">
                 <div class="card-image">
                   <picture class="crop-event-img">
-                      <img src="{{ event.image_url }}" >
+                      {% thumbnail event.image "640x360" crop="center" as im %}
+                        <img src="{{ im.url }}" >
+                      {% endthumbnail %}
                   </picture>
                   <span class="card-title">{{ event.name }}</span>
                 </div>
