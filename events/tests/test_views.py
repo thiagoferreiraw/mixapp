@@ -8,38 +8,40 @@ from events.views.search_event_view import EventSearchView
 
 
 class EventsViewsTests(TestCase):
-    fixtures = ['categories.json']
+    fixtures = ['categories.json', 'languages.json', "test_data.json"]
 
     def setUp(self):
-        self.factory = RequestFactory()
+        self.user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        self.client.login(username="tester", password="top_secret")
+
+    def test_get_create_success(self):
+        response = self.client.get("/events/new/")
+        self.assertEquals(response.status_code, 200)
 
     @patch('django.contrib.messages.success', return_value=True)
-    def test_post_success(self, mock_messages):
-        user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
-        Event.objects.all().delete()
-
-        request = self.factory.post("/events/new/", {
+    def test_post_create_success(self, mock_messages):
+        response = self.client.post("/events/new/", {
             'name': "Test Event",
             'description': "test Event",
             'duration': 1,
             'date': (datetime.now() + timedelta(days=1)).date(),
             'time': datetime.now().time(),
             'expected_costs': 200,
-            'hosted_by': user.id,
+            'hosted_by': self.user.id,
             "location_lat": "-33.8688",
             "location_lng": "151.2195",
             'category': Category.objects.get(pk=1).id,
             'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-            'location_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4'
+            'location_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+            'foreign_language': 1,
+            'native_language': 2,
         })
-
-        request.user = user
-
-        response = EventCreateView().post(request)
 
         self.assertEquals(response.status_code, 302)
 
-        event = Event.objects.all().first()
+        event = Event.objects.all().order_by('-id').first()
+
+        self.assertEqual(response.url, "/events/edit/{}/image/".format(event.id))
 
         self.assertEquals(event.description, "test Event")
 
@@ -55,7 +57,7 @@ class EventsViewsTests(TestCase):
 
 
 class EventDetailsViewsTests(TestCase):
-    fixtures = ['categories.json']
+    fixtures = ['categories.json', 'languages.json']
 
     def setUp(self):
         self.factory = RequestFactory()
@@ -77,7 +79,9 @@ class EventDetailsViewsTests(TestCase):
             "location_lng": "151.2195",
             'category': Category.objects.get(pk=1).id,
             'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-            'location_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4'
+            'location_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+            'foreign_language': 1,
+            'native_language': 2,
         })
 
         request.user = user
@@ -90,7 +94,7 @@ class EventDetailsViewsTests(TestCase):
 
 
 class SearchEventViewTests(TestCase):
-    fixtures = ['fixture_test_events.json']
+    fixtures = ['test_data.json']
 
     def setUp(self):
         self.factory = RequestFactory()

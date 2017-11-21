@@ -31,8 +31,8 @@ $ export TOKEN_GOOGLE_PLACES_API="YOUR_KEY"
 ```
 - Run `make setup` to install the dependencies
 - Run `make migrate` to apply the models on database
-- Run `python manage.py createsuperuser` to create the first user
-- Run `make run` to start the application
+- Run `python manage.py loaddata test_data` to load the initial database
+- Run `make run` to start the application; default user is: [admin, 123]
 
 All set! The application will be on at localhost:8000
 

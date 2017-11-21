@@ -9,7 +9,6 @@
     <link type="text/css" rel="stylesheet" href="{% static 'css/style_members.css' %}" media="screen,projection"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjK5WU8daOGnAjlwjy6wKdDzxS2hHeLEs&libraries=places" async defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body class="grey lighten-5">
@@ -76,6 +75,18 @@
 
     $(document).ready(function(){
       $('select').material_select(); //Makes the select buttons work
+      $('select[required]').css({
+          display: 'inline',
+          position: 'absolute',
+          float: 'left',
+          padding: 0,
+          margin: 0,
+          border: '1px solid rgba(255,255,255,0)',
+          height: 0,
+          width: 0,
+          top: '2em',
+          left: '3em'
+      });
       $(".button-collapse").sideNav(); // Makes the side nav work
       $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
@@ -102,13 +113,13 @@
       $('.collapsible').collapsible();
 
       $('#nav-mobile').removeClass("hide-on-small-only");
-
-      //block to setup map on event details page
-      {% block map %}
-      {% endblock %}
-
     });
 
+    //block to setup map on event details page
+    {% block map %}
+    {% endblock %}
+
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjK5WU8daOGnAjlwjy6wKdDzxS2hHeLEs&libraries=places&callback=init_google_maps" async defer></script>
 </body>
 </html>

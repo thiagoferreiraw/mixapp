@@ -37,8 +37,12 @@ migrate:
 	python manage.py makemigrations
 	python manage.py migrate
 	python manage.py loaddata categories
+	python manage.py loaddata languages
 
 collectstatic:
 	echo yes | python manage.py collectstatic
+
+collectstatic_stage:
+	echo yes | python manage.py collectstatic -settings=app.config.stage_settings
 
 default: setup

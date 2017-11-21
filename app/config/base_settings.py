@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'sorl.thumbnail',
+    'storages',
     'social_django',
 
     'users',
@@ -150,5 +151,8 @@ ALLOWED_HOSTS = ['staging-mixs-app.herokuapp.com','localhost', '127.0.0.1']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-TOKEN_GOOGLE_PLACES_API = os.getenv("TOKEN_GOOGLE_PLACES_API" )
-TOKEN_GOOGLE_STREET_VIEW_API = os.getenv("TOKEN_GOOGLE_STREET_VIEW_API" )
+TOKEN_GOOGLE_PLACES_API = os.getenv("TOKEN_GOOGLE_PLACES_API")
+TOKEN_GOOGLE_STREET_VIEW_API = os.getenv("TOKEN_GOOGLE_STREET_VIEW_API")
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
