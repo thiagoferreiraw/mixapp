@@ -1,0 +1,23 @@
+[{
+	"model": "events.language",
+	"pk": 1,
+	"fields": {
+		"name": "English",
+		"key": "en"
+	}
+}, {
+	"model": "events.language",
+	"pk": 2,
+	"fields": {
+		"name": "Portuguese (Brazilian)",
+		"key": "pt-br"
+	}
+},
+	{
+	"model": "events.language",
+	"pk": 3,
+	"fields": {
+		"name": "Spanish",
+		"key": "es"
+	}
+}]

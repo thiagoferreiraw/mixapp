@@ -1,5 +1,5 @@
 from events.gateways import PlacesGateway, settings
-from events.models import City, Location, LocationImage
+from events.models import City, Location
 
 
 class PlacesService:

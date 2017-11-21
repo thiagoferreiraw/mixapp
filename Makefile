@@ -37,6 +37,7 @@ migrate:
 	python manage.py makemigrations
 	python manage.py migrate
 	python manage.py loaddata categories
+	python manage.py loaddata languages
 
 collectstatic:
 	echo yes | python manage.py collectstatic

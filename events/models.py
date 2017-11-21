@@ -45,9 +45,12 @@ class Location(models.Model):
         return self.description
 
 
-class LocationImage(models.Model):
-    url = models.CharField(max_length=500)
-    location = models.ForeignKey(Location)
+class Language(models.Model):
+    key = models.CharField(max_length=20, unique=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class Event(models.Model):
@@ -65,6 +68,8 @@ class Event(models.Model):
     hosted_by = models.ForeignKey(User)
     category = models.ForeignKey(Category)
     image = models.ImageField(null=True)
+    native_language = models.ForeignKey(Language, related_name="native_language")
+    foreign_language = models.ForeignKey(Language, related_name="foreign_language")
 
     def __str__(self):
         return self.name
@@ -81,4 +86,3 @@ class Event(models.Model):
         if self.date is not None and self.time is not None:
             self.datetime = datetime.combine(date=self.date, time=self.time)
         super(Event, self).save(*args, **kwargs)
-
