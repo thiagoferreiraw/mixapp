@@ -42,4 +42,7 @@ migrate:
 collectstatic:
 	echo yes | python manage.py collectstatic
 
+collectstatic_stage:
+	echo yes | python manage.py collectstatic -settings=app.config.stage_settings
+
 default: setup
