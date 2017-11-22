@@ -8,19 +8,21 @@ from datetime import datetime
 
 class EventSearchView(View):
     template_name = "events/search_events.html"
-    form = SearchForm()
-    context = {'form':form}
 
     def get(self, request):
+        context = {'form': SearchForm(request.GET)}
+
         category = request.GET.get('category')
         city = request.GET.get('city')
+
         events = Event.objects.filter(date__gte=datetime.now().date())
+
         if category:
             events = events.filter(category__id=category)
 
         if city:
             events = events.filter(city__id=city)     
             
-        self.context['events']=events
+        context['events']=events
         
-        return render(request, self.template_name, self.context)
+        return render(request, self.template_name, context)

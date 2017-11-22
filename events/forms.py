@@ -66,17 +66,18 @@ class ImageUploadForm(ModelForm):
 
 
 class SearchForm(Form):
+    city = forms.ChoiceField(required=False  )
+    category = forms.ChoiceField(required=False, label=False)
 
-    categories = Category.objects.all()
-    CATEGORIES_CHOICES = [('', 'Select a category')]
-    for c in categories:
-        CATEGORIES_CHOICES.append((c.id, c.name))
+    def __init__(self, *args, **kwargs):
+        super(Form, self).__init__(*args, **kwargs)
+        self.fields['city'].choices = [('', 'Select a city')] + self.get_cities()
+        self.fields['category'].choices = [('', 'Select a category')] + self.get_categories()
 
-    cities = City.objects.raw("select city.id, city.description || ' ('|| (select count(1) from events_event where city_id = city.id  and datetime > current_timestamp ) || ')' as description from events_city city")
-    CITIES_CHOICES = [('', 'Select a city')]
-    for c in cities:
-        CITIES_CHOICES.append((c.id, c.description))
+    def get_cities(self):
+        cities = City.objects.raw("""select city.id, city.description || ' ('|| (select count(1) from events_event where city_id = city.id  and datetime > current_timestamp ) || ')' as description from events_city city order by city.description""")
+        return list(map(lambda city: (city.id, city.description), cities))
 
-    category = forms.ChoiceField(choices=(CATEGORIES_CHOICES), required=False, label=False)
-    city = forms.ChoiceField(choices=(CITIES_CHOICES), required=False, label=False)
+    def get_categories(self):
+        return list(map(lambda city: (city.id, city.description), Category.objects.all()))
 
