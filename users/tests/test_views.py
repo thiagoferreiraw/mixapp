@@ -17,12 +17,12 @@ class TestViews(TestCase):
     def test_post_login_page(self):
         User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
         response = self.client.post('/login/', {'username': "tester", 'password': 'top_secret'})
-        self.assertRedirects(response, "/home/")
+        self.assertRedirects(response, "/events/search/")
 
     def test_post_login_page_with_email(self):
         User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
         response = self.client.post('/login/', {'username': "tester@tester.com", 'password': 'top_secret'})
-        self.assertRedirects(response, "/home/")
+        self.assertRedirects(response, "/events/search/")
 
     def test_post_login_page_with_failing_email(self):
         User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')

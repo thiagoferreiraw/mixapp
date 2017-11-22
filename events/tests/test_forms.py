@@ -1,6 +1,6 @@
 from django.test import TestCase
 from events.services import PlacesService
-from events.models import User, Category, Event
+from events.models import User, Event
 from datetime import datetime, timedelta
 from events.views.create_event_view import EventForm
 
