@@ -4,4 +4,4 @@ staticfiles
 *.env
 .idea/
 .coverage
-app/media
+app/media/
