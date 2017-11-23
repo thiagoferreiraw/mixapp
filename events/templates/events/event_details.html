@@ -60,11 +60,6 @@
                         <div id="map" style="height: 200px"></div>
                     </div>
                 </div>
-                <div class="card-action">
-                    <a href="{% url 'edit_event' event_details.id %}" class="btn waves-effect waves-light blue ">Edit</a>
-                    <a href="{% url 'edit_event_image' event_details.id %}" class="btn waves-effect waves-light blue ">Change image</a>
-                    </a>
-                </div>
             </div>
         </div>
     </div>
@@ -73,16 +68,18 @@
 {% endblock %}
 
 {% block map %}
-    var myLatLong = {lat: {{ event_details.location_lat }}, lng: {{ event_details.location_lng }}};
-    
-    var map = new google.maps.Map(document.getElementById('map'), {
-          center: myLatLong,
-          zoom: 13
-    });
+    function init_google_maps() {
+        var myLatLong = {lat: {{ event_details.location_lat }}, lng: {{ event_details.location_lng }}};
 
-    var marker = new google.maps.Marker({
-        position: myLatLong,
-        map: map,
-        title: '{{ event_details.location }}'
-    });
+        var map = new google.maps.Map(document.getElementById('map'), {
+              center: myLatLong,
+              zoom: 13
+        });
+
+        var marker = new google.maps.Marker({
+            position: myLatLong,
+            map: map,
+            title: '{{ event_details.location }}'
+        });
+    }
 {% endblock %}

@@ -13,7 +13,7 @@
     </div>
 </footer>
 
-<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="{% static 'js/init.js' %}"></script>
 
 
@@ -24,6 +24,18 @@
     $(document).ready(function(){
       $('.parallax').parallax();
       $('select').material_select(); //Makes the select buttons work
+      $('select[required]').css({
+          display: 'inline',
+          position: 'absolute',
+          float: 'left',
+          padding: 0,
+          margin: 0,
+          border: '1px solid rgba(255,255,255,0)',
+          height: 0,
+          width: 0,
+          top: '2em',
+          left: '3em'
+      });
       $(".button-collapse").sideNav(); // Makes the side nav work
       $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
@@ -49,7 +61,7 @@
 
       $('.slider').slider({full_width: true});
 
-        $('.collapsible').collapsible();
+       $('.collapsible').collapsible();
     });
 
 </script>

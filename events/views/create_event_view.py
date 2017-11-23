@@ -13,7 +13,6 @@ class EventCreateView(View):
         self.places_service = PlacesService()
 
     def get(self, request):
-
         form = EventForm()
         return render(request, self.template_name,
                       {'form': form, 'user': request.user, 'form_action': self.form_action})

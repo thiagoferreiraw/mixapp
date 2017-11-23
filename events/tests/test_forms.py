@@ -1,12 +1,12 @@
 from django.test import TestCase
 from events.services import PlacesService
-from events.models import User, Category, Event
+from events.models import User, Event
 from datetime import datetime, timedelta
 from events.views.create_event_view import EventForm
 
 
 class EventsFormsTests(TestCase):
-    fixtures = ['categories.json']
+    fixtures = ['categories.json', 'languages.json']
 
     def setUp(self):
         self.user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
@@ -30,7 +30,10 @@ class EventsFormsTests(TestCase):
             "location_lng": 151.2195,
             'expected_costs': 200,
             'hosted_by': self.user.id,
-            'category': 1
+            'category': 1,
+            'foreign_language': 1,
+            'native_language': 2,
+
         })
 
         self.assertTrue(form.is_valid())
@@ -64,7 +67,9 @@ class EventsFormsTests(TestCase):
             'location': location.id,
             'expected_costs': 200,
             'hosted_by': self.user.id,
-            'category': 1
+            'category': 1,
+            'foreign_language': 1,
+            'native_language': 2,
         })
 
         self.assertFalse(form.is_valid())
@@ -89,7 +94,10 @@ class EventsFormsTests(TestCase):
             'location': location.id,
             'expected_costs': 200,
             'hosted_by': self.user.id,
-            'category': 1
+            'category': 1,
+            'foreign_language': 1,
+            'native_language': 2,
+
         })
 
         self.assertFalse(form.is_valid())
@@ -106,7 +114,9 @@ class EventsFormsTests(TestCase):
             "location_lng": 151.2195,
             'expected_costs': 200,
             'hosted_by': None,
-            'category': []
+            'category': [],
+            'foreign_language': 1,
+            'native_language': 2,
         })
 
         self.assertFalse(form.is_valid())
@@ -119,7 +129,8 @@ class EventsFormsTests(TestCase):
         event = Event(name="Test Event", description="test Event", duration=1,
                       date=datetime.now().date(), time=datetime.now().time(),
                       city_id=city.id, location_id=location.id, expected_costs=200,
-                      hosted_by_id=self.user.id, category_id=1, location_lat=0, location_lng=0)
+                      hosted_by_id=self.user.id, category_id=1, location_lat=0, location_lng=0,
+                      foreign_language_id=1, native_language_id=1)
         event.save()
 
         date_time_form = (datetime.now() + timedelta(days=10))
@@ -136,7 +147,9 @@ class EventsFormsTests(TestCase):
             'location': location.id,
             'expected_costs': 200,
             'hosted_by': self.user.id,
-            'category': 1
+            'category': 1,
+            'foreign_language': 1,
+            'native_language': 2,
         }, instance=event)
         form.is_valid()
         print(form.errors)

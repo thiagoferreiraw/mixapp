@@ -43,10 +43,13 @@ class EventForm(ModelForm):
         fields = ('id', 'name', 'description', 'duration',
                   'date', 'time', 'city', 'category',
                   'location', 'expected_costs', 'hosted_by',
-                  'location_lat', 'location_lng')
+                  'location_lat', 'location_lng', 'native_language',
+                  'foreign_language')
 
     def set_up_widgets(self):
         self.fields['category'].empty_label = "Select a category"
+        self.fields['native_language'].empty_label = "Select the native language"
+        self.fields['foreign_language'].empty_label = "Select the foreign language"
         self.fields['description'].widget = Textarea(attrs={'class': 'materialize-textarea'})
         self.fields['duration'].widget.attrs.update({'min': 1, 'max': 10})
         self.fields['expected_costs'].widget.attrs.update({'min': 0})
@@ -56,21 +59,25 @@ class EventForm(ModelForm):
         self.fields['location_lng'].widget = HiddenInput(attrs={'id': 'location_lng'})
 
 
-class ImageUploadForm(Form):
-    file = FileField()
+class ImageUploadForm(ModelForm):
+    class Meta:
+        model = Event
+        fields = ('image', )
 
 
 class SearchForm(Form):
+    city = forms.ChoiceField(required=False  )
+    category = forms.ChoiceField(required=False, label=False)
 
-    categories = Category.objects.all()
-    CATEGORIES_CHOICES = [('', 'Select a category')]
-    for c in categories:
-        CATEGORIES_CHOICES.append((c.id, c.name))
+    def __init__(self, *args, **kwargs):
+        super(Form, self).__init__(*args, **kwargs)
+        self.fields['city'].choices = [('', 'Select a city')] + self.get_cities()
+        self.fields['category'].choices = [('', 'Select a category')] + self.get_categories()
 
-    cities = City.objects.raw("select city.id, city.description || ' ('|| (select count(1) from events_event where city_id = city.id  and datetime > current_timestamp ) || ')' as description from events_city city")
-    CITIES_CHOICES = [('', 'Select a city')]
-    for c in cities:
-        CITIES_CHOICES.append((c.id, c.description))
+    def get_cities(self):
+        cities = City.objects.raw("""select city.id, city.description || ' ('|| (select count(1) from events_event where city_id = city.id  and datetime > current_timestamp ) || ')' as description from events_city city order by city.description""")
+        return list(map(lambda city: (city.id, city.description), cities))
 
-    category = forms.ChoiceField(choices=(CATEGORIES_CHOICES), required=False, label=False)
-    city = forms.ChoiceField(choices=(CITIES_CHOICES), required=False, label=False)
+    def get_categories(self):
+        return list(map(lambda city: (city.id, city.description), Category.objects.all()))
+

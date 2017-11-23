@@ -17,3 +17,17 @@ class EventsGatewayTests(TestCase):
 
         self.assertEquals(response.status_code, 200)
         self.assertTrue(len(response.json()['result']))
+
+    def test_get_place_metadata_street_view_ok(self):
+        gateway = PlacesGateway()
+        response = gateway.get_place_metadata_street_view(-23.561414, -46.6580706)
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue(response.json()['status'], "OK")
+
+    def test_get_place_metadata_street_view_invalid_place(self):
+        gateway = PlacesGateway()
+        response = gateway.get_place_metadata_street_view(0, 0)
+
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()['status'], "ZERO_RESULTS")

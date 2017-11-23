@@ -43,7 +43,21 @@
                           <span class="red-text">{{ form.description.errors }}</span>
                         </div>
 
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">language</i>
+                              {{ form.native_language }}
+                                <label for="{{ form.native_language.id_for_label }}">Native Language </label>
+                              <span class="red-text">{{ form.native_language.errors }}</span>
+                            </div>
 
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">language</i>
+                              {{ form.foreign_language }}
+                                <label for="{{ form.foreign_language.id_for_label }}">Foreign Language </label>
+                              <span class="red-text">{{ form.foreign_language.errors }}</span>
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="input-field col s12 m4">
@@ -108,7 +122,7 @@
     </div>
 </div>
 <script>
-    function init_autocomplete_maps() {
+    function init_google_maps() {
         function create_autocomplete_input(input, options) {
             // store the original event binding function
             var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
@@ -210,8 +224,6 @@
           $("#location_lng").val(e.latLng.lng());
         });
     }
-
-    google.maps.event.addDomListener(window, 'load', init_autocomplete_maps);
 
     $(document).ready(function(){
 
