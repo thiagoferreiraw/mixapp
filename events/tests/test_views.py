@@ -120,13 +120,43 @@ class SearchEventViewTests(TestCase):
         self.assertEquals(len(response.context['events']), 4)
 
     def test_get_success_filter_category(self):
-        "Create a test to filter category and "
+        response = self.client.get("/events/search/?city=&category=1")
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue("form" in response.context)
+        self.assertTrue("events" in response.context)
+        self.assertEquals(len(response.context['events']), 1)
 
     def test_get_success_filter_city(self):
-        "Create a test to filter category"
+        response = self.client.get("/events/search/?city=1&category=")
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue("form" in response.context)
+        self.assertTrue("events" in response.context)
+        self.assertEquals(len(response.context['events']), 1)
 
     def test_get_success_filter_city_and_category(self):
-        "Create a test to filter category"
+        response = self.client.get("/events/search/?city=1&category=2")
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue("form" in response.context)
+        self.assertTrue("events" in response.context)
+        self.assertEquals(len(response.context['events']), 1)        
 
     def test_get_success_filter_with_no_results(self):
-        "Create a test that will return 0 results"
+        response = self.client.get("/events/search/?city=1&category=1")
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue("form" in response.context)
+        self.assertTrue("events" in response.context)
+        self.assertEquals(len(response.context['events']), 0)   
+
+    def test_get_with_invalid_category(self):     
+        response = self.client.get("/events/search/?city=1&category=99")
+
+        self.assertTrue(response.context['form'].errors)
+
+    def test_get_with_invalid_city(self):     
+        response = self.client.get("/events/search/?city=99&category=1")
+
+        self.assertTrue(response.context['form'].errors)
