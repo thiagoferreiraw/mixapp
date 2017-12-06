@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import Form, ModelForm,  HiddenInput, Textarea, CharField, TextInput, FileField
 from events.models import Category, Event, City
 from datetime import datetime
@@ -62,3 +63,21 @@ class ImageUploadForm(ModelForm):
     class Meta:
         model = Event
         fields = ('image', )
+
+
+class SearchForm(Form):
+    city = forms.ChoiceField(required=False  )
+    category = forms.ChoiceField(required=False, label=False)
+
+    def __init__(self, *args, **kwargs):
+        super(Form, self).__init__(*args, **kwargs)
+        self.fields['city'].choices = [('', 'Select a city')] + self.get_cities()
+        self.fields['category'].choices = [('', 'Select a category')] + self.get_categories()
+
+    def get_cities(self):
+        cities = City.objects.raw("""select city.id, city.description || ' ('|| (select count(1) from events_event where city_id = city.id  and datetime > current_timestamp ) || ')' as description from events_city city order by city.description""")
+        return list(map(lambda city: (city.id, city.description), cities))
+
+    def get_categories(self):
+        return list(map(lambda city: (city.id, city.description), Category.objects.all()))
+

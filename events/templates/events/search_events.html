@@ -1,0 +1,77 @@
+{% extends 'base_member.html' %}
+{% load static %}
+{% load thumbnail %}
+
+{% block content %}
+<div class="blue darken-4" style="height: 150px;"></div>
+<div class="container" style="min-height: 80vh; margin-top: -100px;">
+    <div class="col s12">
+        <div class="card white z-depth-3 ">
+            <div class="card-content">
+                <span class="card-title">Find a mix!</span>
+                <form method="GET">
+                    <div class="row">
+                        <div class="input-field col s12 m6">
+                            <i class="material-icons prefix">map</i>
+                          {{ form.city }}
+                            <label for="{{ form.city.id_for_label }}">City </label>
+                          <span class="red-text">{{ form.city.errors }}</span>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <i class="material-icons prefix">apps</i>
+                          {{ form.category }}
+                            <label for="{{ form.category.id_for_label }}">Category </label>
+                          <span class="red-text">{{ form.category.errors }}</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="waves-effect waves-light btn blue darken-4">
+                        Search <i class="material-icons right">search</i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% for event in events %}
+        {% cycle '<div class="row">' '' %}
+        <div class="col s12 l6 ">
+            <div class="card white z-depth-3 ">
+                <div class="card-image">
+                  <picture class="crop-event-img">
+                      {% thumbnail event.image "640x360" crop="center" as im %}
+                        <img src="{{ im.url }}" >
+                      {% endthumbnail %}
+                  </picture>
+                  <span class="card-title">{{ event.name }}</span>
+                </div>
+                <div class="card-content">
+                    <ul>
+                            <li>
+                                <p><b>City: </b>{{ event.city.description }}</p>
+                                <p><b>Location:</b> {{ event.location.description }}</p>
+                                <p><b>Category: </b>{{ event.category.description }}</p>
+                                <p><b>Date: </b> {{ event.datetime }}</p>
+                            </li>
+                    </ul>
+                </div>
+                 <div class="card-action">
+                  <a href="{% url "event_details" event.id %}" class="btn waves-effect waves-light blue "><i class="material-icons left">remove_red_eye</i> View</a>
+
+
+                </div>
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:2 or forloop.last %}</div>{% endif %}
+    {% empty %}
+        <div class="card white z-depth-3 ">
+            <div class="card-content">
+                <p>Sorry! We don't have any event at this moment.</p>
+                <p>Why don't you start right now?</p>
+                <a href="{% url 'create_event' %}" class="btn">Make a MIX</a>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

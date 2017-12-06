@@ -11,43 +11,52 @@
                 <div class="card-content">
                     <span class="card-title">Event Details - {{ event_details.name }}</span>
 
-                    <div class="input-field ">
+                    <!-- <div class="input-field ">
                         <strong>Event: </strong>{{ event_details.name }}
-                    </div>
+                    </div> -->
 
                     <div class="row">
-                        <div class="input-field col s12 m6">
-                            <strong>Catergory: </strong>{{ event_details.category }}
+                        <div class="input-field col s12 m4">
+                            <i class="material-icons left">date_range</i>
+                            <strong>Date: </strong>{{ event_details.date }}                        
+                        </div>
+                        <div class="input-field col s12 m4">
+                            <i class="material-icons left">apps</i>
+                            <strong>Category: </strong>{{ event_details.category }}
                         </div>
 
-                        <div class="input-field col s12 m6">
+                        <div class="input-field col s12 m4">
+                            <i class="material-icons left">attach_money</i>
                           <strong>Expected Costs: </strong>$ {{ event_details.expected_costs }}
                         </div>
                     </div>
-                    <div class="input-field ">
-                      <strong>Description: </strong>{{ event_details.description }}                        
-                    </div>
                     <div class="row">
                         <div class="input-field col s12 m4">
-                             <strong>Date: </strong>{{ event_details.date }}                        
+                            <i class="material-icons left">watch_later</i>
+                            <strong>Time: </strong>{{ event_details.time }}                        
                         </div>
 
                         <div class="input-field col s12 m4">
-                          <strong>Time: </strong>{{ event_details.time }}                        
-                        </div>
-
-                        <div class="input-field col s12 m4">
+                                <i class="material-icons left">timelapse</i>
                           <strong>Duration: </strong>{{ event_details.duration }} hours                       
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons left">description</i>
+                            <strong>Description: </strong>{{ event_details.description }}                        
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field col s12 m6 ">
+                            <i class="material-icons left">map</i>
                             <strong>City: </strong>
                              {{ event_details.city }}
                         </div>
 
                         <div class="input-field col s12 m6">
+                            <i class="material-icons left">place</i>
                             <strong>Location: </strong>
                              {{ event_details.location }}                         
                         </div>
