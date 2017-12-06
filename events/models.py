@@ -53,6 +53,15 @@ class Language(models.Model):
         return self.name
 
 
+class EventTemplate(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.CharField(max_length=2000)
+    category = models.ForeignKey(Category)
+
+    def __str__(self):
+        return self.name
+
+
 class Event(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=2000)
