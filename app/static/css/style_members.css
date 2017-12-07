@@ -28,7 +28,7 @@ header, main, footer {
 
 /*Crop img for the event listing*/
 .crop-event-img {
- height: 150px;
+ height: 100%;
  width: 100%;
  overflow: hidden;
  display:block;
