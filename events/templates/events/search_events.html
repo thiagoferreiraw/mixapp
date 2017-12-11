@@ -37,14 +37,15 @@
         {% cycle '<div class="row">' '' %}
         <div class="col s12 l6 ">
             <div class="card white z-depth-3 ">
-                <div class="card-image">
-                  <picture class="crop-event-img">
-                      {% thumbnail event.image "640x360" crop="center" as im %}
-                        <img src="{{ im.url }}" >
-                      {% endthumbnail %}
-                  </picture>
-                  <span class="card-title">{{ event.name }}</span>
-                </div>
+                <a href="{% url "event_details" event.id %}" >
+                    <div class="card-image"><picture class="crop-event-img">
+                          {% thumbnail event.image "640x360" crop="center" as im %}
+                            <img src="{{ im.url }}" >
+                          {% endthumbnail %}
+                      </picture>
+                      <span class="card-title">{{ event.name }}</span>
+                    </div>
+                </a>
                 <div class="card-content">
                     <ul>
                             <li>
@@ -55,10 +56,8 @@
                             </li>
                     </ul>
                 </div>
-                 <div class="card-action">
+                 <div class="card-action center-align">
                   <a href="{% url "event_details" event.id %}" class="btn waves-effect waves-light blue "><i class="material-icons left">remove_red_eye</i> View</a>
-
-
                 </div>
             </div>
         </div>
