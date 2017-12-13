@@ -13,34 +13,21 @@
                         {% csrf_token %}
 
                         <span class="red-text">{{ form.non_field_errors }}</span>
-                        <div class="input-field ">
-                            <i class="material-icons prefix">edit</i>
-                            {{ form.name }}
-                            <label for="{{ form.name.id_for_label }}">Event name </label>
-                          <span class="red-text">{{ form.name.errors }}</span>
-                        </div>
 
                         <div class="row">
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12 l8">
                                 <i class="material-icons prefix">apps</i>
-                              {{ form.category }}
-                                <label for="{{ form.category.id_for_label }}">Category </label>
-                              <span class="red-text">{{ form.category.errors }}</span>
+                              {{ form.template }}
+                                <label for="{{ form.template.id_for_label }}">Event Type </label>
+                              <span class="red-text">{{ form.template.errors }}</span>
                             </div>
 
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s12 m4">
                                 <i class="material-icons prefix">attach_money</i>
                               {{ form.expected_costs }}
                                 <label for="{{ form.expected_costs.id_for_label }}">Expected costs </label>
                               <span class="red-text">{{ form.expected_costs.errors }}</span>
                             </div>
-                        </div>
-
-                        <div class="input-field ">
-                            <i class="material-icons prefix">description</i>
-                          {{ form.description }}
-                          <label for="{{ form.description.id_for_label }}">Event Description </label>
-                          <span class="red-text">{{ form.description.errors }}</span>
                         </div>
 
                         <div class="row">

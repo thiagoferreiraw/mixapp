@@ -23,44 +23,31 @@
 	"model": "events.city",
 	"pk": 1,
 	"fields": {
-		"description": "S\u00e3o Paulo, State of S\u00e3o Paulo, Brazil",
-		"place_id": "ChIJ0WGkg4FEzpQRrlsz_whLqZs",
+		"description": "Lisbon, Portugal",
+		"place_id": "ChIJO_PkYRozGQ0R0DaQ5L3rAAQ",
 		"image": null,
-		"latitude": -23.5505199,
-		"longitude": -46.6333094,
+		"latitude": 38.7222524,
+		"longitude": -9.1393366,
 		"photo_reference": null,
 		"photo_url": null,
-		"timezone": "-2.0"
+		"timezone": "0.0"
 	}
 }, {
 	"model": "events.city",
 	"pk": 2,
 	"fields": {
-		"description": "Springfield, OR, USA",
-		"place_id": "ChIJvwJwLkfewFQR1j9KnOnbNgU",
+		"description": "New York, NY, USA",
+		"place_id": "ChIJOwg_06VPwokRYv534QaPC8g",
 		"image": null,
-		"latitude": 44.0462362,
-		"longitude": -123.0220289,
+		"latitude": 40.7127753,
+		"longitude": -74.0059728,
 		"photo_reference": null,
 		"photo_url": null,
-		"timezone": "-8.0"
+		"timezone": "-5.0"
 	}
 }, {
 	"model": "events.city",
 	"pk": 3,
-	"fields": {
-		"description": "Franca, SP, Brazil",
-		"place_id": "ChIJMQjGXbOpsJQRYhRoaYpVuGg",
-		"image": null,
-		"latitude": -20.5393288,
-		"longitude": -47.4013437,
-		"photo_reference": null,
-		"photo_url": null,
-		"timezone": "-2.0"
-	}
-}, {
-	"model": "events.city",
-	"pk": 4,
 	"fields": {
 		"description": "Santiago, Santiago Metropolitan Region, Chile",
 		"place_id": "ChIJuzrymgbQYpYRl0jtCfRZnYc",
@@ -72,52 +59,65 @@
 		"timezone": "-3.0"
 	}
 }, {
+	"model": "events.city",
+	"pk": 4,
+	"fields": {
+		"description": "Berlin, Germany",
+		"place_id": "ChIJAVkDPzdOqEcRcDteW0YgIQQ",
+		"image": null,
+		"latitude": 52.5200066,
+		"longitude": 13.404954,
+		"photo_reference": null,
+		"photo_url": null,
+		"timezone": "1.0"
+	}
+}, {
 	"model": "events.location",
 	"pk": 1,
 	"fields": {
-		"description": "Av. Pedro \u00c1lvares Cabral - Vila Mariana, S\u00e3o Paulo - SP, 04002-010, Brazil",
-		"place_id": "ChIJ0RGdBvFZzpQRQeWcrwlhk8s",
-		"latitude": -23.5874162,
-		"longitude": -46.6576336,
+		"description": "R. Me. Deus 4, 1900-312 Lisboa, Portugal",
+		"place_id": "ChIJX6FT2ugzGQ0RKLxFhkpvHbM",
+		"latitude": 38.7247424,
+		"longitude": -9.1141428,
 		"photo_reference": null,
 		"photo_url": null,
-		"timezone": "-2.0"
+		"timezone": "0.0"
 	}
 }, {
 	"model": "events.location",
 	"pk": 2,
 	"fields": {
-		"description": "32nd Street, Springfield, OR, USA",
-		"place_id": "ChIJQ-WTY_bgwFQRJXQgrxLlyNs",
-		"latitude": 44.0565321,
-		"longitude": -122.9801254,
+		"description": "New York, NY, USA",
+		"place_id": "ChIJ4zGFAZpYwokRGUGph3Mf37k",
+		"latitude": 40.7828647,
+		"longitude": -73.9653551,
 		"photo_reference": null,
 		"photo_url": null,
-		"timezone": "-8.0"
+		"timezone": "-5.0"
 	}
 }, {
 	"model": "events.location",
 	"pk": 3,
 	"fields": {
-		"description": "Av. Francisco Paulo Quintanilha Ribeiro, 639-827 - Parque Francal, Franca - SP, Brazil",
-		"place_id": "ChIJR4rAd4iosJQR237Ect2fzQg",
-		"latitude": -20.5591571,
-		"longitude": -47.4080822,
+		"description": "Santa Luc\u00eda Hill, Santiago, Santiago Metropolitan Region, Chile",
+		"place_id": "ChIJKaxCO5_FYpYRgz50ZCqFnJ8",
+		"latitude": -33.4402778,
+		"longitude": -70.6433333,
 		"photo_reference": null,
 		"photo_url": null,
-		"timezone": "-2.0"
+		"timezone": "-3.0"
 	}
 }, {
 	"model": "events.location",
 	"pk": 4,
 	"fields": {
-		"description": "Enrique Mac Iver 133, Santiago, Regi\u00f3n Metropolitana, Chile",
-		"place_id": "ChIJewd2wqHFYpYRH3ql5JITzo8",
-		"latitude": -33.4411671,
-		"longitude": -70.646472,
+		"description": "Platz der Republik 1, Deutscher Bundestag, 11011 Berlin, Germany",
+		"place_id": "ChIJO3GBWcdRqEcRmW3Z2YcEi2E",
+		"latitude": 52.518619,
+		"longitude": 13.3763176,
 		"photo_reference": null,
 		"photo_url": null,
-		"timezone": "-3.0"
+		"timezone": "1.0"
 	}
 }, {
 	"model": "events.language",
@@ -637,88 +637,112 @@
 		"groups": [],
 		"user_permissions": []
 	}
+},  {
+	"model": "events.eventtemplate",
+	"pk": 1,
+	"fields": {
+		"name": "Origami MIX",
+		"description": "Origami MIX",
+		"category": 1
+	}
+}, {
+	"model": "events.eventtemplate",
+	"pk": 2,
+	"fields": {
+		"name": "Cooking a traditional dish MIX",
+		"description": "Cooking a traditional dish MIX",
+		"category": 2
+	}
+}, {
+	"model": "events.eventtemplate",
+	"pk": 3,
+	"fields": {
+		"name": "Meditation MIX",
+		"description": "Meditation MIX",
+		"category": 3
+	}
+}, {
+	"model": "events.eventtemplate",
+	"pk": 4,
+	"fields": {
+		"name": "Hacking Session MIX",
+		"description": "Hacking Session MIX",
+		"category": 2
+	}
 }, {
 	"model": "events.event",
 	"pk": 1,
 	"fields": {
-		"name": "Food MIX",
-		"description": "Food mix",
+		"template": 1,
 		"duration": 2,
-		"date": "2019-11-03",
-		"time": "18:30:00",
-		"datetime": "2019-11-03T18:30:00Z",
+		"date": "2017-12-27",
+		"time": "22:31:00",
+		"datetime": "2017-12-27T22:31:00Z",
 		"city": 1,
 		"location": 1,
-		"location_lat": -23.5874162,
-		"location_lng": -46.6576336,
-		"expected_costs": 20.0,
+		"location_lat": 38.7247424,
+		"location_lng": -9.11414279999997,
+		"expected_costs": 1.0,
 		"hosted_by": 1,
-		"category": 2,
-		"image": "cbdc5574fc354206bd98cafeb514cc98.jpg",
-		"native_language": 2,
+		"image": "1eda65d180014cf8ad37a92b3f4cbaee.jpg",
+		"native_language": 1,
 		"foreign_language": 1
 	}
 }, {
 	"model": "events.event",
 	"pk": 2,
 	"fields": {
-		"name": "Music MIX",
-		"description": "Music mix",
+		"template": 3,
 		"duration": 2,
-		"date": "2018-11-30",
-		"time": "22:27:00",
-		"datetime": "2020-11-30T22:27:00Z",
+		"date": "2017-12-19",
+		"time": "17:05:00",
+		"datetime": "2017-12-19T17:05:00Z",
 		"city": 2,
 		"location": 2,
-		"location_lat": 44.0565321,
-		"location_lng": -122.9801254,
-		"expected_costs": 30.0,
+		"location_lat": 40.7828647,
+		"location_lng": -73.9653551,
+		"expected_costs": 1.0,
 		"hosted_by": 1,
-		"category": 1,
-		"image": "homepage_WwBGbt1.jpg",
+		"image": "95c6058288ac48618cef22ee131f6a23.jpg",
 		"native_language": 1,
-		"foreign_language": 3
+		"foreign_language": 2
 	}
 }, {
 	"model": "events.event",
 	"pk": 3,
 	"fields": {
-		"name": "Meditation MIX",
-		"description": "Meditation MIX",
-		"duration": 2,
-		"date": "2019-11-30",
-		"time": "18:30:00",
-		"datetime": "2019-11-30T18:30:00Z",
+		"template": 3,
+		"duration": 1,
+		"date": "2017-12-30",
+		"time": "23:05:00",
+		"datetime": "2017-12-30T23:05:00Z",
 		"city": 3,
 		"location": 3,
-		"location_lat": -20.5591571,
-		"location_lng": -47.4080822,
+		"location_lat": -33.4402778,
+		"location_lng": -70.6433333,
 		"expected_costs": 2.0,
 		"hosted_by": 1,
-		"category": 3,
-		"image": "884239adb85a4ecbb378593cf4f91119.jpg",
+		"image": "75fe1d5408cd45b692251645d883cb1f.jpg",
 		"native_language": 2,
-		"foreign_language": 1
+		"foreign_language": 3
 	}
 }, {
 	"model": "events.event",
 	"pk": 4,
 	"fields": {
-		"name": "Coffee Tasting MIX",
-		"description": "Coffee tasting",
-		"duration": 1,
-		"date": "2019-11-29",
-		"time": "22:31:00",
-		"datetime": "2019-11-29T22:31:00Z",
+		"template": 4,
+		"duration": 2,
+		"date": "2017-12-29",
+		"time": "23:06:00",
+		"datetime": "2017-12-29T23:06:00Z",
 		"city": 4,
 		"location": 4,
-		"location_lat": -33.4411671,
-		"location_lng": -70.646472,
-		"expected_costs": 10.0,
+		"location_lat": 52.518619,
+		"location_lng": 13.3763176,
+		"expected_costs": 0.0,
 		"hosted_by": 1,
-		"category": 3,
-		"image": "c635d32f279e40408be6c44873164893.jpg",
-		"native_language": 3,
+		"image": "62e0299a012448209f69461fe2b7ebb1.jpg",
+		"native_language": 1,
 		"foreign_language": 2
 	}
 }]
