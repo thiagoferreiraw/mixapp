@@ -14,7 +14,6 @@ class EventEditView(View):
         self.places_service = PlacesService()
 
     def get(self, request, event_id):
-        print("ID DO EVENTO: ".format(event_id))
         event = self.get_event_or_404(event_id, request.user.id)
 
         form = EventForm(instance=event)

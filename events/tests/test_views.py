@@ -134,3 +134,35 @@ class SearchEventViewTests(TestCase):
         response = self.client.get("/events/search/?city=99&category=1")
 
         self.assertTrue(response.context['form'].errors)
+
+
+class EventTemplateViewTests(TestCase):
+    fixtures = ['test_data.json']
+
+    def setUp(self):
+        self.client.login(username="admin", password="123")
+
+    def test_get_create_success(self):
+        response = self.client.get("/events/templates/new/")
+        self.assertEquals(response.status_code, 200)
+
+    def test_get_edit_success(self):
+        response = self.client.get("/events/templates/edit/1/")
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue("form" in response.context)
+
+    def test_get_list_success(self):
+        response = self.client.get("/events/templates/list/")
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue("templates" in response.context)
+        self.assertTrue(len(response.context["templates"]) > 0)
+
+    def test_post_create_success(self):
+        response = self.client.post("/events/templates/new/",
+                                   {"name": "new template", "category": 1, "description": "test"})
+        self.assertRedirects(response, "/events/templates/list/")
+
+    def test_post_edit_success(self):
+        response = self.client.post("/events/templates/edit/1/",
+                                   {"name": "new template", "category": 1, "description": "test"})
+        self.assertRedirects(response, "/events/templates/list/")

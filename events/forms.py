@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import Form, ModelForm,  HiddenInput, Textarea, CharField, TextInput, FileField
-from events.models import Category, Event, City
+from events.models import Category, Event, City, EventTemplate
 from datetime import datetime
 
 
@@ -80,3 +80,11 @@ class SearchForm(Form):
     def get_categories(self):
         return list(map(lambda city: (city.id, city.description), Category.objects.all()))
 
+class EventTemplateForm(ModelForm):
+    class Meta:
+        model = EventTemplate
+        fields = ('name', 'description', 'category')
+
+    def __init__(self, *args, **kwargs):
+        super(ModelForm, self).__init__(*args, **kwargs)
+        self.fields['category'].empty_label = "Select a category"
