@@ -1,0 +1,9 @@
+find . -name '*.pyc' -exec rm -f {} +
+find . -name '*.pyo' -exec rm -f {} +
+find . -name '*~' -exec rm -f {} +
+rm -rf builds/
+coverage run --include=users/*,app/*,pages/*,events/*  manage.py test --settings=app.config.test_settings
+Creating test database for alias 'default'...
+
+Destroying test database for alias 'default'...
+Makefile:30: recipe for target 'tests' failed
