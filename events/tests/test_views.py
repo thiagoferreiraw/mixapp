@@ -61,9 +61,12 @@ class EventDetailsViewsTests(TestCase):
         self.client.login(username="admin", password="123")
 
     def test_get_success(self):
-        response = self.client.get("/events/details/1/")
+        response = self.client.get("/events/details/1")
         self.assertEquals(response.status_code, 200)
 
+    def test_get_not_found(self):
+        response = self.client.get("/events/details/99")
+        self.assertEquals(response.status_code, 404)
 
 class SearchEventViewTests(TestCase):
     fixtures = ['test_data.json']
