@@ -15,14 +15,14 @@
                         <img src="{{ im.url }}" >
                       {% endthumbnail %}
                   </picture>
-                  <span class="card-title">{{ event.name }}</span>
+                  <span class="card-title">{{ event.template.name    }}</span>
                 </div></a>
                 <div class="card-content">
                     <ul>
                             <li>
                                 <p><b>City: </b>{{ event.city.description }}</p>
                                 <p><b>Location:</b> {{ event.location.description }}</p>
-                                <p><b>Category: </b>{{ event.category.description }}</p>
+                                <p><b>Category: </b>{{ event.template.category.description }}</p>
 
                             </li>
                     </ul>

@@ -23,7 +23,7 @@
                                         <div style="background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('{{ im.url }}'); height:400px; background-repeat: no-repeat; padding: 0;background-size: cover;background-position: center center;">
                                     {% endthumbnail %}
                                 </picture>
-                                <span class="card-title" >Event Details - {{ event_details.name }}</span>
+                                <span class="card-title" >Event Details - {{ event_details.template.name }}</span>
                             </div>    
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="input-field col s12 m4">
                                 <i class="material-icons left">apps</i>
-                                <strong>Category: </strong>{{ event_details.category }}
+                                <strong>Category: </strong>{{ event_details.template.category }}
                             </div>
 
                             <div class="input-field col s12 m4">
