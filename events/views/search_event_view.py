@@ -18,7 +18,7 @@ class EventSearchView(View):
         events = Event.objects.filter(date__gte=datetime.now().date())
 
         if category:
-            events = events.filter(category__id=category)
+            events = events.filter(template__category__id=category)
 
         if city:
             events = events.filter(city__id=city)     

@@ -59,12 +59,11 @@ class EventTemplate(models.Model):
     category = models.ForeignKey(Category)
 
     def __str__(self):
-        return self.name
+        return f'{self.category.description} - {self.name}'
 
 
 class Event(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField(max_length=2000)
+    template = models.ForeignKey(EventTemplate)
     duration = models.IntegerField()
     date = models.DateField()
     time = models.TimeField()
@@ -75,13 +74,12 @@ class Event(models.Model):
     location_lng = models.FloatField()
     expected_costs = models.FloatField()
     hosted_by = models.ForeignKey(User)
-    category = models.ForeignKey(Category)
     image = models.ImageField(null=True)
     native_language = models.ForeignKey(Language, related_name="native_language")
     foreign_language = models.ForeignKey(Language, related_name="foreign_language")
 
     def __str__(self):
-        return self.name
+        return f'{self.template.name}'
 
     def get_remote_image(self, image_url):
         result = urllib.request.urlretrieve(image_url)

@@ -21,8 +21,7 @@ class EventsViewsTests(TestCase):
     @patch('django.contrib.messages.success', return_value=True)
     def test_post_create_success(self, mock_messages):
         response = self.client.post("/events/new/", {
-            'name': "Test Event",
-            'description': "test Event",
+            'template': 1,
             'duration': 1,
             'date': (datetime.now() + timedelta(days=1)).date(),
             'time': datetime.now().time(),
@@ -30,7 +29,6 @@ class EventsViewsTests(TestCase):
             'hosted_by': self.user.id,
             "location_lat": "-33.8688",
             "location_lng": "151.2195",
-            'category': Category.objects.get(pk=1).id,
             'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
             'location_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
             'foreign_language': 1,
@@ -43,7 +41,7 @@ class EventsViewsTests(TestCase):
 
         self.assertEqual(response.url, "/events/edit/{}/image/".format(event.id))
 
-        self.assertEquals(event.description, "test Event")
+        self.assertEquals(event.template.id, 1)
 
         self.assertTrue(mock_messages.called)
 
@@ -57,48 +55,24 @@ class EventsViewsTests(TestCase):
 
 
 class EventDetailsViewsTests(TestCase):
-    fixtures = ['categories.json', 'languages.json']
+    fixtures = ['test_data.json']
 
     def setUp(self):
-        self.factory = RequestFactory()
+        self.client.login(username="admin", password="123")
 
-    @patch('django.contrib.messages.success', return_value=True)
-    def test_get_success(self, mock_messages):
-        user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
-        Event.objects.all().delete()
-
-        request = self.factory.post("/events/new/", {
-            'name': "Test Event",
-            'description': "test Event",
-            'duration': 1,
-            'date': (datetime.now() + timedelta(days=1)).date(),
-            'time': datetime.now().time(),
-            'expected_costs': 200,
-            'hosted_by': user.id,
-            "location_lat": "-33.8688",
-            "location_lng": "151.2195",
-            'category': Category.objects.get(pk=1).id,
-            'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-            'location_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-            'foreign_language': 1,
-            'native_language': 2,
-        })
-
-        request.user = user
-
-        resp = EventCreateView().post(request)
-        event = Event.objects.all().first()
-        response = EventDetailsView().get(request, event.id)
-
+    def test_get_success(self):
+        response = self.client.get("/events/details/1")
         self.assertEquals(response.status_code, 200)
 
+    def test_get_not_found(self):
+        response = self.client.get("/events/details/99")
+        self.assertEquals(response.status_code, 404)
 
 class SearchEventViewTests(TestCase):
     fixtures = ['test_data.json']
 
     def setUp(self):
-        self.user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
-        self.client.login(username="tester", password="top_secret")
+        self.client.login(username="admin", password="123")
 
     def test_get_success_without_filter(self):
         response = self.client.get("/events/search/")
@@ -136,27 +110,59 @@ class SearchEventViewTests(TestCase):
         self.assertEquals(len(response.context['events']), 1)
 
     def test_get_success_filter_city_and_category(self):
-        response = self.client.get("/events/search/?city=1&category=2")
-
-        self.assertEquals(response.status_code, 200)
-        self.assertTrue("form" in response.context)
-        self.assertTrue("events" in response.context)
-        self.assertEquals(len(response.context['events']), 1)        
-
-    def test_get_success_filter_with_no_results(self):
         response = self.client.get("/events/search/?city=1&category=1")
 
         self.assertEquals(response.status_code, 200)
         self.assertTrue("form" in response.context)
         self.assertTrue("events" in response.context)
-        self.assertEquals(len(response.context['events']), 0)   
+        self.assertEquals(len(response.context['events']), 1)
 
-    def test_get_with_invalid_category(self):     
+    def test_get_success_filter_with_no_results(self):
+        response = self.client.get("/events/search/?city=99&category=1")
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue("form" in response.context)
+        self.assertTrue("events" in response.context)
+        self.assertEquals(len(response.context['events']), 0)
+
+    def test_get_with_invalid_category(self):
         response = self.client.get("/events/search/?city=1&category=99")
 
         self.assertTrue(response.context['form'].errors)
 
-    def test_get_with_invalid_city(self):     
+    def test_get_with_invalid_city(self):
         response = self.client.get("/events/search/?city=99&category=1")
 
         self.assertTrue(response.context['form'].errors)
+
+
+class EventTemplateViewTests(TestCase):
+    fixtures = ['test_data.json']
+
+    def setUp(self):
+        self.client.login(username="admin", password="123")
+
+    def test_get_create_success(self):
+        response = self.client.get("/events/templates/new/")
+        self.assertEquals(response.status_code, 200)
+
+    def test_get_edit_success(self):
+        response = self.client.get("/events/templates/edit/1/")
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue("form" in response.context)
+
+    def test_get_list_success(self):
+        response = self.client.get("/events/templates/list/")
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue("templates" in response.context)
+        self.assertTrue(len(response.context["templates"]) > 0)
+
+    def test_post_create_success(self):
+        response = self.client.post("/events/templates/new/",
+                                   {"name": "new template", "category": 1, "description": "test"})
+        self.assertRedirects(response, "/events/templates/list/")
+
+    def test_post_edit_success(self):
+        response = self.client.post("/events/templates/edit/1/",
+                                   {"name": "new template", "category": 1, "description": "test"})
+        self.assertRedirects(response, "/events/templates/list/")

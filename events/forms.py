@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import Form, ModelForm,  HiddenInput, Textarea, CharField, TextInput, FileField
-from events.models import Category, Event, City
+from events.models import Category, Event, City, EventTemplate
 from datetime import datetime
 
 
@@ -40,17 +40,16 @@ class EventForm(ModelForm):
 
     class Meta:
         model = Event
-        fields = ('id', 'name', 'description', 'duration',
-                  'date', 'time', 'city', 'category',
+        fields = ('id', 'template', 'duration',
+                  'date', 'time', 'city',
                   'location', 'expected_costs', 'hosted_by',
                   'location_lat', 'location_lng', 'native_language',
                   'foreign_language')
 
     def set_up_widgets(self):
-        self.fields['category'].empty_label = "Select a category"
+        self.fields['template'].empty_label = "Select an event type"
         self.fields['native_language'].empty_label = "Select the native language"
         self.fields['foreign_language'].empty_label = "Select the foreign language"
-        self.fields['description'].widget = Textarea(attrs={'class': 'materialize-textarea'})
         self.fields['duration'].widget.attrs.update({'min': 1, 'max': 10})
         self.fields['expected_costs'].widget.attrs.update({'min': 0})
         self.fields['date'].widget.attrs['class'] = "datepicker"
@@ -81,3 +80,11 @@ class SearchForm(Form):
     def get_categories(self):
         return list(map(lambda city: (city.id, city.description), Category.objects.all()))
 
+class EventTemplateForm(ModelForm):
+    class Meta:
+        model = EventTemplate
+        fields = ('name', 'description', 'category')
+
+    def __init__(self, *args, **kwargs):
+        super(ModelForm, self).__init__(*args, **kwargs)
+        self.fields['category'].empty_label = "Select a category"
