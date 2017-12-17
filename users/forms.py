@@ -1,8 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm as UserCreationFormDjango, User, UsernameField
 from django.forms import ModelForm, MultipleChoiceField
-from users.models import Category, UserCategory, SignupInvitation, SignupWaitingList
+from users.models import Category, UserCategory, SignupInvitation, SignupWaitingList, Profile
 from django.conf import settings
 from django.core import validators
+from datetime import datetime
 
 
 class UserCreationForm(UserCreationFormDjango):
@@ -78,3 +79,29 @@ class UserWaitingListForm(ModelForm):
     class Meta:
         model = SignupWaitingList
         fields = ('email',)
+
+
+class ProfileForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ModelForm, self).__init__(*args, **kwargs)
+
+        self.set_up_widgets()
+
+    def is_valid(self):
+        valid = super(ProfileForm,self).is_valid()
+        if not valid:
+            return valid
+
+        if self.cleaned_data['birth_date'] >= datetime.now().date():
+            self.add_error("birth_date", "Invalid birth date.")
+            return False
+
+        return True
+
+    class Meta:
+        model = Profile
+        fields = ('birth_city', 'actual_city', 'languages', 'birth_date')
+
+    def set_up_widgets(self):
+        self.fields['birth_date'].widget.attrs['class'] = "datepicker"

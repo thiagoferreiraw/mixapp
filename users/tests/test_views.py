@@ -2,6 +2,7 @@ from django.test import TestCase, RequestFactory
 from mock import patch
 from users.models import *
 from users.views.user_edit_profile_view import UserEditProfileView
+from datetime import datetime
 
 
 class TestViews(TestCase):
@@ -220,15 +221,22 @@ class TestViews(TestCase):
             "email": "invited@test.com",
             "first_name": "Tester changed1",
             "last_name": "Tester changed2",
+            "birth_city": "My birth city",
+            "actual_city": "My actual city",
+            "languages": "english",
+            "birth_date": "2002-01-03"
         })
 
         self.assertEqual(response.url, "/user/profile/")
         self.assertEqual(response.status_code, 302)
 
-        updated_user = User.objects.filter(username="tester")[0]
+        updated_user = User.objects.get(username="tester")
 
         self.assertEqual(updated_user.first_name, "Tester changed1")
         self.assertEqual(updated_user.last_name, "Tester changed2")
+        self.assertEqual(updated_user.profile.birth_city , "My birth city")
+        self.assertEqual(updated_user.profile.actual_city , "My actual city")
+        self.assertEqual(updated_user.profile.languages , "english")
         self.assertTrue(mock_messages.called)
 
     @patch('django.contrib.messages.success', return_value=True)
