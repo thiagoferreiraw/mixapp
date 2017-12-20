@@ -22,12 +22,12 @@
     <section class="search">
         {# <div class="container">#}
             <div style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                    url('{% static "img/Guides.jpeg" %}');background-size: cover;background-position: center center; height: 300px;">
+                    url('{% static "img/map.jpeg" %}');background-size: cover;background-position: center center; height: 300px;">
                 <div class="caption center-align white-text">
                     <!-- <input class="input-field" style="width:400px; margin-top:100px; border: 1px solid #ededed; padding: 5px;" placeholder="Enter a location..."/><i class="medium material-icons" style="font-size: 28px; padding: 5px; border: 1px solid #fff; padding:12px;">search</i> -->
                     <!-- <div class="search-wrapper card"> -->
                         <i class="material-icons" style="padding-top:10px;">search</i>
-                        <input id="search" style="width:350px; margin-top:100px;" placeholder="Enter a location...">
+                        <input id="search" style="width:350px; margin-top:100px;" placeholder="Enter a location..."><button class="btn btn-primary" onClick="map('m-events')" style="margin-left:10px;">Search</button>
                         <div class="search-results"></div>
                    <!--  </div> -->
                 </div>
@@ -48,7 +48,7 @@
         </div>
     </section> -->
 
-     <div class="map-events">
+     <div class="map-events" id="m-events" style="display: none;">
         <div class="container">
             <div class="row">
                 <div class="col s12 m12" style="background: 
@@ -143,132 +143,16 @@
         </div>
     </div>
 
-    <script>
-    function init_google_maps() {
-        function create_autocomplete_input(input, options) {
-            // store the original event binding function
-            var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
+    <script type="text/javascript">
 
-            function addEventListenerWrapper(type, listener) {
-                // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
-                // and then trigger the original listener.
-                if (type == "keydown") {
-                    var orig_listener = listener;
-                    listener = function(event) {
-                        var suggestion_selected = $(".pac-item-selected").length > 0;
-                        if ((event.which == 13 || event.which == 9) && !suggestion_selected) {
-                            var simulated_downarrow = $.Event("keydown", {
-                                keyCode: 40,
-                                which: 40
-                            });
-                            orig_listener.apply(input, [simulated_downarrow]);
-                        }
-
-                        orig_listener.apply(input, [event]);
-                    };
-                }
-
-                _addEventListener.apply(input, [type, listener]);
-            }
-
-            input.addEventListener = addEventListenerWrapper;
-            input.attachEvent = addEventListenerWrapper;
-
-            return new google.maps.places.Autocomplete(input, options);
+        function map(el){
+            var display = document.getElementById(el).style.display;
+            if(display == "none")
+                document.getElementById(el).style.display = 'block';
+            else
+                document.getElementById(el).style.display = 'none';
         }
 
-        var initial_coordinates = {lat: "52.50697" ,
-                                   lng: "13.2843063"};
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: initial_coordinates,
-            {% if  form.location_lat.value %}
-                zoom: 16
-            {% else %}
-                zoom: 2
-            {% endif %}
-        });
-
-        var marker = new google.maps.Marker({
-          {% if  form.location_lat.value %}
-            position: initial_coordinates,
-          {% endif %}
-          map: map,
-          title: 'Location'
-        });
-
-        var autocomplete_city = create_autocomplete_input(document.getElementById('autocomplete_city'),  {types: ['(cities)']});
-        var autocomplete_location = create_autocomplete_input(document.getElementById('autocomplete_location'), {strictBounds: true})
-
-        autocomplete_city.addListener('place_changed', function (e) {
-            var place = autocomplete_city.getPlace();
-            if (!place.geometry) {
-                // User entered the name of a Place that was not suggested and
-                // pressed the Enter key, or the Place Details request failed.
-                $("#city_place_id").val("")
-                window.alert("No details available for input: '" + place.name + "'");
-                return;
-            }
-
-            $("#city_place_id").val(place.place_id)
-            $("#location_place_id").val("")
-            $("#autocomplete_location").val("")
-
-            map.setCenter(place.geometry.location);
-            map.setZoom(13)
-
-            autocomplete_location.setBounds(place.geometry.viewport);
-        });
-
-        autocomplete_location.addListener('place_changed', function (e) {
-            var place = autocomplete_location.getPlace();
-            if (!place.geometry) {
-                // User entered the name of a Place that was not suggested and
-                // pressed the Enter key, or the Place Details request failed.
-                document.getElementById("location_place_id").setAttribute('value', "");
-                window.alert("No details available for input: '" + place.name + "'");
-                return;
-            }
-
-            marker.setPosition(place.geometry.location);
-            map.setCenter(marker.getPosition());
-            map.setZoom(16)
-
-            $("#location_lat").val(place.geometry.location.lat());
-            $("#location_lng").val(place.geometry.location.lng());
-
-            $("#location_place_id").val(place.place_id)
-        });
-
-        map.addListener('click', function(e) {
-          marker.setPosition(e.latLng)
-          $("#location_lat").val(e.latLng.lat());
-          $("#location_lng").val(e.latLng.lng());
-        });
-    }
-
-    $(document).ready(function(){
-
-        // Form validation...
-        $('form').submit(function (e) {
-
-            city_place_id = $("#city_place_id").val();
-            location_place_id = $("#location_place_id").val();
-
-            if (!location_place_id || !city_place_id){
-                alert("Please choose correctly a city and a location")
-                e.preventDefault();
-                return;
-            }
-
-        }).bind("keypress", function (e) {
-            if (e.keyCode == 13) {
-                return false;
-            }
-        });
-
-    });
-
-</script>
+    </script>
 
 {% endblock %}
