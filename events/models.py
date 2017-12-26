@@ -93,3 +93,10 @@ class Event(models.Model):
         if self.date is not None and self.time is not None:
             self.datetime = datetime.combine(date=self.date, time=self.time)
         super(Event, self).save(*args, **kwargs)
+
+class Palindrome(models.Model):
+    word = models.CharField(max_length=500)
+    is_palindrome = models.BooleanField()
+
+    def __str__(self):
+        return self.word
