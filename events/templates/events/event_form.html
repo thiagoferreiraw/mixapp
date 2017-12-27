@@ -1,0 +1,239 @@
+{% extends 'base_member.html' %}
+{% load static %}
+
+{% block content %}
+<div class="blue darken-4" style="height: 150px;"></div>
+<div class="container" style="min-height: 80vh; margin-top: -100px;">
+    <div class="row">
+        <div class="col s12 ">
+            <div class="card white z-depth-3">
+                <div class="card-content">
+                    <span class="card-title">{{ form_action }} Event</span>
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <span class="red-text">{{ form.non_field_errors }}</span>
+
+                        <div class="row">
+                            <div class="input-field col s12 l8">
+                                <i class="material-icons prefix">apps</i>
+                              {{ form.template }}
+                                <label for="{{ form.template.id_for_label }}">Event Type </label>
+                              <span class="red-text">{{ form.template.errors }}</span>
+                            </div>
+
+                            <div class="input-field col s12 m4">
+                                <i class="material-icons prefix">attach_money</i>
+                              {{ form.expected_costs }}
+                                <label for="{{ form.expected_costs.id_for_label }}">Expected costs </label>
+                              <span class="red-text">{{ form.expected_costs.errors }}</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">language</i>
+                              {{ form.native_language }}
+                                <label for="{{ form.native_language.id_for_label }}">Native Language </label>
+                              <span class="red-text">{{ form.native_language.errors }}</span>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">language</i>
+                              {{ form.foreign_language }}
+                                <label for="{{ form.foreign_language.id_for_label }}">Foreign Language </label>
+                              <span class="red-text">{{ form.foreign_language.errors }}</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12 m4">
+                                <i class="material-icons prefix">date_range</i>
+                                 {{ form.date }}
+                                <label for="{{ form.date.id_for_label }}">Date</label>
+                              <span class="red-text">{{ form.date.errors }}</span>
+                            </div>
+
+                            <div class="input-field col s12 m4">
+                                <i class="material-icons prefix">watch_later</i>
+                              {{ form.time }}
+                                <label for="{{ form.time.id_for_label }}">Time</label>
+                              <span class="red-text">{{ form.time.errors }}</span>
+                            </div>
+
+                            <div class="input-field col s12 m4">
+                                <i class="material-icons prefix">timelapse</i>
+                              {{ form.duration }}
+                                <label for="{{ form.duration.id_for_label }}">Event Duration in hours </label>
+                              <span class="red-text">{{ form.duration.errors }}</span>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="input-field col s12 m6 ">
+                                <i class="material-icons prefix">map</i>
+                                 {{ form.autocomplete_city }}
+                                 {{ form.city_place_id }}
+                                <label for="city_google_maps">City </label>
+                                <span class="red-text">{{ form.city.errors }}</span>
+                            </div>
+
+
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">place</i>
+                                 {{ form.autocomplete_location }}
+                                 {{ form.location_place_id }}
+                                <label for="location_place_id">Location or address</label>
+                                <span class="red-text">{{ form.location.errors }}</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <p class="center-align" style="font-weight: bold; margin-bottom:10px">Choose on the map the exact coordinates to meet</p>
+                            <div id="map" style="height: 250px"></div>
+                            {{ form.location_lat }}
+                            {{ form.location_lng }}
+                        </div>
+
+                        <!--{{ form.errors }}-->
+
+                        <button type="submit" class="waves-effect waves-light btn blue darken-4">
+                            Submit <i class="material-icons right">send</i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function init_google_maps() {
+        function create_autocomplete_input(input, options) {
+            // store the original event binding function
+            var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
+
+            function addEventListenerWrapper(type, listener) {
+                // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
+                // and then trigger the original listener.
+                if (type == "keydown") {
+                    var orig_listener = listener;
+                    listener = function(event) {
+                        var suggestion_selected = $(".pac-item-selected").length > 0;
+                        if ((event.which == 13 || event.which == 9) && !suggestion_selected) {
+                            var simulated_downarrow = $.Event("keydown", {
+                                keyCode: 40,
+                                which: 40
+                            });
+                            orig_listener.apply(input, [simulated_downarrow]);
+                        }
+
+                        orig_listener.apply(input, [event]);
+                    };
+                }
+
+                _addEventListener.apply(input, [type, listener]);
+            }
+
+            input.addEventListener = addEventListenerWrapper;
+            input.attachEvent = addEventListenerWrapper;
+
+            return new google.maps.places.Autocomplete(input, options);
+        }
+
+        var initial_coordinates = {lat: {{ form.location_lat.value|default_if_none:"52.50697" }},
+                                   lng: {{ form.location_lng.value|default_if_none:"13.2843063" }}};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: initial_coordinates,
+            {% if  form.location_lat.value %}
+                zoom: 16
+            {% else %}
+                zoom: 2
+            {% endif %}
+        });
+
+        var marker = new google.maps.Marker({
+          {% if  form.location_lat.value %}
+            position: initial_coordinates,
+          {% endif %}
+          map: map,
+          title: 'Location'
+        });
+
+        var autocomplete_city = create_autocomplete_input(document.getElementById('autocomplete_city'),  {types: ['(cities)']});
+        var autocomplete_location = create_autocomplete_input(document.getElementById('autocomplete_location'), {strictBounds: true})
+
+        autocomplete_city.addListener('place_changed', function (e) {
+            var place = autocomplete_city.getPlace();
+            if (!place.geometry) {
+                // User entered the name of a Place that was not suggested and
+                // pressed the Enter key, or the Place Details request failed.
+                $("#city_place_id").val("")
+                window.alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+
+            $("#city_place_id").val(place.place_id)
+            $("#location_place_id").val("")
+            $("#autocomplete_location").val("")
+
+            map.setCenter(place.geometry.location);
+            map.setZoom(13)
+
+            autocomplete_location.setBounds(place.geometry.viewport);
+        });
+
+        autocomplete_location.addListener('place_changed', function (e) {
+            var place = autocomplete_location.getPlace();
+            if (!place.geometry) {
+                // User entered the name of a Place that was not suggested and
+                // pressed the Enter key, or the Place Details request failed.
+                document.getElementById("location_place_id").setAttribute('value', "");
+                window.alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+
+            marker.setPosition(place.geometry.location);
+            map.setCenter(marker.getPosition());
+            map.setZoom(16)
+
+            $("#location_lat").val(place.geometry.location.lat());
+            $("#location_lng").val(place.geometry.location.lng());
+
+            $("#location_place_id").val(place.place_id)
+        });
+
+        map.addListener('click', function(e) {
+          marker.setPosition(e.latLng)
+          $("#location_lat").val(e.latLng.lat());
+          $("#location_lng").val(e.latLng.lng());
+        });
+    }
+
+    $(document).ready(function(){
+
+        // Form validation...
+        $('form').submit(function (e) {
+
+            city_place_id = $("#city_place_id").val();
+            location_place_id = $("#location_place_id").val();
+
+            if (!location_place_id || !city_place_id){
+                alert("Please choose correctly a city and a location")
+                e.preventDefault();
+                return;
+            }
+
+        }).bind("keypress", function (e) {
+            if (e.keyCode == 13) {
+                return false;
+            }
+        });
+
+    });
+
+</script>
+
+{% endblock %}

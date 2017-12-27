@@ -6,14 +6,13 @@ from events.services import PlacesService
 
 
 class EventCreateView(View):
-    template_name = "events/create_event.html"
+    template_name = "events/event_form.html"
     form_action = "Create"
 
     def __init__(self):
         self.places_service = PlacesService()
 
     def get(self, request):
-
         form = EventForm()
         return render(request, self.template_name,
                       {'form': form, 'user': request.user, 'form_action': self.form_action})
@@ -26,9 +25,9 @@ class EventCreateView(View):
 
         form = EventForm(request.POST)
         if form.is_valid():
-            form.save()
+            event = form.save()
             messages.success(request, 'Event created successfully')
-            return redirect("create_event")
+            return redirect("edit_event_image", event.id)
 
         return render(request, self.template_name,
                       {'form': form,  'user': request.user, 'form_action': self.form_action})

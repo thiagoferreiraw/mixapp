@@ -2,7 +2,7 @@ import requests
 from django.conf import settings
 
 
-class PlacesGateway():
+class PlacesGateway:
     base_url = "https://maps.googleapis.com/"
 
     def get_cities_by_description(self, description, language):
@@ -22,6 +22,15 @@ class PlacesGateway():
             'placeid': place_id,
             'language': language,
             'key': settings.TOKEN_GOOGLE_PLACES_API
+        }
+
+        return requests.get(url, params=query)
+
+    def get_place_metadata_street_view(self, lat, lng):
+        url = self.base_url + "maps/api/streetview/metadata"
+        query = {
+            'location': "{},{}".format(lat, lng),
+            'key': settings.TOKEN_GOOGLE_STREET_VIEW_API
         }
 
         return requests.get(url, params=query)

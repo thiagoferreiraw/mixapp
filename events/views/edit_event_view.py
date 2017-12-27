@@ -7,7 +7,7 @@ from events.services import PlacesService
 
 
 class EventEditView(View):
-    template_name = "events/create_event.html"
+    template_name = "events/event_form.html"
     form_action = "Edit"
 
     def __init__(self):
@@ -18,27 +18,32 @@ class EventEditView(View):
 
         form = EventForm(instance=event)
         return render(request, self.template_name,
-                      {'form': form, 'user': request.user, 'form_action': self.form_action})
+                      {'form': form, 'user': request.user, 'form_action': self.form_action, 'event_id': event_id})
 
     def post(self, request, event_id):
         event = self.get_event_or_404(event_id, request.user.id)
 
         request = self.places_service.get_city_for_request(request)
         request = self.places_service.get_location_for_request(request)
+
         request.POST['hosted_by'] = request.user.id
 
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
-            form.save()
+            event = form.save()
             messages.success(request, 'Event updated successfully')
-            return redirect("edit_event", event_id=event_id)
+
+            if "location_lat" in form.changed_data or "location_lng" in form.changed_data:
+                return redirect("edit_event_image", event.id)
+
+            return redirect("list_events")
 
         return render(request, self.template_name,
-                      {'form': form,  'user': request.user, 'form_action': self.form_action})
+                      {'form': form,  'user': request.user, 'form_action': self.form_action, 'event_id': event_id})
 
     @staticmethod
     def get_event_or_404(event_id, user_id):
         event = Event.objects.filter(pk=event_id, hosted_by=user_id).first()
-        if not event_id:
+        if not event:
             raise Http404()
         return event

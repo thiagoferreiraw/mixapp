@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+
+
+     <!-- Search MIXs section -->
+    <section class="search">
+        {# <div class="container">#}
+            <div style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                    url('{% static "img/mapa.png" %}');background-size: cover;background-position: center center; height: 300px;">
+                <div class="caption center-align white-text">
+                    <!-- <input class="input-field" style="width:400px; margin-top:100px; border: 1px solid #ededed; padding: 5px;" placeholder="Enter a location..."/><i class="medium material-icons" style="font-size: 28px; padding: 5px; border: 1px solid #fff; padding:12px;">search</i> -->
+                    <!-- <div class="search-wrapper card"> -->
+                        <i class="material-icons" style="padding-top:10px;">search</i>
+                        <input id="search" style="width:350px; margin-top:100px;" placeholder="Enter a location..."><button class="btn btn-primary" onClick="map('m-events')" style="margin-left:10px;">Search</button>
+                        <div class="search-results"></div>
+                   <!--  </div> -->
+                </div>
+            </div>
+        {# </div>#}
+    </section>
+
+    <!-- Map section -->
+    <!-- <section class="map">
+        <div id="map" style="height: 250px; position: relative; overflow: hidden;"></div>
+        <div class="container">
+            <div class="col-md-6">
+                <img src="http://www.sparxsys.com/sites/default/files/styles/full_node/public/sampleMap.JPG?itok=fJQMEvQK">
+            </div>
+            <div class="col-md-6">
+                
+            </div>
+        </div>
+    </section> -->
+
+     <div class="map-events" id="m-events" style="display: none;">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m12" style="background: 
+                    url('{% static "img/mapa.png" %}');background-size: cover;background-position: center center; height: 300px; margin:0;">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div class="row">
+                   <div class="col s12 m4">
+                        <div class="card">
+                            <div class="card-content" style="padding:0; text-align: left;">
+                                <div class="city-name" style=" background: #737c83; padding: 10px;"><a href="#"><i class="medium material-icons" style="font-size: 18px; padding: 5px;">location_on</i> Rio de Janeiro</a></div>
+                            </div>
+                            <div class="card-content" style="padding:0; text-align: left;">
+                                <div class="city-name" style=" background: #677077; padding: 15px;"><a href="#">Food MIX</a></div>
+                            </div>
+                            <div class="card-content" style="padding:0; text-align: left; color: #fff;">
+                                <div class="city-name" style=" background: #737c83; padding: 15px;  min-height: 230px;">DEC/12<hr><p style="padding-top:10px; color: #fff;">{% lorem 15 w random %}</p></div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="col s12 m4">
+                        <div class="card">
+                            <div class="card-content" style="padding:0; text-align: left;">
+                                <div class="city-name" style=" background: #737c83; padding: 10px;"><a href="#"><i class="medium material-icons" style="font-size: 18px; padding: 5px;">location_on</i> Rio de Janeiro</a></div>
+                            </div>
+                            <div class="card-content" style="padding:0; text-align: left;">
+                                <div class="city-name" style=" background: #677077; padding: 15px;"><a href="#">Food MIX</a></div>
+                            </div>
+                            <div class="card-content" style="padding:0; text-align: left; color: #fff;">
+                                <div class="city-name" style=" background: #737c83; padding: 15px;  min-height: 230px;">DEC/12<hr><p style="padding-top:10px; color: #fff;">{% lorem 15 w random %}</p></div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="col s12 m4">
+                        <div class="card">
+                            <div class="card-content" style="padding:0; text-align: left;">
+                                <div class="city-name" style=" background: #737c83; padding: 10px;"><a href="#"><i class="medium material-icons" style="font-size: 18px; padding: 5px;">location_on</i> Rio de Janeiro</a></div>
+                            </div>
+                            <div class="card-content" style="padding:0; text-align: left;">
+                                <div class="city-name" style=" background: #677077; padding: 15px;"><a href="#">Food MIX</a></div>
+                            </div>
+                            <div class="card-content" style="padding:0; text-align: left; color: #fff;">
+                                <div class="city-name" style=" background: #737c83; padding: 15px;  min-height: 230px;">DEC/12<hr><p style="padding-top:10px; color: #fff;">{% lorem 15 w random %}</p></div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="col s12 m4">
+                        <div class="card">
+                            <div class="card-content" style="padding:0; text-align: left;">
+                                <div class="city-name" style=" background: #737c83; padding: 10px;"><a href="#"><i class="medium material-icons" style="font-size: 18px; padding: 5px;">location_on</i> Rio de Janeiro</a></div>
+                            </div>
+                            <div class="card-content" style="padding:0; text-align: left;">
+                                <div class="city-name" style=" background: #677077; padding: 15px;"><a href="#">Food MIX</a></div>
+                            </div>
+                            <div class="card-content" style="padding:0; text-align: left; color: #fff;">
+                                <div class="city-name" style=" background: #737c83; padding: 15px;  min-height: 230px;">DEC/12<hr><p style="padding-top:10px; color: #fff;">{% lorem 15 w random %}</p></div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="col s12 m4">
+                        <div class="card">
+                            <div class="card-content" style="padding:0; text-align: left;">
+                                <div class="city-name" style=" background: #737c83; padding: 10px;"><a href="#"><i class="medium material-icons" style="font-size: 18px; padding: 5px;">location_on</i> Rio de Janeiro</a></div>
+                            </div>
+                            <div class="card-content" style="padding:0; text-align: left;">
+                                <div class="city-name" style=" background: #677077; padding: 15px;"><a href="#">Food MIX</a></div>
+                            </div>
+                            <div class="card-content" style="padding:0; text-align: left; color: #fff;">
+                                <div class="city-name" style=" background: #737c83; padding: 15px;  min-height: 230px;">DEC/12<hr><p style="padding-top:10px; color: #fff;">{% lorem 15 w random %}</p></div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="col s12 m4">
+                        <div class="card">
+                            <div class="card-content" style="padding:0; text-align: left;">
+                                <div class="city-name" style=" background: #737c83; padding: 10px;"><a href="#"><i class="medium material-icons" style="font-size: 18px; padding: 5px;">location_on</i> Rio de Janeiro</a></div>
+                            </div>
+                            <div class="card-content" style="padding:0; text-align: left;">
+                                <div class="city-name" style=" background: #677077; padding: 15px;"><a href="#">Food MIX</a></div>
+                            </div>
+                            <div class="card-content" style="padding:0; text-align: left; color: #fff;">
+                                <div class="city-name" style=" background: #737c83; padding: 15px;  min-height: 230px;">DEC/12<hr><p style="padding-top:10px; color: #fff;">{% lorem 15 w random %}</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        function map(el){
+            var display = document.getElementById(el).style.display;
+            if(display == "none")
+                document.getElementById(el).style.display = 'block';
+            else
+                document.getElementById(el).style.display = 'none';
+        }
+
+    </script>
+
+{% endblock %}

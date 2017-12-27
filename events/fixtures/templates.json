@@ -1,0 +1,33 @@
+[{
+	"model": "events.eventtemplate",
+	"pk": 1,
+	"fields": {
+		"name": "Origami MIX",
+		"description": "Origami MIX",
+		"category": 1
+	}
+}, {
+	"model": "events.eventtemplate",
+	"pk": 2,
+	"fields": {
+		"name": "Cooking a traditional dish MIX",
+		"description": "Cooking a traditional dish MIX",
+		"category": 2
+	}
+}, {
+	"model": "events.eventtemplate",
+	"pk": 3,
+	"fields": {
+		"name": "Meditation MIX",
+		"description": "Meditation MIX",
+		"category": 3
+	}
+}, {
+	"model": "events.eventtemplate",
+	"pk": 4,
+	"fields": {
+		"name": "Hacking Session MIX",
+		"description": "Hacking Session MIX",
+		"category": 2
+	}
+}]

@@ -1,0 +1,39 @@
+header, main, footer {
+  padding-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+}
+
+.side-nav .collapsible-body>ul:not(.collapsible)>li.active, .side-nav.fixed .collapsible-body>ul:not(.collapsible)>li.active{
+  background-color: #0D47A1;
+}
+
+/*Crop img to the select img page*/
+.crop-choose-img {
+ height: 110px;
+ width: 100%;
+ overflow: hidden;
+ display:block;
+    margin-bottom:5px;
+
+}
+.crop-choose-img img {
+ height: auto;
+ width: 100%;
+}
+
+/*Crop img for the event listing*/
+.crop-event-img {
+ height: 100%;
+ width: 100%;
+ overflow: hidden;
+ display:block;
+}
+.crop-event-img img {
+ height: auto;
+ width: 100%;
+}
