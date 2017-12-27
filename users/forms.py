@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm as UserCreationFormDjango, User, UsernameField
 from django.forms import ModelForm, MultipleChoiceField
-from users.models import Category, UserCategory, SignupInvitation, SignupWaitingList, Profile
+from users.models import Category, UserCategory, SignupInvitation, SignupWaitingList, Profile, UserLanguage
 from django.conf import settings
 from django.core import validators
 from datetime import datetime
@@ -33,7 +33,7 @@ class UserCreationForm(UserCreationFormDjango):
 
         return True
 
-    def save(self, commit=True, chosen_categories=[], signup_invitation=None):
+    def save(self, commit=True, chosen_categories=[], chosen_languages=[], signup_invitation=None):
         user = super(UserCreationForm, self).save(commit=True)
 
         signup_invitation.user_has_signed_up = True
@@ -42,6 +42,10 @@ class UserCreationForm(UserCreationFormDjango):
         for category in chosen_categories:
             user_category = UserCategory(user_id_id=user.id, category_id_id=category)
             user_category.save()
+
+        for language in chosen_languages:
+            user_language = UserLanguage(user_id_id=user.id, language_id_id=language)
+            user_language.save()
 
         return user
 
@@ -58,13 +62,18 @@ class UserEditProfileForm(ModelForm):
         model = User
         fields = ('first_name', 'last_name')
 
-    def save(self, commit=True, chosen_categories=[]):
+    def save(self, commit=True, chosen_categories=[], chosen_languages=[]):
         user = super(UserEditProfileForm, self).save(commit=True)
 
         UserCategory.objects.filter(user_id=user).delete()
         for category in chosen_categories:
             user_category = UserCategory(user_id_id=user.id, category_id_id=category)
             user_category.save()
+
+        UserLanguage.objects.filter(user_id=user).delete()
+        for language in chosen_languages:
+            user_language = UserLanguage(user_id_id=user.id, language_id_id=language)
+            user_language.save()
 
         return user
 
@@ -101,7 +110,7 @@ class ProfileForm(ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('birth_city', 'actual_city', 'languages', 'birth_date')
+        fields = ('birth_city', 'actual_city', 'birth_date')
 
     def set_up_widgets(self):
         self.fields['birth_date'].widget.attrs['class'] = "datepicker"

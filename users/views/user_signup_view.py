@@ -26,6 +26,7 @@ class UserSignupView(View):
 
         form = UserCreationForm(initial={'email': signup_invitation.email_invited})
         return render(request, self.template_name, {'form': form, 'categories': Category.objects.all(),
+                                                    'languages': Language.objecst.all(),
                                                     'invitation': signup_invitation})
 
     def post(self, request, invitation_hash):
@@ -39,10 +40,10 @@ class UserSignupView(View):
             messages.error(request,
                            "You must sign up with the invited email: {}".format(signup_invitation.email_invited))
             return render(request, self.template_name,
-                          {'form': form, 'categories': Category.objects.all(), 'invitation': signup_invitation})
+                          {'form': form, 'categories': Category.objects.all(), 'languages': Language.objecst.all(), 'invitation': signup_invitation})
 
         if form.is_valid():
-            form.save(chosen_categories=request.POST.getlist('categories'), signup_invitation=signup_invitation)
+            form.save(chosen_categories=request.POST.getlist('categories'), chosen_languages=request.POST.getlist('languages'), signup_invitation=signup_invitation)
             user = authenticate(
                 username=form.cleaned_data.get('username'),
                 password=form.cleaned_data.get('password1')

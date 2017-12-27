@@ -32,6 +32,15 @@
                             </select>
                             <label>Tell us what you are interested in</label>
                         </div>
+                        <div class="input-field ">
+                            <select multiple name="languages">
+                              <option value="" disabled selected>Choose your languages</option>
+                                {% for l in languages %}
+                                    <option value="{{ l.id }}">{{ l.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <label>Tell us what languages you speak</label>
+                        </div>
                         <div class="row">
                             <div class="input-field col s6">
                                 <label for="{{ form.email.id_for_label }}">Email</label>

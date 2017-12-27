@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from events.models import Category
+from events.models import Category, Language
 import uuid
 
 
@@ -33,11 +33,18 @@ class SignupWaitingList(models.Model):
         return self.email
 
 
+class UserLanguage(models.Model):
+    user_id = models.ForeignKey(User)
+    language_id = models.ForeignKey(Language)
+
+    class Meta:
+        unique_together = (("user_id", "language_id"),)
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     birth_city = models.CharField(max_length=100, blank=True)
     actual_city = models.CharField(max_length=100, blank=True)
-    languages = models.CharField(max_length=100, blank=True)
     birth_date = models.DateField(null=True, blank=True)
 
 
