@@ -4,10 +4,14 @@ from django.contrib import messages
 from users.forms import UserEditProfileForm, ProfileForm
 from django.views.generic import View
 from users.models import Category, UserCategory, Profile, Language, UserLanguage
+from events.services import PlacesService
 
 
 class UserEditProfileView(View):
     template_name = "user_profile/profile.html"
+
+    def __init__(self):
+        self.places_service = PlacesService()
 
     def get(self, request):
         categories = self._get_user_categories(request.user.id)
@@ -24,6 +28,8 @@ class UserEditProfileView(View):
         })
 
     def post(self, request):
+        request = self.places_service.get_city_for_request(request)
+        
         form = UserEditProfileForm(request.POST, instance=User.objects.get(pk=request.user.id))
         profile_form =ProfileForm(request.POST, instance=request.user.profile)
         if form.is_valid() and profile_form.is_valid():

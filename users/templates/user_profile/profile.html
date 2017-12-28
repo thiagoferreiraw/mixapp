@@ -55,6 +55,12 @@
 
                         <span class="card-title">More info</span>
                         <div class="row">
+                            <div class="input-field col s12 m6 ">
+                                {{ form.autocomplete_city }}
+                                {{ form.city_place_id }}
+                                <label for="city_google_maps">City </label>
+                                <span class="red-text">{{ form.city.errors }}</span>
+                            </div>
                             <div class="input-field col s6">
                                 <label for="{{ profile_form.birth_city.id_for_label }}">Birth city</label>
                                 {{ profile_form.birth_city }}
