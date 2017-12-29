@@ -55,21 +55,15 @@
 
                         <span class="card-title">More info</span>
                         <div class="row">
-                            <div class="input-field col s12 m6 ">
-                                {{ form.autocomplete_city }}
-                                {{ form.city_place_id }}
-                                <label for="city_google_maps">City </label>
-                                <span class="red-text">{{ form.city.errors }}</span>
-                            </div>
                             <div class="input-field col s6">
                                 <label for="{{ profile_form.birth_city.id_for_label }}">Birth city</label>
                                 {{ profile_form.birth_city }}
                                 <span class="red-text">{{ profile_form.birth_city.errors }}</span>
                             </div>
                             <div class="input-field col s6">
-                                <label for="{{ profile_form.actual_city.id_for_label }}">Actual city</label>
-                                {{ profile_form.actual_city }}
-                                <span class="red-text">{{ profile_form.actual_city.errors }}</span>
+                                <label for="{{ profile_form.current_city.id_for_label }}">Current city</label>
+                                {{ profile_form.current_city }}
+                                <span class="red-text">{{ profile_form.current_city.errors }}</span>
                             </div>
                         </div>
 
@@ -90,4 +84,132 @@
         </div>
     </div>
 </div>
+<script>
+    function init_google_maps() {
+        function create_autocomplete_input(input, options) {
+            // store the original event binding function
+            var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
+
+            function addEventListenerWrapper(type, listener) {
+                // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
+                // and then trigger the original listener.
+                if (type == "keydown") {
+                    var orig_listener = listener;
+                    listener = function(event) {
+                        var suggestion_selected = $(".pac-item-selected").length > 0;
+                        if ((event.which == 13 || event.which == 9) && !suggestion_selected) {
+                            var simulated_downarrow = $.Event("keydown", {
+                                keyCode: 40,
+                                which: 40
+                            });
+                            orig_listener.apply(input, [simulated_downarrow]);
+                        }
+
+                        orig_listener.apply(input, [event]);
+                    };
+                }
+
+                _addEventListener.apply(input, [type, listener]);
+            }
+
+            input.addEventListener = addEventListenerWrapper;
+            input.attachEvent = addEventListenerWrapper;
+
+            return new google.maps.places.Autocomplete(input, options);
+        }
+
+        var initial_coordinates = {lat: {{ form.location_lat.value|default_if_none:"52.50697" }},
+                                   lng: {{ form.location_lng.value|default_if_none:"13.2843063" }}};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: initial_coordinates,
+            {% if  form.location_lat.value %}
+                zoom: 16
+            {% else %}
+                zoom: 2
+            {% endif %}
+        });
+
+        var marker = new google.maps.Marker({
+          {% if  form.location_lat.value %}
+            position: initial_coordinates,
+          {% endif %}
+          map: map,
+          title: 'Location'
+        });
+
+        var autocomplete_city = create_autocomplete_input(document.getElementById('autocomplete_city'),  {types: ['(cities)']});
+        var autocomplete_location = create_autocomplete_input(document.getElementById('autocomplete_location'), {strictBounds: true})
+
+        autocomplete_city.addListener('place_changed', function (e) {
+            var place = autocomplete_city.getPlace();
+            if (!place.geometry) {
+                // User entered the name of a Place that was not suggested and
+                // pressed the Enter key, or the Place Details request failed.
+                $("#city_place_id").val("")
+                window.alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+
+            $("#city_place_id").val(place.place_id)
+            $("#location_place_id").val("")
+            $("#autocomplete_location").val("")
+
+            map.setCenter(place.geometry.location);
+            map.setZoom(13)
+
+            autocomplete_location.setBounds(place.geometry.viewport);
+        });
+
+        autocomplete_location.addListener('place_changed', function (e) {
+            var place = autocomplete_location.getPlace();
+            if (!place.geometry) {
+                // User entered the name of a Place that was not suggested and
+                // pressed the Enter key, or the Place Details request failed.
+                document.getElementById("location_place_id").setAttribute('value', "");
+                window.alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+
+            marker.setPosition(place.geometry.location);
+            map.setCenter(marker.getPosition());
+            map.setZoom(16)
+
+            $("#location_lat").val(place.geometry.location.lat());
+            $("#location_lng").val(place.geometry.location.lng());
+
+            $("#location_place_id").val(place.place_id)
+        });
+
+        map.addListener('click', function(e) {
+          marker.setPosition(e.latLng)
+          $("#location_lat").val(e.latLng.lat());
+          $("#location_lng").val(e.latLng.lng());
+        });
+    }
+
+    $(document).ready(function(){
+
+        // Form validation...
+        $('form').submit(function (e) {
+
+            city_place_id = $("#city_place_id").val();
+            location_place_id = $("#location_place_id").val();
+
+            if (!location_place_id || !city_place_id){
+                alert("Please choose correctly a city and a location")
+                e.preventDefault();
+                return;
+            }
+
+        }).bind("keypress", function (e) {
+            if (e.keyCode == 13) {
+                return false;
+            }
+        });
+
+    });
+
+</script>
+
 {% endblock %}

@@ -100,8 +100,8 @@ class ProfileForm(ModelForm):
         self.set_up_widgets()
 
         if self.instance.pk:
-            self.fields['autocomplete_city'].initial = self.instance.city.description
-            self.fields['city_place_id'].initial = self.instance.city.place_id
+            self.fields['autocomplete_city'].initial = self.instance.birth_city
+            self.fields['city_place_id'].initial = self.instance.birth_city
 
     def is_valid(self):
         valid = super(ProfileForm,self).is_valid()
@@ -116,7 +116,7 @@ class ProfileForm(ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('birth_city', 'actual_city', 'birth_date')
+        fields = ('birth_city', 'current_city', 'birth_date')
 
     def set_up_widgets(self):
         self.fields['birth_date'].widget.attrs['class'] = "datepicker"

@@ -635,12 +635,16 @@
 		"is_active": true,
 		"date_joined": "2017-11-21T00:24:57.897Z",
 		"groups": [],
-		"user_permissions": [],
-		"profile": {
-			"birth_city": "",
-			"birth_date": "",
-			"actual_city": ""
-		}
+		"user_permissions": []
+	}
+}, {
+	"model": "users.profile",
+	"pk": 1,
+	"fields": {
+		"user": 1,
+		"birth_city": null,
+		"current_city": null,
+		"birth_date": null
 	}
 }, {
 	"model": "events.eventtemplate",

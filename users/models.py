@@ -44,7 +44,7 @@ class UserLanguage(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     birth_city = models.ForeignKey(City, related_name="birth_city", null=True)
-    actual_city = models.ForeignKey(City, related_name="actual_city", null=True)
+    current_city = models.ForeignKey(City, related_name="current_city", null=True)
     birth_date = models.DateField(null=True, blank=True)
 
 
