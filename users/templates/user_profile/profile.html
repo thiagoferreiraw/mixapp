@@ -56,13 +56,15 @@
                         <span class="card-title">More info</span>
                         <div class="row">
                             <div class="input-field col s6">
-                                <label for="{{ profile_form.birth_city.id_for_label }}">Birth city</label>
-                                {{ profile_form.birth_city }}
+                                <label for="{{ profile_form.autocomplete_birth_city.id_for_label }}">Birth city</label>
+                                {{ profile_form.autocomplete_birth_city }}
+                                {{ profile_form.birth_city_place_id }}
                                 <span class="red-text">{{ profile_form.birth_city.errors }}</span>
                             </div>
                             <div class="input-field col s6">
                                 <label for="{{ profile_form.current_city.id_for_label }}">Current city</label>
-                                {{ profile_form.current_city }}
+                                {{ profile_form.autocomplete_current_city }}
+                                {{ profile_form.current_city_place_id }}
                                 <span class="red-text">{{ profile_form.current_city.errors }}</span>
                             </div>
                         </div>
@@ -118,73 +120,33 @@
             return new google.maps.places.Autocomplete(input, options);
         }
 
-        var initial_coordinates = {lat: {{ form.location_lat.value|default_if_none:"52.50697" }},
-                                   lng: {{ form.location_lng.value|default_if_none:"13.2843063" }}};
+        var autocomplete_birth_city = create_autocomplete_input(document.getElementById('autocomplete_birth_city'),  {types: ['(cities)']});
+        var autocomplete_current_city = create_autocomplete_input(document.getElementById('autocomplete_current_city'),  {types: ['(cities)']});
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: initial_coordinates,
-            {% if  form.location_lat.value %}
-                zoom: 16
-            {% else %}
-                zoom: 2
-            {% endif %}
-        });
-
-        var marker = new google.maps.Marker({
-          {% if  form.location_lat.value %}
-            position: initial_coordinates,
-          {% endif %}
-          map: map,
-          title: 'Location'
-        });
-
-        var autocomplete_city = create_autocomplete_input(document.getElementById('autocomplete_city'),  {types: ['(cities)']});
-        var autocomplete_location = create_autocomplete_input(document.getElementById('autocomplete_location'), {strictBounds: true})
-
-        autocomplete_city.addListener('place_changed', function (e) {
-            var place = autocomplete_city.getPlace();
+        autocomplete_birth_city.addListener('place_changed', function (e) {
+            var place = autocomplete_birth_city.getPlace();
             if (!place.geometry) {
                 // User entered the name of a Place that was not suggested and
                 // pressed the Enter key, or the Place Details request failed.
-                $("#city_place_id").val("")
+                $("#birth_city_place_id").val("")
                 window.alert("No details available for input: '" + place.name + "'");
                 return;
             }
 
-            $("#city_place_id").val(place.place_id)
-            $("#location_place_id").val("")
-            $("#autocomplete_location").val("")
-
-            map.setCenter(place.geometry.location);
-            map.setZoom(13)
-
-            autocomplete_location.setBounds(place.geometry.viewport);
+            $("#birth_city_place_id").val(place.place_id)
         });
 
-        autocomplete_location.addListener('place_changed', function (e) {
-            var place = autocomplete_location.getPlace();
+        autocomplete_current_city.addListener('place_changed', function (e) {
+            var place = autocomplete_current_city.getPlace();
             if (!place.geometry) {
                 // User entered the name of a Place that was not suggested and
                 // pressed the Enter key, or the Place Details request failed.
-                document.getElementById("location_place_id").setAttribute('value', "");
+                $("#current_city_place_id").val("")
                 window.alert("No details available for input: '" + place.name + "'");
                 return;
             }
 
-            marker.setPosition(place.geometry.location);
-            map.setCenter(marker.getPosition());
-            map.setZoom(16)
-
-            $("#location_lat").val(place.geometry.location.lat());
-            $("#location_lng").val(place.geometry.location.lng());
-
-            $("#location_place_id").val(place.place_id)
-        });
-
-        map.addListener('click', function(e) {
-          marker.setPosition(e.latLng)
-          $("#location_lat").val(e.latLng.lat());
-          $("#location_lng").val(e.latLng.lng());
+            $("#current_city_place_id").val(place.place_id)
         });
     }
 
@@ -193,11 +155,10 @@
         // Form validation...
         $('form').submit(function (e) {
 
-            city_place_id = $("#city_place_id").val();
-            location_place_id = $("#location_place_id").val();
+            birth_city_place_id = $("#birth_city_place_id").val();
 
-            if (!location_place_id || !city_place_id){
-                alert("Please choose correctly a city and a location")
+            if (!birth_city_place_id){
+                alert("Please choose correctly birth and current city")
                 e.preventDefault();
                 return;
             }

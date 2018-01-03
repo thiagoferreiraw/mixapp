@@ -28,10 +28,12 @@ class UserEditProfileView(View):
         })
 
     def post(self, request):
-        request = self.places_service.get_city_for_request(request)
+        request = self.places_service.get_city_for_request(request, 'birth_city_place_id', 'birth_city')
+        request = self.places_service.get_city_for_request(request, 'current_city_place_id', 'current_city')
         
         form = UserEditProfileForm(request.POST, instance=User.objects.get(pk=request.user.id))
-        profile_form =ProfileForm(request.POST, instance=request.user.profile)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+
         if form.is_valid() and profile_form.is_valid():
             form.save(chosen_categories=request.POST.getlist('categories'), chosen_languages=request.POST.getlist('languages'))
             profile_form.save()

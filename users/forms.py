@@ -91,17 +91,21 @@ class UserWaitingListForm(ModelForm):
 
 
 class ProfileForm(ModelForm):
-    autocomplete_city = CharField(required=False, widget=TextInput(attrs={'id': 'autocomplete_city'}))
-    city_place_id = CharField(required=False, widget=HiddenInput(attrs={'id': 'city_place_id'}))
+    autocomplete_birth_city = CharField(required=False, widget=TextInput(attrs={'id': 'autocomplete_birth_city'}))
+    birth_city_place_id = CharField(required=False, widget=HiddenInput(attrs={'id': 'birth_city_place_id'}))
+    autocomplete_current_city = CharField(required=False, widget=TextInput(attrs={'id': 'autocomplete_current_city'}))
+    current_city_place_id = CharField(required=False, widget=HiddenInput(attrs={'id': 'current_city_place_id'}))
 
     def __init__(self, *args, **kwargs):
         super(ModelForm, self).__init__(*args, **kwargs)
 
         self.set_up_widgets()
 
-        if self.instance.pk:
-            self.fields['autocomplete_city'].initial = self.instance.birth_city
-            self.fields['city_place_id'].initial = self.instance.birth_city
+        if self.instance.birth_city:
+            self.fields['autocomplete_birth_city'].initial = self.instance.birth_city.description
+            self.fields['birth_city_place_id'].initial = self.instance.birth_city.place_id
+            self.fields['autocomplete_current_city'].initial = self.instance.current_city.description
+            self.fields['current_city_place_id'].initial = self.instance.current_city.place_id
 
     def is_valid(self):
         valid = super(ProfileForm,self).is_valid()

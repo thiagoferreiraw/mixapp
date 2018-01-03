@@ -23,7 +23,7 @@ class EventEditView(View):
     def post(self, request, event_id):
         event = self.get_event_or_404(event_id, request.user.id)
 
-        request = self.places_service.get_city_for_request(request)
+        request = self.places_service.get_city_for_request(request, "city_place_id", "city")
         request = self.places_service.get_location_for_request(request)
 
         request.POST['hosted_by'] = request.user.id
