@@ -156,8 +156,9 @@
         $('form').submit(function (e) {
 
             birth_city_place_id = $("#birth_city_place_id").val();
+            current_city_place_id = $("#current_city_place_id").val();
 
-            if (!birth_city_place_id){
+            if (!birth_city_place_id || !current_city_place_id){
                 alert("Please choose correctly birth and current city")
                 e.preventDefault();
                 return;
