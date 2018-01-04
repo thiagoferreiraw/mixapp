@@ -8,3 +8,6 @@ def index2(request):
 
 def find(request):
       return render(request, "find.html", {})
+
+def feedback(request):
+      return render(request, "feedback.html", {})
