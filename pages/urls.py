@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^index2/$', views.index2, name='indext2'),
     url(r'^find/$', views.find, name='find'),
     url(r'^feedback/$', views.feedback, name='feedback'),
+    url(r'^translations/$', views.translations_test, name='translations'),
 ]
