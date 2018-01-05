@@ -46,4 +46,10 @@ collectstatic:
 collectstatic_stage:
 	echo yes | python manage.py collectstatic --settings=app.config.stage_settings
 
+messages:
+	python manage.py makemessages -l en -l pt_BR -l pt
+
+compilemessages:
+	python manage.py compilemessages
+
 default: setup
