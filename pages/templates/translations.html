@@ -1,0 +1,19 @@
+{% load i18n %}
+{% block content %}
+    <h1>{% trans 'Welcome! You are accessing the website in ' %} [{{ language }}]<h1/>
+    <hr>
+    <h2>{% trans 'Categories' %}</h2>
+    <ul>
+        {% for category in categories %}
+            <li>{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <h2>{% trans 'Event Templates' %}</h2>
+        <ul>
+        {% for template in templates %}
+            <li>{{ template.name }}</li>
+        {% endfor %}
+    </ul>
+    <hr>
+{% endblock %}
