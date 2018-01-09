@@ -92,8 +92,8 @@
                         <div class="row">
                             <p class="center-align" style="font-weight: bold; margin-bottom:10px">Choose on the map the exact coordinates to meet</p>
                             <div id="map" style="height: 250px"></div>
-                            {{ form.location_lat }}
-                            {{ form.location_lng }}
+                            {{ form.location_lat|safe }}
+                            {{ form.location_lng|safe }}
                         </div>
 
                         <!--{{ form.errors }}-->
@@ -141,15 +141,14 @@
 
             return new google.maps.places.Autocomplete(input, options);
         }
-
-        var initial_coordinates = {lat: {{ form.location_lat.value|default_if_none:"52.50697" }},
-                                   lng: {{ form.location_lng.value|default_if_none:"13.2843063" }}};
+        var initial_coordinates = {lat: {{ form.location_lat.value|safe}}, lng: {{ form.location_lng.value|safe}}}
 
         var map = new google.maps.Map(document.getElementById('map'), {
-            center: initial_coordinates,
             {% if  form.location_lat.value %}
+                center: {lat: {{ form.location_lat.value|safe}}, lng: {{ form.location_lng.value|safe}}},
                 zoom: 16
             {% else %}
+                center: {lat: 52.50697, lng: 13.2843063},
                 zoom: 2
             {% endif %}
         });
