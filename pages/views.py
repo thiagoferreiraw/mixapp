@@ -16,6 +16,10 @@ def find(request):
     return render(request, "find.html", {})
 
 
+def mixdetails(request):
+      return render(request, "mix-details.html", {})
+
+
 def feedback(request):
     return render(request, "feedback.html", {})
 
@@ -25,3 +29,7 @@ def translations_test(request):
                   {'language': request.LANGUAGE_CODE,
                    'categories': Category.objects.all(),
                    'templates': EventTemplate.objects.all()})
+
+
+def feedbackdetails(request):
+      return render(request, "feedback-details.html", {})
