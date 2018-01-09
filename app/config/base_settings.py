@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'storages',
     'social_django',
+    'modeltranslation',
 
     'users',
 
@@ -121,9 +122,18 @@ USE_TZ = True
 
 LANGUAGES = (
     ('en', _('English')),
+    ('fr', _('French')),
+    ('ar', _('Arabic')),
+    ('es', _('Spanish')),
     ('pt-br', _('Portuguese (Brazilian)')),
     ('pt', _('Portuguese')),
-
+    ('it', _('Italian')),
+    ('de', _('German')),
+    ('nl', _('Dutch')),
+    ('hi', _('Hindi')),
+    ('ru', _('Russian')),
+    ('ko', _('Korean')),
+    ('ja', _('Japanese')),
 )
 
 LOCALE_PATHS = (
