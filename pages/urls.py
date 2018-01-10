@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^feedback/$', views.feedback, name='feedback'),
     url(r'^translations/$', views.translations_test, name='translations'),
     url(r'^feedbackdetails/$', views.feedbackdetails, name='feedbackdetails'),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 ]
