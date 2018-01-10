@@ -59,7 +59,7 @@ class EventTemplate(models.Model):
     category = models.ForeignKey(Category)
 
     def __str__(self):
-        return f'{self.category.description} - {self.name}'
+        return f'{self.category.name} - {self.name}'
 
 
 class Event(models.Model):
