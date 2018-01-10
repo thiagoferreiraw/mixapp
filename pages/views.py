@@ -1,5 +1,3 @@
-from django.utils.translation import gettext as _, gettext
-from django.http import HttpResponse
 from django.shortcuts import render
 from events.models import Category, EventTemplate
 
@@ -17,7 +15,7 @@ def find(request):
 
 
 def mixdetails(request):
-      return render(request, "mix-details.html", {})
+    return render(request, "mix-details.html", {})
 
 
 def feedback(request):
@@ -32,4 +30,5 @@ def translations_test(request):
 
 
 def feedbackdetails(request):
-      return render(request, "feedback-details.html", {})
+    return render(request, "feedback-details.html", {})
+
