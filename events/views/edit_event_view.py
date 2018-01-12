@@ -4,6 +4,8 @@ from django.contrib import messages
 from events.forms import EventForm, Event
 from django.views.generic import View
 from events.services import PlacesService
+from users.user_enums import UserGroupsEnum
+from users.user_service import UserService
 
 
 class EventEditView(View):
@@ -14,6 +16,9 @@ class EventEditView(View):
         self.places_service = PlacesService()
 
     def get(self, request, event_id):
+        if not UserService.check_user_permission(request.user.id, UserGroupsEnum.MODERATOR.value):
+            return redirect("request_event")
+
         event = self.get_event_or_404(event_id, request.user.id)
 
         form = EventForm(instance=event)
@@ -21,6 +26,9 @@ class EventEditView(View):
                       {'form': form, 'user': request.user, 'form_action': self.form_action, 'event_id': event_id})
 
     def post(self, request, event_id):
+        if not UserService.check_user_permission(request.user.id, UserGroupsEnum.MODERATOR.value):
+            return redirect("request_event")
+
         event = self.get_event_or_404(event_id, request.user.id)
 
         request = self.places_service.get_city_for_request(request)
