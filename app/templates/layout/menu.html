@@ -1,12 +1,12 @@
 {% load static %}
 <header>
     <div class="navbar-fixed">
-        <nav class="indigo white" role="navigation">
+        <nav class="indigo white" role="navigation" style="min-height:90px;">
             <div class="nav-wrapper container">
                 <a id="logo-container" href="/" class="brand-logo">
-                    <img src="http://www.brigidmixs.org/uploads/1/4/4/3/14432394/published/website-logo-final-png_1.png?1492466309">
+                    <img src="http://www.brigidmixs.org/uploads/1/4/4/3/14432394/published/website-logo-final-png_1.png?1492466309" style="margin: 20px; margin-top:22px;">
                 </a>
-                <ul class="right hide-on-med-and-down">
+                <ul class="right hide-on-med-and-down menu">
                     {% if user.is_authenticated %}
                     <li><a href="{% url "list_events" %}">List my events</a></li>
                     <li><a href="{% url "create_event" %}">Create event</a></li>
@@ -25,9 +25,18 @@
                         </ul>
                     </li>
                     {% else %}
+                        <li><a href="#">EVENTS</a></li>
+                        <li><a href="#">TESTIMONIALS</a></li>
+                        <li><a href="#">ABOUT</a></li>
+                        <li><a href="#">CONTACT</a></li>
                         <li>
-                            <a href="{% url 'login' %}"class="waves-effect waves-light btn blue darken-4">
-                                <i class="material-icons left">lock</i> Members
+                            <a href="{% url 'login' %}"class="btn" style="background:#6FCD84;">
+                                Log in
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="btn" style="background:#6FCD84;">
+                                Discover
                             </a>
                         </li>
                     {% endif %}
