@@ -38,6 +38,7 @@ migrate:
 	python manage.py makemigrations thumbnail
 	python manage.py migrate
 	python manage.py loaddata languages
+	python manage.py loaddata user_groups
 
 collectstatic:
 	echo yes | python manage.py collectstatic
