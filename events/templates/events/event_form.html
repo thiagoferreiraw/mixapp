@@ -141,10 +141,15 @@
 
             return new google.maps.places.Autocomplete(input, options);
         }
-        var initial_coordinates = {lat: {{ form.location_lat.value|safe}}, lng: {{ form.location_lng.value|safe}}}
+        var initial_coordinates = {% if form.location_lat.value %}
+                                    {lat: {{ form.location_lat.value|safe}}, lng: {{ form.location_lng.value|safe}}}
+                                  {% else %}
+                                    {lat: 52.50697, lng: 13.2843063}
+                                  {% endif %} ;
+
 
         var map = new google.maps.Map(document.getElementById('map'), {
-            {% if  form.location_lat.value %}
+            {% if form.location_lat.value  %}
                 center: {lat: {{ form.location_lat.value|safe}}, lng: {{ form.location_lng.value|safe}}},
                 zoom: 16
             {% else %}
