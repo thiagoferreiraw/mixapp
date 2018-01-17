@@ -55,12 +55,7 @@
                               <strong>Duration: </strong>{{ event_details.duration }} hours                       
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <i class="material-icons left">description</i>
-                                <strong>Description: </strong>{{ event_details.description }}                        
-                            </div>
-                        </div>
+
 
                         <div class="row">
                             <div class="input-field col s12 m6 ">
@@ -99,7 +94,7 @@
 
 {% block map %}
     function init_google_maps() {
-        var myLatLong = {lat: {{ event_details.location_lat }}, lng: {{ event_details.location_lng }}};
+        var myLatLong = {lat: {{ event_details.location_lat|safe }}, lng: {{ event_details.location_lng|safe }}};
 
         var map = new google.maps.Map(document.getElementById('map'), {
               center: myLatLong,

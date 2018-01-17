@@ -8,18 +8,32 @@ from events.views.search_event_view import EventSearchView
 
 
 class EventsViewsTests(TestCase):
-    fixtures = ['categories.json', 'languages.json', "test_data.json"]
+    fixtures = ['categories.json', 'languages.json', "test_data.json", "user_groups.json"]
 
     def setUp(self):
-        self.user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
-        self.client.login(username="tester", password="top_secret")
+        User.objects.all().delete()
 
     def test_get_create_success(self):
+        self.user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        self.client.login(username="tester", password="top_secret")
+        self.user.groups.add(1)
+
         response = self.client.get("/events/new/")
         self.assertEquals(response.status_code, 200)
 
+    def test_get_create_not_authorized_should_redirect_to_request_event(self):
+        self.user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        self.client.login(username="tester", password="top_secret")
+
+        response = self.client.get("/events/new/")
+        self.assertRedirects(response, '/events/request/')
+
     @patch('django.contrib.messages.success', return_value=True)
     def test_post_create_success(self, mock_messages):
+        self.user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        self.client.login(username="tester", password="top_secret")
+        self.user.groups.add(1)
+
         response = self.client.post("/events/new/", {
             'template': 1,
             'duration': 1,
@@ -53,6 +67,28 @@ class EventsViewsTests(TestCase):
 
         self.assertIsNotNone(location.description)
 
+    @patch('django.contrib.messages.success', return_value=True)
+    def test_post_not_authorized_should_redirect_to_request_event(self, mock_messages):
+        self.user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        self.client.login(username="tester", password="top_secret")
+
+        response = self.client.post("/events/new/", {
+            'template': 1,
+            'duration': 1,
+            'date': (datetime.now() + timedelta(days=1)).date(),
+            'time': datetime.now().time(),
+            'expected_costs': 200,
+            'hosted_by': self.user.id,
+            "location_lat": "-33.8688",
+            "location_lng": "151.2195",
+            'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+            'location_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+            'foreign_language': 1,
+            'native_language': 2,
+        })
+
+        self.assertRedirects(response, '/events/request/')
+
 
 class EventDetailsViewsTests(TestCase):
     fixtures = ['test_data.json']
@@ -67,6 +103,7 @@ class EventDetailsViewsTests(TestCase):
     def test_get_not_found(self):
         response = self.client.get("/events/details/99")
         self.assertEquals(response.status_code, 404)
+
 
 class SearchEventViewTests(TestCase):
     fixtures = ['test_data.json']
