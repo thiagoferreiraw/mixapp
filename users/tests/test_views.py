@@ -7,6 +7,8 @@ from datetime import datetime
 
 class TestViews(TestCase):
 
+    fixtures = ['categories']
+
     def setUp(self):
         self.factory = RequestFactory()
         User.objects.all().delete()
@@ -218,13 +220,13 @@ class TestViews(TestCase):
         self.client.login(username="tester", password="top_secret")
 
         response = self.client.post("/user/profile/", {
-            "email": "invited@test.com",
             "first_name": "Tester changed1",
             "last_name": "Tester changed2",
-            "birth_city": "My birth city",
-            "actual_city": "My actual city",
-            "languages": "english",
-            "birth_date": "2002-01-03"
+            "birth_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "current_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "languages": [],
+            "birth_date": "2002-01-03",
+            "categories": [1, 2]
         })
 
         self.assertEqual(response.url, "/user/profile/")
@@ -234,10 +236,16 @@ class TestViews(TestCase):
 
         self.assertEqual(updated_user.first_name, "Tester changed1")
         self.assertEqual(updated_user.last_name, "Tester changed2")
-        self.assertEqual(updated_user.profile.birth_city , "My birth city")
-        self.assertEqual(updated_user.profile.actual_city , "My actual city")
-        self.assertEqual(updated_user.profile.languages , "english")
+        self.assertEqual(updated_user.profile.birth_city.place_id , "ChIJN1t_tDeuEmsRUsoyG83frY4")
+        self.assertEqual(updated_user.profile.current_city.place_id, "ChIJN1t_tDeuEmsRUsoyG83frY4")
+        self.assertEqual(updated_user.profile.birth_date.strftime("%Y-%m-%d"), "2002-01-03")
         self.assertTrue(mock_messages.called)
+
+        chosen_categories = UserCategory.objects.filter(user_id_id=updated_user.id)
+        self.assertEqual(len(chosen_categories), 2)
+
+        #self.assertEqual(updated_user.profile.user_languages, "english")
+
 
     @patch('django.contrib.messages.success', return_value=True)
     def test_post_edit_profile_failed(self, mock_messages):
