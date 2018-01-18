@@ -72,6 +72,7 @@ nav .button-collapse i {
 .banner .caption{
     opacity:1; 
     padding: 12%;
+    padding-bottom: 7%;
 }
 
 /*.banner span{
@@ -96,7 +97,7 @@ nav .button-collapse i {
     width: 100%;
 }*/
 .slider .indicators .indicator-item.active{
-    background: #0404FF;
+    background: #6FCD84;
 }
 .slider .indicators {
     /*display: none;*/
@@ -130,6 +131,7 @@ nav .button-collapse i {
     .banner .caption{
         opacity:1; 
         padding: 10%;
+        padding-bottom: 5%;
     }
 
     .banner-right .caption{
