@@ -1,6 +1,8 @@
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib import messages
+
+from events.models import Language
 from users.models import SignupInvitation
 from django.views.generic import View
 from users.forms import UserCreationForm
@@ -26,7 +28,7 @@ class UserSignupView(View):
 
         form = UserCreationForm(initial={'email': signup_invitation.email_invited})
         return render(request, self.template_name, {'form': form, 'categories': Category.objects.all(),
-                                                    'languages': Language.objecst.all(),
+                                                    'languages': Language.objects.all(),
                                                     'invitation': signup_invitation})
 
     def post(self, request, invitation_hash):
@@ -40,7 +42,7 @@ class UserSignupView(View):
             messages.error(request,
                            "You must sign up with the invited email: {}".format(signup_invitation.email_invited))
             return render(request, self.template_name,
-                          {'form': form, 'categories': Category.objects.all(), 'languages': Language.objecst.all(), 'invitation': signup_invitation})
+                          {'form': form, 'categories': Category.objects.all(), 'languages': Language.objects.all(), 'invitation': signup_invitation})
 
         if form.is_valid():
             form.save(chosen_categories=request.POST.getlist('categories'), chosen_languages=request.POST.getlist('languages'), signup_invitation=signup_invitation)

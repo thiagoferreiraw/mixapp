@@ -152,6 +152,7 @@ class TestViews(TestCase):
 
     def test_get_user_categories(self):
         user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        Category.objects.all().delete()
 
         categories = []
         for i in range(5):
@@ -253,7 +254,13 @@ class TestViews(TestCase):
 
         self.client.login(username="tester", password="top_secret")
 
-        response = self.client.post("/user/profile/", {})
+        response = self.client.post("/user/profile/",
+                                    {"last_name": "Tester changed2",
+                                     "birth_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                                     "current_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                                     "languages": [],
+                                     "birth_date": "2002-01-03",
+                                     "categories": [1, 2]})
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue("first_name" in response.context['form'].errors)
