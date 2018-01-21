@@ -1,10 +1,10 @@
 {% load static %}
 <header>
     <div class="navbar-fixed">
-        <nav class="indigo white" role="navigation" style="min-height:90px;">
+        <nav class="indigo white" role="navigation">
             <div class="nav-wrapper container">
                 <a id="logo-container" href="/" class="brand-logo">
-                    <img src="http://www.brigidmixs.org/uploads/1/4/4/3/14432394/published/website-logo-final-png_1.png?1492466309" style="margin: 20px; margin-top:22px;">
+                    <img src="{% static "img/logo.png" %}"><div class="name">MIXs</div>
                 </a>
                 <ul class="right hide-on-med-and-down menu">
                     {% if user.is_authenticated %}
@@ -36,11 +36,9 @@
                         <li><a href="{% url 'edit_profile' %}">Profile</a></li>
                         <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
-                        <li>
-                            <a href="{% url 'login' %}"class="waves-effect waves-light btn blue darken-4">
-                                <i class="material-icons left">lock</i>Members
-                            </a>
-                        </li>
+                        <li><a href="#">OUR STORY</a></li>
+                        <li><a href="#" style="color:#70D9EB;">LOG IN</a></li>
+                        <li><a href="#" style="color: #6FCD84;">DISCOVER</a></li>
                     {% endif %}
                 </ul>
                 <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
