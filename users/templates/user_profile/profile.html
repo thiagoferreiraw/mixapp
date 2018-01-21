@@ -88,70 +88,14 @@
 </div>
 <script>
     function init_google_maps() {
-        function create_autocomplete_input(input, options) {
-            // store the original event binding function
-            var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
+        var autocomplete_birth_city = create_autocomplete_input(document.getElementById("autocomplete_birth_city"), "birth_city_place_id", {types: ['(cities)']});
+        var autocomplete_current_city = create_autocomplete_input(document.getElementById("autocomplete_current_city"), "current_city_place_id", {types: ['(cities)']});
 
-            function addEventListenerWrapper(type, listener) {
-                // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
-                // and then trigger the original listener.
-                if (type == "keydown") {
-                    var orig_listener = listener;
-                    listener = function(event) {
-                        var suggestion_selected = $(".pac-item-selected").length > 0;
-                        if ((event.which == 13 || event.which == 9) && !suggestion_selected) {
-                            var simulated_downarrow = $.Event("keydown", {
-                                keyCode: 40,
-                                which: 40
-                            });
-                            orig_listener.apply(input, [simulated_downarrow]);
-                        }
-
-                        orig_listener.apply(input, [event]);
-                    };
-                }
-
-                _addEventListener.apply(input, [type, listener]);
-            }
-
-            input.addEventListener = addEventListenerWrapper;
-            input.attachEvent = addEventListenerWrapper;
-
-            return new google.maps.places.Autocomplete(input, options);
-        }
-
-        var autocomplete_birth_city = create_autocomplete_input(document.getElementById('autocomplete_birth_city'),  {types: ['(cities)']});
-        var autocomplete_current_city = create_autocomplete_input(document.getElementById('autocomplete_current_city'),  {types: ['(cities)']});
-
-        autocomplete_birth_city.addListener('place_changed', function (e) {
-            var place = autocomplete_birth_city.getPlace();
-            if (!place.geometry) {
-                // User entered the name of a Place that was not suggested and
-                // pressed the Enter key, or the Place Details request failed.
-                $("#birth_city_place_id").val("")
-                window.alert("No details available for input: '" + place.name + "'");
-                return;
-            }
-
-            $("#birth_city_place_id").val(place.place_id)
-        });
-
-        autocomplete_current_city.addListener('place_changed', function (e) {
-            var place = autocomplete_current_city.getPlace();
-            if (!place.geometry) {
-                // User entered the name of a Place that was not suggested and
-                // pressed the Enter key, or the Place Details request failed.
-                $("#current_city_place_id").val("")
-                window.alert("No details available for input: '" + place.name + "'");
-                return;
-            }
-
-            $("#current_city_place_id").val(place.place_id)
-        });
+        mix_set_autocomplete_place_changed_event(autocomplete_birth_city, "birth_city_place_id");
+        mix_set_autocomplete_place_changed_event(autocomplete_current_city, "current_city_place_id");
     }
 
     $(document).ready(function(){
-
         // Form validation...
         $('form').submit(function (e) {
 

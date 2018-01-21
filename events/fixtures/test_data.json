@@ -638,15 +638,6 @@
 		"user_permissions": []
 	}
 }, {
-	"model": "users.profile",
-	"pk": 1,
-	"fields": {
-		"user": 1,
-		"birth_city": null,
-		"current_city": null,
-		"birth_date": null
-	}
-}, {
 	"model": "events.eventtemplate",
 	"pk": 1,
 	"fields": {
