@@ -23,24 +23,6 @@
                                 <span class="red-text">{{ form.last_name.errors }}</span>
                             </div>
                         </div>
-                       <div class="input-field ">
-                            <select multiple name="categories">
-                              <option value="" disabled selected>Choose your interests</option>
-                                {% for c in categories %}
-                                    <option value="{{ c.id }}">{{ c.name }}</option>
-                                {% endfor %}
-                            </select>
-                            <label>Tell us what you are interested in</label>
-                        </div>
-                        <div class="input-field ">
-                            <select multiple name="languages">
-                              <option value="" disabled selected>Choose your languages</option>
-                                {% for l in languages %}
-                                    <option value="{{ l.id }}">{{ l.name }}</option>
-                                {% endfor %}
-                            </select>
-                            <label>Tell us what languages you speak</label>
-                        </div>
                         <div class="row">
                             <div class="input-field col s6">
                                 <label for="{{ form.email.id_for_label }}">Email</label>
@@ -65,6 +47,51 @@
                                 <span class="red-text">{{ form.password2.errors }}</span>
                             </div>
                         </div>
+                        <div class="row">
+                           <div class="input-field col s12">
+                                <select multiple name="categories">
+                                  <option value="" disabled selected>Choose your interests</option>
+                                    {% for c in categories %}
+                                        <option value="{{ c.id }}">{{ c.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label>Tell us what you are interested in</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select multiple name="languages">
+                                    <option value="" disabled selected>Choose your languages</option>
+                                    {% for l in languages %}
+                                        <option value="{{ l.id }}">{{ l.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label>Tell us what languages you speak</label>
+                            </div>
+                        </div>
+                        <span class="card-title">More info</span>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <label for="{{ profile_form.autocomplete_birth_city.id_for_label }}">Birth city</label>
+                                {{ profile_form.autocomplete_birth_city }}
+                                {{ profile_form.birth_city_place_id }}
+                                <span class="red-text">{{ profile_form.birth_city.errors }}</span>
+                            </div>
+                            <div class="input-field col s6">
+                                <label for="{{ profile_form.current_city.id_for_label }}">Current city</label>
+                                {{ profile_form.autocomplete_current_city }}
+                                {{ profile_form.current_city_place_id }}
+                                <span class="red-text">{{ profile_form.current_city.errors }}</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <label for="{{ profile_form.birth_date.id_for_label }}">Birth Date</label>
+                                {{ profile_form.birth_date }}
+                                <span class="red-text">{{ profile_form.birth_date.errors }}</span>
+                            </div>
+                        </div>
                         <button type="submit" class="waves-effect waves-light btn  orange darken-4">
                             Sign up <i class="material-icons right">send</i>
                         </button>
@@ -75,4 +102,37 @@
     </div>
     <p class="center-align">Already have an account? <a href="{% url "login" %}">Log in</a></p>
 </div>
+
+<script>
+    function init_google_maps() {
+        var autocomplete_birth_city = create_autocomplete_input(document.getElementById("autocomplete_birth_city"), "birth_city_place_id", {types: ['(cities)']});
+        var autocomplete_current_city = create_autocomplete_input(document.getElementById("autocomplete_current_city"), "current_city_place_id", {types: ['(cities)']});
+
+        mix_set_autocomplete_place_changed_event(autocomplete_birth_city, "birth_city_place_id");
+        mix_set_autocomplete_place_changed_event(autocomplete_current_city, "current_city_place_id");
+    }
+
+    $(document).ready(function(){
+        // Form validation...
+        $('form').submit(function (e) {
+
+            birth_city_place_id = $("#birth_city_place_id").val();
+            current_city_place_id = $("#current_city_place_id").val();
+
+            if (!birth_city_place_id || !current_city_place_id){
+                alert("Please choose correctly birth and current city")
+                e.preventDefault();
+                return;
+            }
+
+        }).bind("keypress", function (e) {
+            if (e.keyCode == 13) {
+                return false;
+            }
+        });
+
+    });
+
+</script>
+
 {% endblock %}
