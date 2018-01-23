@@ -8,7 +8,7 @@ from users.models import SignupInvitation
 from django.views.generic import View
 from users.forms import UserCreationForm, ProfileForm
 from users.models import Category
-from django.contrib.auth.models import User
+
 
 class UserSignupView(View):
     template_name = "registration/signup.html"
@@ -42,8 +42,11 @@ class UserSignupView(View):
         if not signup_invitation:
             return render(request, 'registration/invalid_signup.html', {'hash': invitation_hash})
 
-        request = self.places_service.get_city_for_request(request, 'birth_city_place_id', 'birth_city')
-        request = self.places_service.get_city_for_request(request, 'current_city_place_id', 'current_city')
+        if "birth_city_place_id" in request.POST:
+            request = self.places_service.get_city_for_request(request, 'birth_city_place_id', 'birth_city')
+
+        if "current_city_place_id" in request.POST:
+            request = self.places_service.get_city_for_request(request, 'current_city_place_id', 'current_city')
 
         form = UserCreationForm(request.POST)
         profile_form = ProfileForm(request.POST)

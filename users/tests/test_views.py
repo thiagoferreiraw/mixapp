@@ -98,6 +98,9 @@ class TestViews(TestCase):
         self.assertTrue("first_name" in response.context['form'].errors)
         self.assertTrue("last_name" in response.context['form'].errors)
         self.assertTrue("email" in response.context['form'].errors)
+        self.assertTrue("birth_city" in response.context['profile_form'].errors)
+        self.assertTrue("current_city" in response.context['profile_form'].errors)
+        self.assertTrue("birth_date" in response.context['profile_form'].errors)
 
     def test_post_signup_page_with_valid_invitation_success(self):
         signup_invitation = SignupInvitation(email_invited="invited@test.com")
@@ -111,7 +114,10 @@ class TestViews(TestCase):
             "last_name": "Tester2",
             "password1": "123",
             "password2": "123",
-            "username": "tester"
+            "username": "tester",
+            "birth_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "current_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "birth_date": "1996-03-12"
         })
 
         self.assertRedirects(response, "/home/")
@@ -122,6 +128,9 @@ class TestViews(TestCase):
         self.assertEqual(created_user.first_name, "Tester1")
         self.assertEqual(created_user.last_name, "Tester2")
         self.assertEqual(created_user.username, "tester")
+        self.assertEqual(created_user.profile.birth_date.strftime("%Y-%m-%d"), "1996-03-12")
+        self.assertEqual(created_user.profile.birth_city.place_id, "ChIJN1t_tDeuEmsRUsoyG83frY4")
+        self.assertEqual(created_user.profile.current_city.place_id, "ChIJN1t_tDeuEmsRUsoyG83frY4")
 
         signup_invitation = SignupInvitation.objects.get(pk=signup_invitation.id)
 
@@ -139,7 +148,10 @@ class TestViews(TestCase):
             "last_name": "Tester",
             "password1": "123",
             "password2": "123",
-            "username": "tester"
+            "username": "tester",
+            "birth_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "current_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "birth_date": "1996-03-12"
         })
 
         self.assertEqual(response.status_code, 200)
@@ -189,7 +201,10 @@ class TestViews(TestCase):
             "password1": "123",
             "password2": "123",
             "username": "tester",
-            "categories": [categories[0].id, categories[1].id]
+            "categories": [categories[0].id, categories[1].id],
+            "birth_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "current_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "birth_date": "1996-03-12"
         })
 
         self.assertRedirects(response, "/home/")
@@ -200,6 +215,9 @@ class TestViews(TestCase):
         self.assertEqual(created_user.first_name, "Tester1")
         self.assertEqual(created_user.last_name, "Tester2")
         self.assertEqual(created_user.username, "tester")
+        self.assertEqual(created_user.profile.birth_date.strftime("%Y-%m-%d"), "1996-03-12")
+        self.assertEqual(created_user.profile.birth_city.place_id, "ChIJN1t_tDeuEmsRUsoyG83frY4")
+        self.assertEqual(created_user.profile.current_city.place_id, "ChIJN1t_tDeuEmsRUsoyG83frY4")
 
         chosen_categories = UserCategory.objects.filter(user_id_id=created_user.id)
         self.assertEqual(len(chosen_categories), 2)

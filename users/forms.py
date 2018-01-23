@@ -124,3 +124,4 @@ class ProfileForm(ModelForm):
 
     def set_up_widgets(self):
         self.fields['birth_date'].widget.attrs['class'] = "datepicker"
+        self.fields['birth_date'].required = True
