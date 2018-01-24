@@ -2,35 +2,48 @@
 {% load static %}
 
 {% block content %}
-<div class="container" style="min-height: 80vh">
-    <div class="row">
-        <div class="col s12 m8 offset-m2 l6 offset-l3">
-            <div class="card white">
-                <div class="card-content">
-                    <span class="card-title">Login</span>
-                    <form method="post">
-                        {% csrf_token %}
-                        <span class="red-text">{{ form.non_field_errors }}</span>
-                        <div class="input-field ">
-                          {{ form.username.errors }}
-                          <label for="{{ form.username.id_for_label }}">Username or email</label>
-                          {{ form.username }}
+
+    <!-- Banner section -->
+{#    <div class="container">#}
+          <div class="banner center-align" style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+                url('{% static "img/background-main-section.jpg" %}');background-size: cover;background-position:center top;">
+                <div class="row">
+                    <div class="col m4"></div>
+                    <div class="col m4">
+                        <div class="card white" style="margin-top:20%; margin-bottom:20%;">
+                            <div class="card-content" style="margin: 4%;">
+                                <span class="card-title" style="color:#77d9ea; font-size:16px; margin-bottom: 5%;">Sign in to your account</span>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <span class="red-text">{{ form.non_field_errors }}</span>
+                                    <div class="input-field ">
+                                    {{ form.username.errors }}
+                                    <label for="{{ form.username.id_for_label }}">Username or email</label>
+                                    {{ form.username }}
+                                    </div>
+                                    <div class="input-field " style="margin-bottom:0;">
+                                    {{ form.password.errors }}
+                                    <label for="{{ form.password.id_for_label }}">Password</label>
+                                    {{ form.password }}
+                                    </div>
+                                    <div style="text-align:right; margin-bottom: 5%;">
+                                        <a style="color: #6ECC83;">Forgot password?</a>
+                                    </div>
+                                    <!--{{ form.as_p }}-->
+                                    <button type="submit" class="waves-effect waves-light btn green" style="width:100%;">
+                                        LOG IN
+                                    </button>
+                                    <div style="margin-top: 5%;">
+                                        <p style="text-align:center;">Don't have an account?</p>
+                                        <a href="#" style="color: green;">Create account</a>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="input-field ">
-                          {{ form.password.errors }}
-                          <label for="{{ form.password.id_for_label }}">Password</label>
-                          {{ form.password }}
-                        </div>
-                        <!--{{ form.as_p }}-->
-                        <button type="submit" class="waves-effect waves-light btn orange darken-4">
-                            Login <i class="material-icons right">send</i>
-                        </button>
-                    </form>
-                </div>
+                    </div>
+                     <div class="col m4"></div>
+             </div>
             </div>
-            <p class="center-align"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
-            <p class="center-align"><a href="{% url 'waiting_list' %}">Create an account</a></p>
-        </div>
-    </div>
-</div>
+{#      </div>#}
+
 {% endblock %}

@@ -361,11 +361,35 @@ nav .button-collapse{
     padding-right: 1%;
 }
 
-.member-item{
+.involved .member-item{
+    /*padding:5%; */
     color: #000;
-    padding:75px;
+    padding: 75px;
     text-align: left;
-    min-height:400px; /*background-color: #e06822;*/"
+    min-height:400px; 
+    /*background-color: #e06822;*/
+}
+
+.involved h5{
+     text-align: center; 
+     font-weight: 400;
+}
+.involved p{
+      /*width: 260px; */
+      font-size:17px; 
+      padding:10px;
+}
+.involved a{
+     width:100%; 
+     background: transparent; 
+     border: 2px solid #fff; 
+     font-weight: 100; 
+     padding: 1px; 
+     height:100%;
+}
+
+.involved .content-involved{
+     min-height:280px;
 }
 
 .work p{
@@ -383,7 +407,7 @@ nav .button-collapse{
     max-width: 350px; 
     text-indent: 10px; 
     height:35px; 
-    margin-left: -20px;
+    margin-left: 0px;
 }
 
 .invitation p {
@@ -405,66 +429,6 @@ nav .button-collapse{
     background:#6FCD84; 
     margin-top: -5px; 
     margin-left:15px;
-}
-
-@media (min-width: 1400px){
-    .banner .caption{
-        opacity:1; 
-        padding-top: 13%;
-    }
-    .invitation p {
-        padding: 20%;
-        padding-bottom: 5%;
-        padding-top: 5%;
-        text-align: left;
-    }
-}
-
-@media (max-width: 900px){
-    .member-item{
-        padding:20px;
-    }
-    .invitation input{
-        border: 1px solid  #6FCD84; 
-        display: inline-block; 
-        margin: 10px;
-        text-indent: 10px; 
-        height:35px; 
-        margin-left: 6px;
-    }
-    .brand-logo img{
-        margin: 0px; 
-        width: 80px; 
-        margin-right:0;
-        margin-top: 0;
-    }
-
-    .testimonial .row .col {
-        float: none;
-    }
-    .testimonial p{
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 900px){
-    .testimonial i{
-        display: none;
-    }
-}
-
-.slider .indicators .indicator-item.active{
-    color: #6FCD84;
-}
-
-.slider .indicators {
-    position: initial;
-}
-
-
-/* menu */
-header nav{
-    min-height:90px;
 }
 
 /* what section */
@@ -512,4 +476,107 @@ header nav{
 .testimonial h5{
     font-size: 16px;
 }
+
+
+@media (min-width: 1400px){
+    .banner .caption{
+        opacity:1; 
+        padding-top: 13%;
+    }
+    .invitation p {
+        padding: 20%;
+        padding-bottom: 5%;
+        padding-top: 5%;
+        text-align: left;
+    }
+}
+
+@media (max-width: 1200px){
+    .testimonial p{
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 900px){
+    .work p {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+    .work h3{
+        font-size: 25px; 
+    }
+    .work h5 {
+        font-size: 20px;
+    }
+    .involved .member-item{
+        color: #000;
+        padding: 5px;
+        text-align: center;
+        min-height: 200px; 
+    }
+    .involved a{
+        margin-bottom: 20px;
+    }
+    .involved p{
+        width: 100%; 
+        font-size:14px; 
+        /*padding:10px;*/
+    }
+    .invitation input{
+        border: 1px solid  #6FCD84; 
+        display: inline-block; 
+        /*margin: 10px;*/
+        text-indent: 10px; 
+        height:35px; 
+        /*margin-left: 6px;*/
+    }
+    .brand-logo img{
+        margin: 0px; 
+        width: 80px; 
+        margin-right:0;
+        margin-top: 0;
+    }
+    .testimonial p{
+        font-size: 16px;
+        margin-top: 35px;
+    }
+    /*footer{
+        text-align: left;
+    }*/
+}
+
+@media (max-width: 600px){
+    .involved .content-involved {
+        min-height: 150px;
+    }
+    .testimonial p{
+        font-size: 14px;
+        margin-top: 15px;
+    }
+    .testimonial .row .col {
+        float: none;
+    }
+}
+
+@media (max-width: 500px){
+    .testimonial i{
+        display: none;
+    }
+}
+
+.slider .indicators .indicator-item.active{
+    color: #6FCD84;
+}
+
+.slider .indicators {
+    position: initial;
+}
+
+
+/* menu */
+header nav{
+    min-height:90px;
+}
+
+
 /*#D4F1DB*/
