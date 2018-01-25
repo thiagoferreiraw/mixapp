@@ -26,8 +26,8 @@
                     </li>
                     {% else %}
                         <li><a href="#">OUR STORY</a></li>
-                        <li><a href="#" style="color:#70D9EB;">LOG IN</a></li>
-                        <li><a href="#" style="color: #6FCD84;">DISCOVER</a></li>
+                        <li><a href="{% url 'login' %}" class='col s12 btn btn-large waves-effect green' style="height:35px; line-height: 35px; margin-top: -4px;">LOG IN / SIGN UP</a></li>
+                        <li><a href="#" style="color:#70D9EB;">DISCOVER</a></li>
                     {% endif %}
                 </ul>
 
