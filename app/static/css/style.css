@@ -21,13 +21,14 @@ li.usermenu-active a{font-weight:600;}
 
 /* Menu section */
 .brand-logo img{
-    margin: 20px; 
-    width: 80px; 
-    margin-right:0;
+    margin: 20px;
+    padding: 10px;
+    width: 65px;
+    margin-right: 0;
     margin-top: 0;
 }
 .brand-logo .name{
-    margin-top:10px; 
+    margin-top:7px; 
     color:#000; 
     margin-right:0; 
     float: right; 
@@ -531,9 +532,10 @@ nav .button-collapse{
         /*margin-left: 6px;*/
     }
     .brand-logo img{
-        margin: 0px; 
-        width: 80px; 
-        margin-right:0;
+        margin: 20px;
+        padding: 10px;
+        width: 65px;
+        margin-right: 0;
         margin-top: 0;
     }
     .testimonial p{
@@ -576,6 +578,10 @@ nav .button-collapse{
 /* menu */
 header nav{
     min-height:90px;
+}
+
+nav ul li{
+    margin-right: 15px;
 }
 
 
