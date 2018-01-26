@@ -47,7 +47,9 @@
                                 <span class="red-text">{{ form.password2.errors }}</span>
                             </div>
                         </div>
-                        <div class="row">
+
+                        <span class="card-title">More info</span>
+                         <div class="row">
                            <div class="input-field col s12">
                                 <select multiple name="categories">
                                   <option value="" disabled selected>Choose your interests</option>
@@ -69,7 +71,6 @@
                                 <label>Tell us what languages you speak</label>
                             </div>
                         </div>
-                        <span class="card-title">More info</span>
                         <div class="row">
                             <div class="input-field col s6">
                                 <label for="{{ profile_form.autocomplete_birth_city.id_for_label }}">Birth city</label>
@@ -105,8 +106,8 @@
 
 <script>
     function init_google_maps() {
-        var autocomplete_birth_city = create_autocomplete_input(document.getElementById("autocomplete_birth_city"), "birth_city_place_id", {types: ['(cities)']});
-        var autocomplete_current_city = create_autocomplete_input(document.getElementById("autocomplete_current_city"), "current_city_place_id", {types: ['(cities)']});
+        var autocomplete_birth_city = create_autocomplete_input(document.getElementById("autocomplete_birth_city"),  {types: ['(cities)']});
+        var autocomplete_current_city = create_autocomplete_input(document.getElementById("autocomplete_current_city"), {types: ['(cities)']});
 
         mix_set_autocomplete_place_changed_event(autocomplete_birth_city, "birth_city_place_id");
         mix_set_autocomplete_place_changed_event(autocomplete_current_city, "current_city_place_id");

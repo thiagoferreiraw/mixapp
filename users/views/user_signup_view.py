@@ -60,11 +60,11 @@ class UserSignupView(View):
                            'invitation': signup_invitation})
 
         if form.is_valid():
-            user = form.save(chosen_categories=request.POST.getlist('categories'), chosen_languages=request.POST.getlist('languages'), signup_invitation=signup_invitation)
+            user = form.save(chosen_categories=request.POST.getlist('categories'), chosen_languages=request.POST.getlist('languages'))
             profile_form = ProfileForm(request.POST, instance=user.profile)
 
             if profile_form.is_valid():
-                profile_form.save()
+                profile_form.save(signup_invitation=signup_invitation)
                 user = authenticate(
                     username=form.cleaned_data.get('username'),
                     password=form.cleaned_data.get('password1')

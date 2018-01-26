@@ -33,11 +33,8 @@ class UserCreationForm(UserCreationFormDjango):
 
         return True
 
-    def save(self, commit=True, chosen_categories=[], chosen_languages=[], signup_invitation=None):
+    def save(self, commit=True, chosen_categories=[], chosen_languages=[]):
         user = super(UserCreationForm, self).save(commit=True)
-
-        signup_invitation.user_has_signed_up = True
-        signup_invitation.save()
 
         for category in chosen_categories:
             user_category = UserCategory(user_id_id=user.id, category_id_id=category)
@@ -117,6 +114,15 @@ class ProfileForm(ModelForm):
             return False
 
         return True
+
+    def save(self, signup_invitation=None):
+        user = super(ProfileForm, self).save(commit=True)
+
+        if signup_invitation:
+            signup_invitation.user_has_signed_up = True
+            signup_invitation.save()
+
+        return user
 
     class Meta:
         model = Profile

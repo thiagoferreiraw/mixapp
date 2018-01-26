@@ -24,24 +24,6 @@
                                 <span class="red-text">{{ form.last_name.errors }}</span>
                             </div>
                         </div>
-                       <div class="input-field ">
-                            <select multiple name="categories">
-                              <option value="" disabled selected>Choose your interests</option>
-                                {% for c in categories %}
-                                    <option {{ c.selected|yesno:"selected,'',''" }} value="{{ c.id }}">{{ c.name }}</option>
-                                {% endfor %}
-                            </select>
-                            <label>Tell us what you are interested in</label>
-                        </div>
-                        <div class="input-field ">
-                            <select multiple name="languages">
-                              <option value="" disabled selected>Choose your languages</option>
-                                {% for l in languages %}
-                                    <option {{ l.selected|yesno:"selected,'',''" }} value="{{ l.id }}">{{ l.name }}</option>
-                                {% endfor %}
-                            </select>
-                            <label>Tell us what languages you speak</label>
-                        </div>
                         <div class="row">
                             <div class="input-field col s6">
                                 <label for="{{ form.email.id_for_label }}">Email</label>
@@ -54,6 +36,26 @@
                         </div>
 
                         <span class="card-title">More info</span>
+                            <div class="input-field ">
+                                <select multiple name="categories">
+                                    <option value="" disabled selected>Choose your interests</option>
+                                    {% for c in categories %}
+                                        <option {{ c.selected|yesno:"selected,'',''" }}
+                                                value="{{ c.id }}">{{ c.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label>Tell us what you are interested in</label>
+                            </div>
+                            <div class="input-field ">
+                                <select multiple name="languages">
+                                    <option value="" disabled selected>Choose your languages</option>
+                                    {% for l in languages %}
+                                        <option {{ l.selected|yesno:"selected,'',''" }}
+                                                value="{{ l.id }}">{{ l.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label>Tell us what languages you speak</label>
+                            </div>
                         <div class="row">
                             <div class="input-field col s6">
                                 <label for="{{ profile_form.autocomplete_birth_city.id_for_label }}">Birth city</label>
@@ -88,8 +90,8 @@
 </div>
 <script>
     function init_google_maps() {
-        var autocomplete_birth_city = create_autocomplete_input(document.getElementById("autocomplete_birth_city"), "birth_city_place_id", {types: ['(cities)']});
-        var autocomplete_current_city = create_autocomplete_input(document.getElementById("autocomplete_current_city"), "current_city_place_id", {types: ['(cities)']});
+        var autocomplete_birth_city = create_autocomplete_input(document.getElementById("autocomplete_birth_city"), {types: ['(cities)']});
+        var autocomplete_current_city = create_autocomplete_input(document.getElementById("autocomplete_current_city"), {types: ['(cities)']});
 
         mix_set_autocomplete_place_changed_event(autocomplete_birth_city, "birth_city_place_id");
         mix_set_autocomplete_place_changed_event(autocomplete_current_city, "current_city_place_id");
