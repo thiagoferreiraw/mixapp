@@ -105,7 +105,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="{% static 'js/init.js' %}"></script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjK5WU8daOGnAjlwjy6wKdDzxS2hHeLEs&libraries=places&callback=init_google_maps" async defer></script>
+<script src="{% static 'js/maps-helper.js' %}"></script>
 <script type="text/javascript">
 
 
@@ -127,7 +128,7 @@
       $(".button-collapse").sideNav(); // Makes the side nav work
       $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        selectYears: 100, // Creates a dropdown of 15 years to control year,
         today: 'Today',
         clear: 'Clear',
         close: 'Ok',

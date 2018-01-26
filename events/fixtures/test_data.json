@@ -637,7 +637,7 @@
 		"groups": [],
 		"user_permissions": []
 	}
-},  {
+}, {
 	"model": "events.eventtemplate",
 	"pk": 1,
 	"fields": {

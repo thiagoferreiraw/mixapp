@@ -76,11 +76,11 @@ class PlacesService:
 
         return images
 
-    def get_city_for_request(self, request):
-        if not (request.POST['city_place_id'] is None or request.POST['city_place_id'] == ""):
-            city = self.get_and_save_city(request.POST['city_place_id'], "en")
+    def get_city_for_request(self, request, place_id_field_name, model_field_name):
+        if not (request.POST[place_id_field_name] is None or request.POST[place_id_field_name] == ""):
+            city = self.get_and_save_city(request.POST[place_id_field_name], "en")
             request.POST._mutable = True
-            request.POST['city'] = city.id
+            request.POST[model_field_name] = city.id
         return request
 
     def get_location_for_request(self, request):

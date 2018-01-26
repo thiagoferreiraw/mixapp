@@ -2,9 +2,12 @@ from django.test import TestCase, RequestFactory
 from mock import patch
 from users.models import *
 from users.views.user_edit_profile_view import UserEditProfileView
+from datetime import datetime
 
 
 class TestViews(TestCase):
+
+    fixtures = ['categories']
 
     def setUp(self):
         self.factory = RequestFactory()
@@ -95,6 +98,9 @@ class TestViews(TestCase):
         self.assertTrue("first_name" in response.context['form'].errors)
         self.assertTrue("last_name" in response.context['form'].errors)
         self.assertTrue("email" in response.context['form'].errors)
+        self.assertTrue("birth_city" in response.context['profile_form'].errors)
+        self.assertTrue("current_city" in response.context['profile_form'].errors)
+        self.assertTrue("birth_date" in response.context['profile_form'].errors)
 
     def test_post_signup_page_with_valid_invitation_success(self):
         signup_invitation = SignupInvitation(email_invited="invited@test.com")
@@ -108,7 +114,10 @@ class TestViews(TestCase):
             "last_name": "Tester2",
             "password1": "123",
             "password2": "123",
-            "username": "tester"
+            "username": "tester",
+            "birth_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "current_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "birth_date": "1996-03-12"
         })
 
         self.assertRedirects(response, "/home/")
@@ -119,6 +128,9 @@ class TestViews(TestCase):
         self.assertEqual(created_user.first_name, "Tester1")
         self.assertEqual(created_user.last_name, "Tester2")
         self.assertEqual(created_user.username, "tester")
+        self.assertEqual(created_user.profile.birth_date.strftime("%Y-%m-%d"), "1996-03-12")
+        self.assertEqual(created_user.profile.birth_city.place_id, "ChIJN1t_tDeuEmsRUsoyG83frY4")
+        self.assertEqual(created_user.profile.current_city.place_id, "ChIJN1t_tDeuEmsRUsoyG83frY4")
 
         signup_invitation = SignupInvitation.objects.get(pk=signup_invitation.id)
 
@@ -136,7 +148,10 @@ class TestViews(TestCase):
             "last_name": "Tester",
             "password1": "123",
             "password2": "123",
-            "username": "tester"
+            "username": "tester",
+            "birth_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "current_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "birth_date": "1996-03-12"
         })
 
         self.assertEqual(response.status_code, 200)
@@ -149,6 +164,7 @@ class TestViews(TestCase):
 
     def test_get_user_categories(self):
         user = User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        Category.objects.all().delete()
 
         categories = []
         for i in range(5):
@@ -185,7 +201,10 @@ class TestViews(TestCase):
             "password1": "123",
             "password2": "123",
             "username": "tester",
-            "categories": [categories[0].id, categories[1].id]
+            "categories": [categories[0].id, categories[1].id],
+            "birth_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "current_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "birth_date": "1996-03-12"
         })
 
         self.assertRedirects(response, "/home/")
@@ -196,6 +215,9 @@ class TestViews(TestCase):
         self.assertEqual(created_user.first_name, "Tester1")
         self.assertEqual(created_user.last_name, "Tester2")
         self.assertEqual(created_user.username, "tester")
+        self.assertEqual(created_user.profile.birth_date.strftime("%Y-%m-%d"), "1996-03-12")
+        self.assertEqual(created_user.profile.birth_city.place_id, "ChIJN1t_tDeuEmsRUsoyG83frY4")
+        self.assertEqual(created_user.profile.current_city.place_id, "ChIJN1t_tDeuEmsRUsoyG83frY4")
 
         chosen_categories = UserCategory.objects.filter(user_id_id=created_user.id)
         self.assertEqual(len(chosen_categories), 2)
@@ -217,19 +239,32 @@ class TestViews(TestCase):
         self.client.login(username="tester", password="top_secret")
 
         response = self.client.post("/user/profile/", {
-            "email": "invited@test.com",
             "first_name": "Tester changed1",
             "last_name": "Tester changed2",
+            "birth_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "current_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "languages": [],
+            "birth_date": "2002-01-03",
+            "categories": [1, 2]
         })
 
         self.assertEqual(response.url, "/user/profile/")
         self.assertEqual(response.status_code, 302)
 
-        updated_user = User.objects.filter(username="tester")[0]
+        updated_user = User.objects.get(username="tester")
 
         self.assertEqual(updated_user.first_name, "Tester changed1")
         self.assertEqual(updated_user.last_name, "Tester changed2")
+        self.assertEqual(updated_user.profile.birth_city.place_id , "ChIJN1t_tDeuEmsRUsoyG83frY4")
+        self.assertEqual(updated_user.profile.current_city.place_id, "ChIJN1t_tDeuEmsRUsoyG83frY4")
+        self.assertEqual(updated_user.profile.birth_date.strftime("%Y-%m-%d"), "2002-01-03")
         self.assertTrue(mock_messages.called)
+
+        chosen_categories = UserCategory.objects.filter(user_id_id=updated_user.id)
+        self.assertEqual(len(chosen_categories), 2)
+
+        #self.assertEqual(updated_user.profile.user_languages, "english")
+
 
     @patch('django.contrib.messages.success', return_value=True)
     def test_post_edit_profile_failed(self, mock_messages):
@@ -237,7 +272,13 @@ class TestViews(TestCase):
 
         self.client.login(username="tester", password="top_secret")
 
-        response = self.client.post("/user/profile/", {})
+        response = self.client.post("/user/profile/",
+                                    {"last_name": "Tester changed2",
+                                     "birth_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                                     "current_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                                     "languages": [],
+                                     "birth_date": "2002-01-03",
+                                     "categories": [1, 2]})
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue("first_name" in response.context['form'].errors)

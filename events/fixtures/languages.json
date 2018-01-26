@@ -2,22 +2,92 @@
 	"model": "events.language",
 	"pk": 1,
 	"fields": {
-		"name": "English",
-		"key": "en"
+		"key": "en",
+		"name": "English"
 	}
 }, {
 	"model": "events.language",
 	"pk": 2,
 	"fields": {
-		"name": "Portuguese (Brazilian)",
-		"key": "pt-br"
+		"key": "pt-br",
+		"name": "Portuguese (Brazilian)"
 	}
-},
-	{
+}, {
 	"model": "events.language",
 	"pk": 3,
 	"fields": {
-		"name": "Spanish",
-		"key": "es"
+		"key": "es",
+		"name": "Spanish"
+	}
+}, {
+	"model": "events.language",
+	"pk": 4,
+	"fields": {
+		"key": "fr",
+		"name": "French"
+	}
+}, {
+	"model": "events.language",
+	"pk": 5,
+	"fields": {
+		"key": "ar",
+		"name": "Arabic"
+	}
+}, {
+	"model": "events.language",
+	"pk": 6,
+	"fields": {
+		"key": "pt",
+		"name": "Portuguese"
+	}
+}, {
+	"model": "events.language",
+	"pk": 7,
+	"fields": {
+		"key": "it",
+		"name": "Italian"
+	}
+}, {
+	"model": "events.language",
+	"pk": 8,
+	"fields": {
+		"key": "de",
+		"name": "German"
+	}
+}, {
+	"model": "events.language",
+	"pk": 9,
+	"fields": {
+		"key": "nl",
+		"name": "Dutch"
+	}
+}, {
+	"model": "events.language",
+	"pk": 10,
+	"fields": {
+		"key": "hi",
+		"name": "Hindi"
+	}
+}, {
+	"model": "events.language",
+	"pk": 11,
+	"fields": {
+		"key": "ru",
+		"name": "Russian"
+	}
+}, {
+	"model": "events.language",
+	"pk": 12,
+	"fields": {
+		"key": "ko",
+		"name": "Korean"
+	}
+}, {
+	"model": "events.language",
+	"pk": 13,
+	"fields": {
+		"key": "ja",
+		"name": "Japanese"
 	}
 }]
+

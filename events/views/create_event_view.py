@@ -26,7 +26,7 @@ class EventCreateView(View):
         if not UserService.check_user_permission(request.user.id, UserGroupsEnum.MODERATOR.value):
             return redirect("request_event")
 
-        request = self.places_service.get_city_for_request(request)
+        request = self.places_service.get_city_for_request(request, "city_place_id", "city")
         request = self.places_service.get_location_for_request(request)
         request.POST['hosted_by'] = request.user.id
 
