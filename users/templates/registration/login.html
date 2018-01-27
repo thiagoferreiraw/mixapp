@@ -5,10 +5,8 @@
 
  <main>
     <center>
-
-
       <div class="banner"  style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-                url('{% static "img/background-main-section.jpg" %}');background-size: cover;background-position:center top; padding-top: 10%; padding-bottom: 10%;">
+                url('{% static "img/background-main-section.png" %}');background-size: cover;background-position:center top; padding-top: 10%; padding-bottom: 10%;">
         <div class="z-depth-1 white lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
           <form class="col s12" method="post">
@@ -21,10 +19,10 @@
                     <span class="red-text">{{ form.non_field_errors }}</span>
                     {{ form.username.errors }}
                 </div>
-
+            </div>
             <div class='row'>
               <div class='input-field col s12'>
-                <label for="{{ form.username.id_for_label }}">Username or email</label>
+                <label for="{{ form.username.id_for_label }}">Username or e-mail</label>
                 {{ form.username }}
               </div>
             </div>
@@ -35,7 +33,7 @@
                 {{ form.password }}
               </div>
                 <label style='float: right;'>
-                    <a style="color: #6ECC83;" href='#!'><b>Forgot Password?</b></a>
+                    <a style="color: #6ECC83;" href='{% url 'password_reset' %}'><b>Forgot Password?</b></a>
                 </label>
             </div>
 
@@ -46,7 +44,7 @@
               </div>
                 <div style="margin-top: 10%; margin-bottom: 10%;">
                     <p style="text-align:center;">Don't have an account?</p>
-                    <a href="#" style="color: #6ECC83;">Create account</a>
+                    <a href="{% url 'waiting_list' %}" style="color: #6ECC83;">Create account</a>
                 </div>
             </center>
           </form>
