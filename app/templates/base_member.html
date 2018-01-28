@@ -5,7 +5,7 @@
 <head>
     <title>Mixs App</title>
     <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="{% static 'css/style_members.css' %}" media="screen,projection"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -27,9 +27,10 @@
                 <img src="http://www.brigidmixs.org/uploads/1/4/4/3/14432394/published/website-logo-final-png_1.png?1492466309" style="width: 100%">
             </a>
         </li>
+        <li class="{% if request.path == "/events/search/" %} active {% endif %}"><a style="padding-left: 16px; padding-right:16px;"  href="{% url 'search_events' %}">Find a MIX</a></li>
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
-            <li class="bold active"><a class="collapsible-header {% if "events" in request.path %} active {% endif %} waves-effect waves-teal">My events</a>
+            <li class="bold active"><a class="collapsible-header {% if "/events/list/" in request.path or "/events/new/" in request.path%} active {% endif %} waves-effect waves-teal">My events</a>
               <div class="collapsible-body" style="display: block;">
                 <ul>
                   <li class="{% if request.path == "/events/list/" %} active {% endif %}"><a href="{% url 'list_events' %}">List my events</a></li>
@@ -68,7 +69,8 @@
     {% endblock %}
 </main>
 
-<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
 
 <script type="text/javascript">
 
@@ -89,7 +91,7 @@
       $(".button-collapse").sideNav(); // Makes the side nav work
       $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        selectYears: 200, // Creates a dropdown of 15 years to control year,
         today: 'Today',
         clear: 'Clear',
         close: 'Ok',
@@ -120,5 +122,6 @@
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjK5WU8daOGnAjlwjy6wKdDzxS2hHeLEs&libraries=places&callback=init_google_maps" async defer></script>
+<script src="{% static 'js/maps-helper.js' %}"></script>
 </body>
 </html>

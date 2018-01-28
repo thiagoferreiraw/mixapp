@@ -1,0 +1,61 @@
+n{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+   <style type="text/css">
+    .class{
+        background: #737c83;
+        padding: 15px;
+        min-height: 150px;
+    }
+   </style>
+
+     <div class="details" >
+        <div class="container">
+            <div class="row center-align">
+                <div class="col s12">
+                    <h3 class="" style="color: #ada397">MIX details</h3>
+                </div>
+
+                <div class="col m4">
+                    <div class="card">
+                        <div style="background: 
+                        url('http://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/France/Paris/paris-attractions-xlarge.jpg');background-size: cover;background-position: center center; min-height: 300px; margin:0;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col m4">
+                    <div class="card">
+                    <div style="background: 
+                    url('{% static "img/mapa.png" %}');background-size: cover;background-position: center center; min-height: 300px; margin:0;">
+                  </div>
+                    </div>
+                </div>
+                <div class="col m4">
+                    <div class="card">
+                        <div class="card-content" style="padding:0; text-align: left;">
+                            <div class="city-name" style=" background: #737c83; padding: 10px;"><a href="#"><i class="medium material-icons" style="font-size: 18px; padding: 5px;">location_on</i> Paris</a></div>
+                        </div>
+                        <div class="card-content" style="padding:0; text-align: left;">
+                            <div class="city-name" style=" background: #677077; padding: 15px;"><a href="#">Art MIX</a></div>
+                        </div>
+                        <div class="card-content" style="padding:0; text-align: left; color: #fff;">
+                            <div class="city-name" style=" background: #737c83; padding: 15px;  min-height: 200px;">DEC/12<hr><p style="padding-top:10px; color: #fff;">{% lorem 15 w random %}</p>
+                                <div class="center-align" style="margin-top:20px;">
+                                    <a class="btn blue darken-4">Join the MIX!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div >
+        
+    </div>
+
+{% endblock %}

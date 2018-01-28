@@ -35,14 +35,21 @@ run:
 
 migrate:
 	python manage.py makemigrations
+	python manage.py makemigrations thumbnail
 	python manage.py migrate
-	python manage.py loaddata categories
 	python manage.py loaddata languages
+	python manage.py loaddata user_groups
 
 collectstatic:
 	echo yes | python manage.py collectstatic
 
 collectstatic_stage:
-	echo yes | python manage.py collectstatic -settings=app.config.stage_settings
+	echo yes | python manage.py collectstatic --settings=app.config.stage_settings
+
+messages:
+	python manage.py makemessages -l en -l fr -l ar -l es -l pt_BR -l pt -l it -l de -l nl -l hi -l ru -l ko -l ja
+
+compilemessages:
+	python manage.py compilemessages
 
 default: setup

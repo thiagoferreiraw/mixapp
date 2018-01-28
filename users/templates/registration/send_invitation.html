@@ -38,7 +38,7 @@
                             {% for invite in invitations %}
                                 <tr>
                                     <td>{{ invite.email_invited }}</td>
-                                    <td>{% if invite.user_has_signup %}
+                                    <td>{% if invite.user_has_signed_up %}
                                             Yes
                                         {% else %}
                                             No
