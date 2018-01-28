@@ -33,3 +33,4 @@ sorl-thumbnail==12.3
 urllib3==1.22
 whitenoise==3.3.0
 django-modeltranslation==0.12.1
+django-machina==0.6.0
