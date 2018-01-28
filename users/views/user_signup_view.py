@@ -48,6 +48,10 @@ class UserSignupView(View):
         if "current_city_place_id" in request.POST:
             request = self.places_service.get_city_for_request(request, 'current_city_place_id', 'current_city')
 
+        if "username" in request.POST and request.POST['username']:
+            request.POST._mutable = True
+            request.POST['username'] = request.POST['username'].lower()
+
         form = UserCreationForm(request.POST)
         profile_form = ProfileForm(request.POST)
 

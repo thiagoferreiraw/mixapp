@@ -17,14 +17,24 @@ class TestViews(TestCase):
         response = self.client.get('/login/')
         self.assertEqual(response.status_code, 200)
 
-    def test_post_login_page(self):
+    def test_post_login_page_username(self):
         User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
         response = self.client.post('/login/', {'username': "tester", 'password': 'top_secret'})
+        self.assertRedirects(response, "/events/search/")
+
+    def test_post_login_page_username_case_insensitive(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        response = self.client.post('/login/', {'username': "TESTER", 'password': 'top_secret'})
         self.assertRedirects(response, "/events/search/")
 
     def test_post_login_page_with_email(self):
         User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
         response = self.client.post('/login/', {'username': "tester@tester.com", 'password': 'top_secret'})
+        self.assertRedirects(response, "/events/search/")
+
+    def test_post_login_page_with_email_case_insensitive(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
+        response = self.client.post('/login/', {'username': "tesTER@tester.com", 'password': 'top_secret'})
         self.assertRedirects(response, "/events/search/")
 
     def test_post_login_page_with_failing_email(self):
@@ -135,6 +145,41 @@ class TestViews(TestCase):
         signup_invitation = SignupInvitation.objects.get(pk=signup_invitation.id)
 
         self.assertTrue(signup_invitation.user_has_signed_up)
+
+    def test_post_signup_page_with_valid_invitation_success_test_insensitive_case_username(self):
+        signup_invitation = SignupInvitation(email_invited="invited1@test.com")
+        signup_invitation.save()
+
+        signup_url = '/signup/{}/'.format(signup_invitation.hash).replace("-", "")
+
+        response = self.client.post(signup_url, {
+            "email": "invited1@test.com",
+            "first_name": "Tester1",
+            "last_name": "Tester2",
+            "password1": "123",
+            "password2": "123",
+            "username": "TesterCaseInsensitive",
+            "birth_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "current_city_place_id": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+            "birth_date": "1996-03-12"
+        })
+
+        self.assertRedirects(response, "/home/")
+
+        created_user = User.objects.get(username__iexact="TesterCaseInsensitive")
+
+        self.assertEqual(created_user.email, "invited1@test.com")
+        self.assertEqual(created_user.first_name, "Tester1")
+        self.assertEqual(created_user.last_name, "Tester2")
+        self.assertEqual(created_user.username, "testercaseinsensitive")  # Usernames will be lowercased
+        self.assertEqual(created_user.profile.birth_date.strftime("%Y-%m-%d"), "1996-03-12")
+        self.assertEqual(created_user.profile.birth_city.place_id, "ChIJN1t_tDeuEmsRUsoyG83frY4")
+        self.assertEqual(created_user.profile.current_city.place_id, "ChIJN1t_tDeuEmsRUsoyG83frY4")
+
+        signup_invitation = SignupInvitation.objects.get(pk=signup_invitation.id)
+
+        self.assertTrue(signup_invitation.user_has_signed_up)
+
 
     def test_post_signup_page_with_valid_invitation_email_different_from_invite(self):
         signup_invitation = SignupInvitation(email_invited="invited@test.com")
