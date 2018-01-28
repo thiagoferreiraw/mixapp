@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 import os
 from django.utils.translation import ugettext_lazy as _
+from machina import get_apps as get_machina_apps
+from machina import MACHINA_MAIN_TEMPLATE_DIR
+from machina import MACHINA_MAIN_STATIC_DIR
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -44,8 +47,13 @@ INSTALLED_APPS = [
 
     'pages',
 
-    'events'
-]
+    'events',
+
+    # Machina related apps:
+    'mptt',
+    'haystack',
+    'widget_tweaks',
+] + get_machina_apps()
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,6 +66,8 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    # Machina
+    'machina.apps.forum_permission.middleware.ForumPermissionMiddleware',
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -68,7 +78,8 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'app/../templates'),
                  os.path.join(BASE_DIR, 'users/../../users/templates'),
                  os.path.join(BASE_DIR, 'events/../../events/templates'),
-                 os.path.join(BASE_DIR, 'pages/../../pages/templates')],
+                 os.path.join(BASE_DIR, 'pages/../../pages/templates'),
+                 MACHINA_MAIN_TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,6 +91,9 @@ TEMPLATES = [
 
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+
+                # Machina
+                'machina.core.context_processors.metadata',
             ],
         },
     },
@@ -151,6 +165,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, '../static'),
+    MACHINA_MAIN_STATIC_DIR,
 )
 
 LOGIN_URL = 'login'
@@ -182,3 +197,21 @@ TOKEN_GOOGLE_STREET_VIEW_API = os.getenv("TOKEN_GOOGLE_STREET_VIEW_API")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    'machina_attachments': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp',
+    },
+}
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}
