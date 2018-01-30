@@ -203,3 +203,78 @@ class EventTemplateViewTests(TestCase):
         response = self.client.post("/events/templates/edit/1/",
                                    {"name": "new template", "category": 1, "description": "test"})
         self.assertRedirects(response, "/events/templates/list/")
+
+
+class EventRequestViewTests(TestCase):
+    fixtures = ['test_data.json']
+
+    def setUp(self):
+        self.client.login(username="admin", password="123")
+
+    def test_get_create_success(self):
+        response = self.client.get("/events/request/")
+        self.assertEquals(response.status_code, 200)
+
+    def test_post_create_with_template_success(self):
+        response = self.client.post("/events/request/",
+                                    {"template": "1",
+                                     "date_start": "2020-12-01",
+                                     "date_end": "2020-12-15",
+                                     'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+                                     })
+
+        self.assertRedirects(response, "/events/request/confirmation")
+
+    def test_post_create_with_description_success(self):
+        response = self.client.post("/events/request/",
+                                    {"description": "Test",
+                                     "date_start": "2020-12-01",
+                                     "date_end": "2020-12-15",
+                                     'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+                                     })
+
+        self.assertRedirects(response, "/events/request/confirmation")
+
+    def test_post_create_with_both_template_and_description_error(self):
+        response = self.client.post("/events/request/",
+                                    {"template": "1",
+                                     "description": "test",
+                                     "date_start": "2020-12-01",
+                                     "date_end": "2020-12-15",
+                                     'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+                                     })
+
+        self.assertIsNotNone(response.context['form'].errors['template'])
+        self.assertIsNotNone(response.context['form'].errors['description'])
+
+    def test_post_create_without_template_and_description_error(self):
+        response = self.client.post("/events/request/",
+                                    {"description": None,
+                                     "date_start": "2020-12-01",
+                                     "date_end": "2020-12-15",
+                                     'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+                                     })
+
+        self.assertIsNotNone(response.context['form'].errors['template'])
+        self.assertIsNotNone(response.context['form'].errors['description'])
+
+    def test_post_create_with_start_date_lower_than_today_error(self):
+        response = self.client.post("/events/request/",
+                                    {"description": "test",
+                                     "date_start": "2017-12-01",
+                                     "date_end": "2017-12-15",
+                                     'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+                                     })
+
+        self.assertIsNotNone(response.context['form'].errors['date_start'])
+
+    def test_post_create_with_start_date_greater_than_end_date(self):
+        response = self.client.post("/events/request/",
+                                    {"description": "test",
+                                     "date_start": "2020-12-01",
+                                     "date_end": "2020-11-01",
+                                     'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+                                     })
+
+        self.assertIsNotNone("date_end" in response.context['form'].errors)
+

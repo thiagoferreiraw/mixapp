@@ -93,3 +93,19 @@ class Event(models.Model):
         if self.date is not None and self.time is not None:
             self.datetime = datetime.combine(date=self.date, time=self.time)
         super(Event, self).save(*args, **kwargs)
+
+
+class EventRequest(models.Model):
+    template = models.ForeignKey(EventTemplate, null=True)
+    description = models.CharField(max_length=200, null=True)
+    city = models.ForeignKey(City)
+    requested_by = models.ForeignKey(User)
+    date_created = models.DateField(auto_now_add=True)
+    date_start = models.DateField()
+    date_end = models.DateField()
+
+    def __str__(self):
+        if self.template:
+            return f'{self.template.name}'
+        else:
+            return f'{self.description}'

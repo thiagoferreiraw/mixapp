@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import Form, ModelForm,  HiddenInput, Textarea, CharField, TextInput, FileField
-from events.models import Category, Event, City, EventTemplate
+from events.models import Category, Event, City, EventTemplate, EventRequest
 from datetime import datetime
 
 
@@ -27,7 +27,7 @@ class EventForm(ModelForm):
             return valid
 
         if self.cleaned_data['date'] < datetime.now().date():
-            self.add_error("date", "Invalid date. Date must be equal or greater than {}".format(str(self.cleaned_data['date'])))
+            self.add_error("date", "Invalid date. Date must be equal or greater than today")
             return False
 
         date_time_form = datetime.combine(self.cleaned_data['date'], self.cleaned_data['time'])
@@ -80,6 +80,7 @@ class SearchForm(Form):
     def get_categories(self):
         return list(map(lambda city: (city.id, city.description), Category.objects.all()))
 
+
 class EventTemplateForm(ModelForm):
     class Meta:
         model = EventTemplate
@@ -88,3 +89,43 @@ class EventTemplateForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ModelForm, self).__init__(*args, **kwargs)
         self.fields['category'].empty_label = "Select a category"
+
+
+class EventRequestForm(ModelForm):
+    class Meta:
+        model = EventRequest
+        fields = ('template', 'description', 'city', 'requested_by', 'date_start', 'date_end')
+
+    autocomplete_city = CharField(required=False, widget=TextInput(attrs={'id': 'autocomplete_city'}))
+    city_place_id = CharField(required=False, widget=HiddenInput(attrs={'id': 'city_place_id'}))
+
+    def is_valid(self):
+        valid = super(EventRequestForm, self).is_valid()
+        if not valid:
+            return valid
+
+        if self.cleaned_data['date_start'] < datetime.now().date():
+            self.add_error("date_start", "Invalid start date. Start Date must be equal or greater than today")
+            return False
+
+        if self.cleaned_data['date_start'] > self.cleaned_data['date_end']:
+            self.add_error("date_end", "Invalid end date. Date must be greater than start date")
+            return False
+
+        if self.cleaned_data['template'] and self.cleaned_data['description']:
+            self.add_error("template", "Please choose a template or fill a description, not both")
+            self.add_error("description", "Please choose a template or fill a description, not both")
+            return False
+
+        #if not (self.cleaned_data['template'] or self.cleaned_data['description']):
+        #    self.add_error("template", "Please choose a template or fill a description")
+        #    self.add_error("description", "Please choose a template or fill a description")
+        #    return False
+
+        return True
+
+    def __init__(self, *args, **kwargs):
+        super(ModelForm, self).__init__(*args, **kwargs)
+        self.fields['template'].required = False
+        self.fields['description'].required = False
+        self.fields['requested_by'].required = False
