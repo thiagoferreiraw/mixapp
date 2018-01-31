@@ -1,0 +1,103 @@
+{% extends 'base_member.html' %}
+{% load static %}
+
+{% block content %}
+<div class="blue darken-4" style="height: 150px;"></div>
+<div class="container" style="min-height: 80vh; margin-top: -100px;">
+    <div class="row">
+        <div class="col s12 ">
+            <div class="card white z-depth-3">
+                <div class="card-content">
+                    <span class="card-title">{{ form_action }} Request a MIX</span>
+                    <p><< <Br> <b>Nice explanation paragraph here </b><br> >> </p>
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <span class="red-text">{{ form.non_field_errors }}</span>
+
+                         <div class="input-field ">
+                            <i class="material-icons prefix">apps</i>
+                            {{ form.template }}
+                            <label for="{{ form.template.id_for_label }}">Event type </label>
+                          <span class="red-text">{{ form.template.errors }}</span>
+                        </div>
+
+                        <div class="input-field ">
+                            <i class="material-icons prefix">create</i>
+                            {{ form.description }}
+                            <label for="{{ form.description.id_for_label }}">Describe your idea</label>
+                            <span class="red-text">{{ form.description.errors }}</span>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">location_on</i>
+                                <label for="{{ form.autocomplete_city.id_for_label }}">City</label>
+                                {{ form.autocomplete_city }}
+                                {{ form.city_place_id }}
+                                <span class="red-text">{{ form.city.errors }}</span>
+                            </div>
+
+                        </div>
+
+                         <div class="row">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">date_range</i>
+                                <label for="{{ form.date_start.id_for_label }}">Date start</label>
+                                {{ form.date_start }}
+                                <span class="red-text">{{ form.date_start.errors }}</span>
+                            </div>
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">date_range</i>
+                                <label for="{{ form.date_end.id_for_label }}">Date end</label>
+                                {{ form.date_end }}
+                                <span class="red-text">{{ form.date_end.errors }}</span>
+                            </div>
+                        </div>
+
+                        <!--{{ form.errors }}-->
+
+                        <button type="submit" class="waves-effect waves-light btn blue darken-4">
+                            Submit <i class="material-icons right">send</i>
+                        </button>
+
+                        <hr>
+
+                        <a href="#" style="font-weight: bold;">Want to moderate a MIX? Click here</a>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function init_google_maps() {
+        var autocomplete_city = create_autocomplete_input(document.getElementById("autocomplete_city"), {types: ['(cities)']});
+        mix_set_autocomplete_place_changed_event(autocomplete_city, "city_place_id");
+    }
+
+{#    $(document).ready(function(){#}
+{##}
+{#        // Form validation...#}
+{#        $('form').submit(function (e) {#}
+{##}
+{#            city_place_id = $("#city_place_id").val();#}
+{#            location_place_id = $("#location_place_id").val();#}
+{##}
+{#            if (!location_place_id || !city_place_id){#}
+{#                alert("Please choose correctly a city and a location")#}
+{#                e.preventDefault();#}
+{#                return;#}
+{#            }#}
+{##}
+{#        }).bind("keypress", function (e) {#}
+{#            if (e.keyCode == 13) {#}
+{#                return false;#}
+{#            }#}
+{#        });#}
+{##}
+{#    });#}
+
+</script>
+{% endblock %}
