@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from events.models import City, Category, Event, Location, Language, EventTemplate
+from events.models import City, Category, Event, Location, Language, EventTemplate, EventRequest
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -22,7 +22,12 @@ class LocationAdmin(admin.ModelAdmin):
 class LanguageAdmin(admin.ModelAdmin):
     pass
 
+
 class TemplateAdmin(admin.ModelAdmin):
+    pass
+
+
+class RequestAdmin(admin.ModelAdmin):
     pass
 
 
@@ -32,3 +37,4 @@ admin.site.register(Event, EventAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Language, LanguageAdmin)
 admin.site.register(EventTemplate, TemplateAdmin)
+admin.site.register(EventRequest, RequestAdmin)

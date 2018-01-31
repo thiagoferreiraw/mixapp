@@ -247,17 +247,6 @@ class EventRequestViewTests(TestCase):
         self.assertIsNotNone(response.context['form'].errors['template'])
         self.assertIsNotNone(response.context['form'].errors['description'])
 
-    def test_post_create_without_template_and_description_error(self):
-        response = self.client.post("/events/request/",
-                                    {"description": None,
-                                     "date_start": "2020-12-01",
-                                     "date_end": "2020-12-15",
-                                     'city_place_id': 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-                                     })
-
-        self.assertIsNotNone(response.context['form'].errors['template'])
-        self.assertIsNotNone(response.context['form'].errors['description'])
-
     def test_post_create_with_start_date_lower_than_today_error(self):
         response = self.client.post("/events/request/",
                                     {"description": "test",

@@ -117,15 +117,20 @@ class EventRequestForm(ModelForm):
             self.add_error("description", "Please choose a template or fill a description, not both")
             return False
 
-        #if not (self.cleaned_data['template'] or self.cleaned_data['description']):
-        #    self.add_error("template", "Please choose a template or fill a description")
-        #    self.add_error("description", "Please choose a template or fill a description")
-        #    return False
+        if not (self.cleaned_data['template'] or self.cleaned_data['description']):
+            self.add_error("template", "Please choose a template or fill a description")
+            self.add_error("description", "Please choose a template or fill a description")
+            return False
 
         return True
 
     def __init__(self, *args, **kwargs):
         super(ModelForm, self).__init__(*args, **kwargs)
         self.fields['template'].required = False
+        self.fields['template'].empty_label = "Select a event type"
         self.fields['description'].required = False
         self.fields['requested_by'].required = False
+        self.fields['date_start'].widget.attrs['class'] = "datepicker"
+        self.fields['date_end'].widget.attrs['class'] = "datepicker"
+        self.fields['description'].widget = forms.Textarea({'class': 'materialize-textarea'})
+
