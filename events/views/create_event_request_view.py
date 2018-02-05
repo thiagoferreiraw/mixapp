@@ -14,7 +14,7 @@ class EventRequestView(View):
     def get(self, request):
         form = EventRequestForm()
         return render(request, self.template_name,
-                      {'form': form, 'user': request.user})
+                      {'form': form, 'user': request.user, 'form_type': request.GET.get("t", "template")})
 
     def post(self, request):
         request.POST._mutable = True
@@ -30,5 +30,5 @@ class EventRequestView(View):
             return redirect("request_event_confirmation")
 
         return render(request, self.template_name,
-                      {'form': form,  'user': request.user})
+                      {'form': form,  'user': request.user, 'form_type': request.GET.get("t     ", "template")})
 

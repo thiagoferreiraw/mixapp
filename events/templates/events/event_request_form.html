@@ -8,12 +8,14 @@
         <div class="col s12 ">
             <div class="card white z-depth-3">
                 <div class="card-content">
-                    <span class="card-title">{{ form_action }} Request a MIX</span>
+                    <span class="card-title">Request a MIX</span>
                     <p><< <Br> <b>Nice explanation paragraph here </b><br> >> </p>
                     <form method="post">
                         {% csrf_token %}
 
                         <span class="red-text">{{ form.non_field_errors }}</span>
+
+                        {% if form_type == "template"  %}
 
                          <div class="input-field ">
                             <i class="material-icons prefix">apps</i>
@@ -21,6 +23,9 @@
                             <label for="{{ form.template.id_for_label }}">Event type </label>
                           <span class="red-text">{{ form.template.errors }}</span>
                         </div>
+                        <a href="{% url "request_event" %}?t=description">I want to suggest a new event type</a>
+
+                        {% else %}
 
                         <div class="input-field ">
                             <i class="material-icons prefix">create</i>
@@ -28,9 +33,12 @@
                             <label for="{{ form.description.id_for_label }}">Describe your idea</label>
                             <span class="red-text">{{ form.description.errors }}</span>
                         </div>
+                        <a href="{% url "request_event" %}?t=template">I want to choose from a list of types</a>
+
+                        {% endif %}
 
                         <div class="row">
-                            <div class="input-field col s6">
+                            <div class="input-field col s12">
                                 <i class="material-icons prefix">location_on</i>
                                 <label for="{{ form.autocomplete_city.id_for_label }}">City</label>
                                 {{ form.autocomplete_city }}
