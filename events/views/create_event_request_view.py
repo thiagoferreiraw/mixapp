@@ -30,5 +30,5 @@ class EventRequestView(View):
             return redirect("request_event_confirmation")
 
         return render(request, self.template_name,
-                      {'form': form,  'user': request.user, 'form_type': request.GET.get("t     ", "template")})
+                      {'form': form,  'user': request.user, 'form_type': request.GET.get("t", "template")})
 
