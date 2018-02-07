@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 from users.views import views as user_views
+from users.views.moderator_flow.moderator_setup_view import ModeratorSetupView
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -12,6 +13,7 @@ urlpatterns = [
     url(r'^signup/(?P<invitation_hash>\w[a-zA-Z0-9-_]{1,50})/$', user_views.UserSignupView.as_view(), name='signup'),
     url(r'^user/profile/$',  login_required(user_views.UserEditProfileView.as_view()), name='edit_profile'),
     url(r'^user/settings/$', user_views.settings, name='settings'),
+    url(r'^user/moderator_setup/$', ModeratorSetupView.as_view(), name='moderator_setup'),
     url(r'^user/settings/password/$', user_views.password, name='password'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
 

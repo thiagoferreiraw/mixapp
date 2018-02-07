@@ -386,4 +386,12 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue("invitations" in response.context)
 
+    def test_moderator_flow(self):
+        User.objects.create_user(username='tester', email='tester@tester.com', password='top_secret')
 
+        self.client.login(username="tester", password="top_secret")
+
+        response = self.client.get('/user/moderator_setup/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("languages" in response.context)

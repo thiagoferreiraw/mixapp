@@ -1,0 +1,69 @@
+{% extends 'base_member.html' %}
+{% load static %}
+
+{% block content %}
+<div class="blue darken-4" style="height: 150px;"></div>
+<div class="container" style="min-height: 80vh; margin-top: -100px;">
+    <div class="row">
+        <div class="col s8 offset-s2 ">
+            <div class="card white z-depth-3">
+                <div class="card-content">
+                    <span class="card-title">Become a moderator</span>
+                    <p>Moderators (M'ods) are not teachers, rather cultural exchange liaisons who simply help with language barriers and encourage everyone’s involvement. Mods choose the activity, location and time. Moderators can optionally receive requests to moderate MIXs, too! Moderators receive a free membership.</p>
+                    <br>
+                    <p><b>Do you speak more than one language?</b></p>
+                    <br>
+                    <div class="row">
+                        <div class="col s6">
+                           <a class="waves-effect waves-light btn red red-4" >
+                                No <i class="material-icons right">clear</i>
+                            </a>
+                        </div>
+                        <div class="col s6">
+                           <button   type="button" class="waves-effect waves-light btn green green-4 right">
+                                Yes <i class="material-icons right">check</i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <p>What language(s) do you speak, and what is your proficiency? It's important for you to know, If more than 60% of your MIX participants record you were not able to help with language barriers, you will only be able to participate in MIXs, not moderate, 3 months! This will give you time to continue to practice your language skills ;</p>
+                    <br>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <span class="red-text">{{ form.non_field_errors }}</span>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select multiple name="languages">
+                                    <option value="" disabled selected>Choose your languages</option>
+                                    {% for l in languages %}
+                                        <option value="{{ l.id }}">{{ l.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label>Tell us what languages you speak</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <input type="checkbox" id="test5"/>
+                                <label for="test5">I'm at least b2 in the languages I selected </label>
+                            </div>
+                        </div>
+
+                        <!--{{ form.errors }}-->
+
+                        <button type="submit" class="waves-effect waves-light btn blue darken-4">
+                            Submit <i class="material-icons right">send</i>
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
